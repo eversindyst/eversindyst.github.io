@@ -182,15 +182,19 @@
 		resetPnB();
 		clearInterval(moneyPerSecondInterval);
 		moneyPerSecondInterval = setInterval(calcPerSec, 1000);
-	//	money2PerSecondInterval = setInterval(calcPerSec2, 1000);
+		money2PerSecondInterval = setInterval(calcPerSec2, 1000);
 		load();
 	}
 	function calcPerSec2(){
-		moneyBucket2.pop();
-		moneyBucket2.unshift(0);
-		var monPerMinute = moneyBucket2.reduce(sumBucket, 0);
-		monPerMinute = Math.round((monPerMinute/150)*100)/100;
-		document.getElementById("monPerSec2").innerHTML = monPerMinute.formatMoney();
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = process;
+		xhr.open("GET", "", true);
+		xhr.send();
+		function process(){
+			var resp = JSON.parse(xhr.responseText);
+			alert(resp);
+		}
+		
 	}
 	function calcPerSec(){
 		moneyBucket.pop();
