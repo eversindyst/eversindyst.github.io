@@ -182,7 +182,7 @@
 		resetPnB();
 		clearInterval(moneyPerSecondInterval);
 		moneyPerSecondInterval = setInterval(calcPerSec, 1000);
-		money2PerSecondInterval = setInterval(calcPerSec2, 1000);
+	//	money2PerSecondInterval = setInterval(calcPerSec2, 1000);
 		load();
 	}
 	function calcPerSec2(){
