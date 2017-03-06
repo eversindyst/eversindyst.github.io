@@ -187,14 +187,13 @@
 	}
 	function calcPerSec2(){
 		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = process;
+		xhr.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
+				alert(xhr.responseText);
+			}
+		};
 		xhr.open("GET", "https://eversindyst.github.io/updateNow.txt", true);
 		xhr.send();
-		function process(){
-			var resp = JSON.parse(xhr.responseText);
-			alert(resp);
-		}
-		
 	}
 	function calcPerSec(){
 		moneyBucket.pop();
