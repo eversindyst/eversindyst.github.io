@@ -188,7 +188,7 @@
 	function calcPerSec2(){
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = process;
-		xhr.open("GET", "", true);
+		xhr.open("GET", "https://eversindyst.github.io/updateNow.txt", true);
 		xhr.send();
 		function process(){
 			var resp = JSON.parse(xhr.responseText);
