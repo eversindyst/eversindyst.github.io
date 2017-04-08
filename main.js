@@ -2,6 +2,7 @@
 	var mc;
 	var zoneHolder;
 	var interval;
+	var mapsCompleted = 0;
 	var bonus = {
 		Str:0,
 		Int:0,

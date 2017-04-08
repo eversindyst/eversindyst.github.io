@@ -68,6 +68,7 @@
 			}	
 		}
 		else{
+			mapsCompleted += 1;
 			newMap()
 			return(zoneHolder.map);
 		}
