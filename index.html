@@ -1,0 +1,154 @@
+<HTML>
+	<HEAD>
+	<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	<link rel="shortcut icon" href="Famico.ico?" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	</HEAD>
+	<BODY id="gameBackground" style="background-color:black;" onLoad="pageInit()">
+
+		<div id="centerField" class="gameWindow">
+			<span id="counter" class="map"></span>
+			<span id="zoneName" class="zoneNameHolder"></span>
+			<div class="statContainer">
+				<div class="expContainer" style="color:#A100A1; margin-left:0px;">
+					<span style="color:#FF00FF">[</span><div id="expTNL" class="expBar" style="margin-right:0;">0</div>%
+					<span style="color:#FF00FF">]</span>
+				</div>
+				<br>
+				<div class="hpContainer" style="margin-left:0px;">
+					<span style="color:#FF00FF">[</span><div id="currentHP" class="hp"></div>hp
+				</div>
+				<div class="manaContainer" style="">
+					<div id="currentMana" class="mana"></div>m
+				</div>
+				<div class="staminaContainer" style="">
+					<div id="currentStamina" class="stamina"></div>stam<span style="color:#FF00FF">]</span>
+				</div>
+			</div>
+			<span style="position:absolute;bottom:0px;right:0px;color:white;cursor:hand;" onclick="newRandomZone()">Click me for random zone!</span>
+		</div>
+		<div id="mapOverlay" class="mapOverlay">
+		</div>
+		<div id="profilePage" class="profile">
+			<span style="color:#01FF00">Level <span id="statLv"></span></span><br><br>
+			<span class="statLine"><span style="color:grey">Strength: <span id="statStr"></span></span><span class="secondColumn" style="color:#204FAF">HP: <span id="statHp"></span><span style="color:#1CBABA">/</span><span id="statMHp" style="color:#1CBABA"></span> (<span id="hpReg"></span>/s)</span></span><br>
+			<span class="statLine"><span style="color:grey">Intelligence: <span id="statInt"></span></span><span class="secondColumn" style="color:#204FAF">Mana: <span id="statMn"></span><span style="color:#1CBABA">/</span><span id="statMMn" style="color:#1CBABA"></span> (<span id="manaReg"></span>/s)</span></span><br>
+			<span class="statLine"><span style="color:grey">Dexterity: <span id="statDex"></span></span><span class="secondColumn" style="color:#204FAF">Stamina: <span id="statSt"></span><span style="color:#1CBABA">/</span><span id="statMSt" style="color:#1CBABA"></span> (<span id="stamReg"></span>/s)</span></span><br>
+			<span class="statLine"><span style="color:grey">Endurance: <span id="statEnd"></span></span></span><br>
+			<span class="statLine"><span style="color:grey">Wisdom: <span id="statWis"></span></span><span class="secondColumn" style="color:white">Damage: <span id="statDmg"></span></span></span><br>
+			<span class="statLine"><span style="color:grey">Agility: <span id="statAgi"></span></span><span class="secondColumn" style="color:#A54996">Spell Damage: +<span id="statSpD"></span>%</span></span><br><br>
+			<span class="statLine"><span style="color:brown">Armor: <span id="statArm"></span> (<span id="armPerc"></span>%)</span><span class="secondColumn" style="color:orange">Critical Strike</span></span><br>
+			<span class="statLine"><span style="color:green">Evasion: <span id="statEva"></span> (<span id="evaPerc"></span>%)</span><span class="secondColumn" style="color:orange">Chance: <span id="statCrC"></span>%</span></span><br>
+			<span class="statLine"><span style="color:lightblue">Resist: <span id="statRes"></span> (<span id="resPerc"></span>%)</span><span class="secondColumn" style="color:orange">Critical Strike</span></span><br>
+			<span class="statLine"><span class="secondColumn" style="color:orange">Damage: <span id="statCrD"></span>%</span></span><br></span><br>
+			<span class="statLine" style="color:red">Fire Resist: <span id="statFR"></span>%<span class="secondColumn">Fire Damage: +<span id="statFD"></span>%</span></span><br>
+			<span class="statLine" style="color:cyan">Cold Resist: <span id="statCR"></span>%<span class="secondColumn">Cold Damage: +<span id="statCD"></span>%</span></span><br>
+			<span class="statLine" style="color:yellow">Shock Resist: <span id="statSR"></span>%<span class="secondColumn">Shock Damage: +<span id="statSD"></span>%</span></span><br>
+			<span class="statLine" style="color:purple"><span class="secondColumn">Dark Damage: +<span id="statDD"></span>%</span></span><br>
+			<span class="statLine"><span style="color:darkred">Life Leech: <span id="statLeech"></span></span></span><br><br>
+			<span class="statLine" style="color:#C5C5C5">Platinum: <span id="statGold"></span></span><br>
+			<span class="statLine" style="color:#7171FF">Experience to Level: <span id="statExp"></span></span><br>
+		</div>
+		
+		<div id="gearPage" class="gearMenu">
+			<div id="eqPanel" class="eqMenu">
+			
+			<span class="statLine">Main Hand: 
+				<span class="eqColumn" id="mhEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Off Hand: 
+				<span class="eqColumn" id="ohEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Helmet: 
+				<span class="eqColumn" id="helmetEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Amulet: 
+				<span class="eqColumn" id="amuletEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Body: 
+				<span class="eqColumn" id="bodyEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Shoulders: 
+				<span class="eqColumn" id="shouldersEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Gloves: 
+				<span class="eqColumn" id="glovesEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Pants: 
+				<span class="eqColumn" id="pantsEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Boots: 
+				<span class="eqColumn" id="bootsEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Ring: 
+				<span class="eqColumn" id="ringEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Trinket: 
+				<span class="eqColumn" id="trinketEQ">None
+				</span>
+			</span>
+			<br>
+			<span class="statLine">Aura: 
+				<span class="eqColumn" id="auraEQ">None
+				</span>
+			</span>
+			
+			</div>
+			<div id="invPanel" class="invMenu">
+			</div>
+			<span id="sellString" class="sellString">Sell Mode</span>
+			<div id="sellBtn" class="sellBtn" onclick="setSell()"></div>
+			<div id="sortBtn1" class="sortBtn1" onclick="setSort(1)"></div>
+			<div id="sortBtn2" class="sortBtn2" onclick="setSort(2)"></div>
+			<div id="sortBtn3" class="sortBtn3" onclick="setSort(3)"></div>
+		</div>
+		
+		<div id="menuHold" class="menuHolder">
+			<div id="statMenu" style="cursor:hand; background-image:url('art/statBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showCharacterStats()"></div>
+			<div id="gearMenu" style="cursor:hand; background-image:url('art/gearBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showGearStats()"></div>
+			<div id="mapMenu" style="cursor:hand; background-image:url('art/mapBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showMapOverlay()"></div>
+			<div id="skillMenu" style="cursor:hand; background-image:url('art/skillBtn.png'); width:67px;height:22px;margin-bottom:5px;"></div>
+			<div id="helpMenu" style="cursor:hand; background-image:url('art/helpBtn.png'); width:67px;height:22px;margin-bottom:5px;"></div>
+		</div>
+	</BODY>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="main.js"></script>
+	<script src="mc.js"></script>
+	<script src="item.js"></script>
+	<script src="itemDB.js"></script>
+	<script src="inventory.js"></script>
+	<script src="effectDB.js"></script>
+	<script src="monster.js"></script>
+	<script src="monsterDB.js"></script>
+	<script src="zone.js"></script>
+	<script src="zoneDB.js"></script>
+	<script src="mapGeneration.js"></script>
+	<script src="mapDisplay.js"></script>
+	<script src="mapMove.js"></script>
+	<script src="terrainDB.js"></script>
+</HTML>
