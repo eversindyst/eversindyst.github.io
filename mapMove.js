@@ -68,7 +68,7 @@
 			}	
 		}
 		else{
-			mapsCompleted += 1;
+			gainLevel();
 			newMap()
 			return(zoneHolder.map);
 		}

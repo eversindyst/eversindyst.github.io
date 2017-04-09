@@ -86,7 +86,7 @@
 		$('#profilePage').toggle();
 	}
 	function loadCharacterStats(){
-		$('#statLv').text(mapsCompleted);$('#statStr').text(mc.functionalStrength);$('#statInt').text(mc.functionalIntelligence);
+		$('#statLv').text(mc.level);$('#statStr').text(mc.functionalStrength);$('#statInt').text(mc.functionalIntelligence);
 		$('#statDex').text(mc.functionalDexterity);$('#statEnd').text(mc.functionalEndurance);$('#statWis').text(mc.functionalWisdom);
 		$('#statAgi').text(mc.functionalAgility);$('#statDmg').text(mc.functionalBaseDamage);$('#statSpD').text(mc.functionalSpellDamage);
 		$('#statArm').text(mc.functionalArmor);$('#statEva').text(mc.functionalEvasion);$('#statRes').text(mc.functionalResist);
