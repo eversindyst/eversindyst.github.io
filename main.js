@@ -86,7 +86,10 @@
 			}
 		}, 10);
 	}
-	
+	function multiLevelEnable(){
+		mc.level = 99;
+		gainLevel();
+	}
 	function newRandomZone(){
 		zoneHolder = getZone(Math.floor(Math.random()*6));
 	}
