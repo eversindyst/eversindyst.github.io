@@ -58,7 +58,7 @@
 		Leech:1
 	}
 	
-	resetMore(){
+	function resetMore(){
 		var moreHolder = {
 		Str:1,
 		Int:1,
@@ -90,7 +90,7 @@
 	};
 	return moreHolder;
 	}
-	resetBonus(){
+	function resetBonus(){
 		bonusHolder = {
 		Str:0,
 		Int:0,
