@@ -199,15 +199,15 @@
 		$('#className').text(mc.charClass);
 	}
 	function calcArmor(x, y, z, a){
-		var damReduc = (Math.round((x/(x+(50+y*2.5))+z/1000)*10000)/100)+a;
+		var damReduc = Math.round(((Math.round((x/(x+(50+y*2.5))+z/1000)*10000)/100)+a) * 100)/100;
 		return damReduc;
 	}
 	function calcEva(x, y, z, a){
-		var damReduc = (Math.round((x/(x+(100+y*1.2))+z/1000)*10000)/100)+a;
+		var damReduc = Math.round(((Math.round((x/(x+(100+y*1.2))+z/1000)*10000)/100)+a) * 100)/100;
 		return damReduc;
 	}
 	function calcRes(x, y, z, a){
-		var damReduc = (Math.round((x/(x+(25+y*1.5))+z/1000)*10000)/100)+a;
+		var damReduc = Math.round(((Math.round((x/(x+(25+y*1.5))+z/1000)*10000)/100)+a) * 100)/100;
 		return damReduc;
 	}
 	function displayStats(){
