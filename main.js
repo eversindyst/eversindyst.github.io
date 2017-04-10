@@ -58,6 +58,68 @@
 		Leech:1
 	}
 	
+	resetMore(){
+		var moreHolder = {
+		Str:1,
+		Int:1,
+		Dex:1,
+		End:1,
+		Wis:1,
+		Agi:1,
+		HP:1,
+		Mana:1,
+		Stamina:1,
+		HReg:1,
+		MReg:1,
+		SReg:1,
+		BaseDamage:1,
+		SpellDamage:1,
+		FireDamage:1,
+		ColdDamage:1,
+		ShockDamage:1,
+		DarkDamage:1,
+		CritChnc:1,
+		CritDmg:1,
+		Armor:1,
+		Evasion:1,
+		Resist:1,
+		FireResist:1,
+		ColdResist:1,
+		ShockResist:1,
+		Leech:1
+	};
+	return moreHolder;
+	}
+	resetBonus(){
+		bonusHolder = {
+		Str:0,
+		Int:0,
+		Dex:0,
+		End:0,
+		Wis:0,
+		Agi:0,
+		HP:0,
+		Mana:0,
+		Stamina:0,
+		BaseDamage:0,
+		SpellDamage:0,
+		FireDamage:0,
+		ColdDamage:0,
+		ShockDamage:0,
+		DarkDamage:0,
+		CritChnc:0,
+		CritDmg:0,
+		Armor:0,
+		Evasion:0,
+		Resist:0,
+		FireResist:0,
+		ColdResist:0,
+		ShockResist:0,
+		Leech:0
+	};
+	return bonusHolder;
+	}
+	
 	var lookupTable;
 	
 	function pageInit(){
@@ -95,6 +157,8 @@
 	}
 	function changeClass(x){
 		mc = resetMC();
+		more = resetMore();
+		bonus = resetBonus();
 		mc.charClassNum = x;
 		mc.classPath = ""+x;
 		mc.classesTaken = 1;
