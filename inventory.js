@@ -32,10 +32,20 @@
 			generateInventory();
 		}
 		else{
+			var weapon2H = false;
+			if(equipHolder["mainHand"] != null){
+				if(equipHolder["mainHand"].is2H){
+					weapon2H = true;
+				}
+			}
 			var item = inventoryHolder[x];
-			equipItem(item);
-			inventoryHolder.splice(inventoryHolder.indexOf(item),1);
-			generateInventory();
+			if(item.slot == "offHand" && weapon2H){
+			}
+			else{
+				equipItem(item);
+				inventoryHolder.splice(inventoryHolder.indexOf(item),1);
+				generateInventory();
+			}
 		}
 	}
 	function setSell(){

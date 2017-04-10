@@ -55,7 +55,7 @@
 		FireResist:1,
 		ColdResist:1,
 		ShockResist:1,
-		Leech:0
+		Leech:1
 	}
 	
 	var lookupTable;
@@ -89,6 +89,18 @@
 	
 	function newRandomZone(){
 		zoneHolder = getZone(Math.floor(Math.random()*6));
+	}
+	function changeClass(x){
+		mc = resetMC();
+		mc.charClassNum = x;
+		mc.classPath = ""+x;
+		mc.classesTaken = 1;
+		switch(x){
+			case(0): mc.charClass = "Warrior"; mc.baseClassNum = 0; break;
+			case(1): mc.charClass = "Mage"; mc.baseClassNum = 1; break;
+			case(2): mc.charClass = "Rogue"; mc.baseClassNum = 2; break;
+			case(3): mc.charClass = "Monk"; mc.baseClassNum = 3; break;
+		}
 	}
 	
 	function shortenLargeNumber(number){

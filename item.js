@@ -2,7 +2,7 @@
 	var inventoryHolder = new Array();
 	var allItemHolder = new Array();
 	
-	function item(id, slot, name, baseStats, effects, lvlStats, upgStats, upgName, upgEffects, xpMult, xpGain){
+	function item(id, slot, name, baseStats, effects, lvlStats, upgStats, upgName, upgEffects, xpMult, xpGain, is2H){
 		this.id = id
 		this.xpMult = xpMult;
 		this.xpGain = xpGain;
@@ -19,6 +19,12 @@
 		this.equip = false;
 		this.effects = effects.split(";");
 		this.upgEffects = upgEffects.split(";");
+		if(is2H == null){
+			this.is2H = false;
+		}
+		else{
+			this.is2H = true;
+		}
 	}
 	function giveItemXP(item){
 		item.xp += Number(Math.pow(item.xpMult, (item.level-1)) * item.xpGain);
@@ -90,34 +96,41 @@
 	}
 	function genTTString(item){
 		var base = item.base
+		var showPositive = "+";
 		var stringBuild = "<span class='tooltip' id='"+item.slot+"TT'><span>Slot: "+item.slot.charAt(0).toUpperCase()+item.slot.slice(1)+"</span><br>";
 		for(var index=0; index<base.length; index++){
 			var statHold = base[index].split(":");
+			if(statHold[1] < 0){
+				showPositive = "";
+			}
+			else{
+				showPositive = "+";
+			}
 			switch(statHold[0]){
-				case("Strength"):stringBuild = stringBuild + "<span style='color:grey'>Strength <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Intelligence"):stringBuild = stringBuild + "<span style='color:grey'>Intelligence <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Dexterity"):stringBuild = stringBuild + "<span style='color:grey'>Dexterity <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Endurance"):stringBuild = stringBuild + "<span style='color:grey'>Endurance <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Wisdom"):stringBuild = stringBuild + "<span style='color:grey'>Wisdom <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Agility"):stringBuild = stringBuild + "<span style='color:grey'>Agility <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("HP"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max HP <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Mana"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max Mana <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Stamina"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max Stamina <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("BaseDamage"):stringBuild = stringBuild + "<span style='color:white'>Damage <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("SpellDamage"):stringBuild = stringBuild + "<span style='color:#A54996'>Spell Damage <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("FireDamage"):stringBuild = stringBuild + "<span style='color:red'>Fire Damage <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("ColdDamage"):stringBuild = stringBuild + "<span style='color:cyan'>Cold Damage <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("ShockDamage"):stringBuild = stringBuild + "<span style='color:yellow'>Shock Damage <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("DarkDamage"):stringBuild = stringBuild + "<span style='color:purple'>Dark Damage <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("CritChnc"):stringBuild = stringBuild + "<span style='color:orange'>Crit Chance <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("CritDmg"):stringBuild = stringBuild + "<span style='color:orange'>Crit Damage <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("Armor"):stringBuild = stringBuild + "<span style='color:brown'>Armor <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Evasion"):stringBuild = stringBuild + "<span style='color:green'>Evasion <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("Resist"):stringBuild = stringBuild + "<span style='color:lightblue'>Resist <span style='position:absolute;right:15%;'>+"+statHold[1]+"</span></span><br>";break;
-				case("FireResist"):stringBuild = stringBuild + "<span style='color:red'>Fire Resist <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("ColdResist"):stringBuild = stringBuild + "<span style='color:cyan'>Cold Resist <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("ShockResist"):stringBuild = stringBuild + "<span style='color:yellow'>Shock Resist <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
-				case("Leech"):stringBuild = stringBuild + "<span style='color:darkred'>Life Leech <span style='position:absolute;right:15%;'>+"+statHold[1]+"%</span></span><br>";break;
+				case("Strength"):stringBuild = stringBuild + "<span style='color:grey'>Strength <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Intelligence"):stringBuild = stringBuild + "<span style='color:grey'>Intelligence <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Dexterity"):stringBuild = stringBuild + "<span style='color:grey'>Dexterity <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Endurance"):stringBuild = stringBuild + "<span style='color:grey'>Endurance <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Wisdom"):stringBuild = stringBuild + "<span style='color:grey'>Wisdom <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Agility"):stringBuild = stringBuild + "<span style='color:grey'>Agility <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("HP"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max HP <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Mana"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max Mana <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Stamina"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max Stamina <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("BaseDamage"):stringBuild = stringBuild + "<span style='color:white'>Damage <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("SpellDamage"):stringBuild = stringBuild + "<span style='color:#A54996'>Spell Damage <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("FireDamage"):stringBuild = stringBuild + "<span style='color:red'>Fire Damage <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("ColdDamage"):stringBuild = stringBuild + "<span style='color:cyan'>Cold Damage <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("ShockDamage"):stringBuild = stringBuild + "<span style='color:yellow'>Shock Damage <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("DarkDamage"):stringBuild = stringBuild + "<span style='color:purple'>Dark Damage <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("CritChnc"):stringBuild = stringBuild + "<span style='color:orange'>Crit Chance <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("CritDmg"):stringBuild = stringBuild + "<span style='color:orange'>Crit Damage <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("Armor"):stringBuild = stringBuild + "<span style='color:brown'>Armor <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Evasion"):stringBuild = stringBuild + "<span style='color:green'>Evasion <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Resist"):stringBuild = stringBuild + "<span style='color:lightblue'>Resist <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("FireResist"):stringBuild = stringBuild + "<span style='color:red'>Fire Resist <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("ColdResist"):stringBuild = stringBuild + "<span style='color:cyan'>Cold Resist <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("ShockResist"):stringBuild = stringBuild + "<span style='color:yellow'>Shock Resist <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
+				case("Leech"):stringBuild = stringBuild + "<span style='color:darkred'>Life Leech <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
 				
 			}
 		}

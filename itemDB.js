@@ -1,8 +1,8 @@
 	var itemDB = [
-		"0,helmet,Iron Helmet,BaseDamage:1,,BaseDamage:1;HP:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
+		"0,helmet,Iron Helmet,BaseDamage:-10,,BaseDamage:1;HP:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
 		"1,body,Iron Breastplate Of Destruction + 4,Armor:2,,HP:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
 		"2,gloves,Iron Gloves,Armor:1,,BaseDamage:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
-		"3,gloves,Steel Gloves,Armor:2;BaseDamage:1,,BaseDamage:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5"
+		"3,gloves,Steel Gloves,Armor:-52;BaseDamage:1,,BaseDamage:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5"
 	];
 
 	function getItem(x){

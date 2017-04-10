@@ -28,11 +28,18 @@
 				</div>
 			</div>
 			<span style="position:absolute;bottom:0px;right:0px;color:white;cursor:hand;" onclick="newRandomZone()">Click me for random zone!</span>
+			<span style="position:absolute;bottom:30px;right:0px;color:white;cursor:hand;" onclick="changeClass(1)">Mage</span>
+			<span style="position:absolute;bottom:60px;right:0px;color:white;cursor:hand;" onclick="changeClass(0)">Warrior</span>
+			<span style="position:absolute;bottom:90px;right:0px;color:white;cursor:hand;" onclick="changeClass(2)">Rogue</span>
+			<span style="position:absolute;bottom:115px;right:0px;color:white;cursor:hand;" onclick="changeClass(3)">Monk</span>
+			
 		</div>
 		<div id="mapOverlay" class="mapOverlay">
 		</div>
+		<div id="multiclassMenu" class="multiclassMenu">
+		</div>
 		<div id="profilePage" class="profile">
-			<span style="color:#01FF00">Level <span id="statLv"></span></span><br><br>
+			<span style="color:#01FF00">Level <span id="statLv"></span> <span id="className"></span></span><br><br>
 			<span class="statLine"><span style="color:grey">Strength: <span id="statStr"></span></span><span class="secondColumn" style="color:#204FAF">HP: <span id="statHp"></span><span style="color:#1CBABA">/</span><span id="statMHp" style="color:#1CBABA"></span> (<span id="hpReg"></span>/s)</span></span><br>
 			<span class="statLine"><span style="color:grey">Intelligence: <span id="statInt"></span></span><span class="secondColumn" style="color:#204FAF">Mana: <span id="statMn"></span><span style="color:#1CBABA">/</span><span id="statMMn" style="color:#1CBABA"></span> (<span id="manaReg"></span>/s)</span></span><br>
 			<span class="statLine"><span style="color:grey">Dexterity: <span id="statDex"></span></span><span class="secondColumn" style="color:#204FAF">Stamina: <span id="statSt"></span><span style="color:#1CBABA">/</span><span id="statMSt" style="color:#1CBABA"></span> (<span id="stamReg"></span>/s)</span></span><br>
@@ -47,7 +54,7 @@
 			<span class="statLine" style="color:cyan">Cold Resist: <span id="statCR"></span>%<span class="secondColumn">Cold Damage: +<span id="statCD"></span>%</span></span><br>
 			<span class="statLine" style="color:yellow">Shock Resist: <span id="statSR"></span>%<span class="secondColumn">Shock Damage: +<span id="statSD"></span>%</span></span><br>
 			<span class="statLine" style="color:purple"><span class="secondColumn">Dark Damage: +<span id="statDD"></span>%</span></span><br>
-			<span class="statLine"><span style="color:darkred">Life Leech: <span id="statLeech"></span></span></span><br><br>
+			<span class="statLine"><span style="color:darkred">Life Leech: <span id="statLeech"></span>%</span></span><br><br>
 			<span class="statLine" style="color:#C5C5C5">Platinum: <span id="statGold"></span></span><br>
 			<span class="statLine" style="color:#7171FF">Experience to Level: <span id="statExp"></span></span><br>
 		</div>
@@ -129,6 +136,7 @@
 			<div id="statMenu" style="cursor:hand; background-image:url('art/statBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showCharacterStats()"></div>
 			<div id="gearMenu" style="cursor:hand; background-image:url('art/gearBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showGearStats()"></div>
 			<div id="mapMenu" style="cursor:hand; background-image:url('art/mapBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showMapOverlay()"></div>
+			<div id="multiMenu" style="cursor:hand; background-image:url('art/multiclassBtn.png'); width:67px;height:22px;margin-bottom:5px;display:none;" onClick="showMulticlass()"></div>
 			<div id="skillMenu" style="cursor:hand; background-image:url('art/skillBtn.png'); width:67px;height:22px;margin-bottom:5px;"></div>
 			<div id="helpMenu" style="cursor:hand; background-image:url('art/helpBtn.png'); width:67px;height:22px;margin-bottom:5px;"></div>
 		</div>
@@ -151,4 +159,5 @@
 	<script src="mapDisplay.js"></script>
 	<script src="mapMove.js"></script>
 	<script src="terrainDB.js"></script>
+	<script src="multiclass.js"></script>
 </HTML>
