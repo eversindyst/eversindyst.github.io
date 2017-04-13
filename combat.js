@@ -2,7 +2,7 @@
 			var ss = "<br>";
 			var pCrit = false;
 			mc.totBaseDamage = mc.totFireDamage = mc.totColdDamage = mc.totShockDamage = mc.totDarkDamage = 0;
-			mc.totFireDamage = 1;
+			mc.totColdDamage = 1;
 			mc.totShockDamage = 1;
 			/* Run buff effects here */
 			calculateFunctionalStats();
@@ -43,43 +43,63 @@
 					}
 					else{
 						ss += "The "+currentMonsters[i].name+" "+getDamageString(dmgAmt, mc.functionalMaxHP)+" you for <span style='color:"+dmgColor+"'>"+dmgAmt+"</span> damage.<br>";
-						ss += "You are "+getConditionString(mc.functionalMaxHP, mc.hp)+"<br><br>";
+						
 					}
 				}
 				else{
-					ss += "<span style='color:#4A66B4'>The "+currentMonsters[i].name+" lunges at you but you evade the attack.</span><br><br>";
+					ss += "<span style='color:#4A66B4'>The "+currentMonsters[i].name+" lunges at you but you evade the attack.</span><br>";
 				}
-			}
+				if(!isDead && i == currentMonsters.length-1)
+					ss += "You are "+getConditionString(mc.functionalMaxHP, mc.hp)+"<br>";
+			}				
 			return ss;
 		}
 		function applyDamage(x, ss, crit){
 			var monEvasion = ((calcEva(currentMonsters[0].armor, currentMonsters[0].level, 0, 0)/100));
+			var prevDmg = false;
 			if(Math.random() > monEvasion){
+				var totDmg = mc.totBaseDamage + mc.totFireDamage + mc.totColdDamage + mc.totShockDamage + mc.totDarkDamage;
+				if(crit){
+					ss += "You <span style='color:red'>*CRITICALLY HIT*</span> the "+currentMonsters[x].name+" for <span style='font-size:110%'>*"+totDmg+"*</span>(";
+				}
+				else{
+					ss += "Your attack "+getDamageString(totDmg, currentMonsters[x].hp)+" the "+currentMonsters[x].name+" for "+totDmg+" (";
+				}
+
 				if(mc.totBaseDamage > 0){
-					if(crit){
-						ss += "You <span style='color:red'>*CRITICALLY HIT*</span> the "+currentMonsters[x].name+" for <span style='font-size:110%'>*"+mc.totBaseDamage+"*</span> damage.<br>";
-					}
-					else{
-						ss += "Your attack "+getDamageString(mc.totBaseDamage, currentMonsters[x].hp)+" the "+currentMonsters[x].name+" for "+mc.totBaseDamage+" damage.<br>";
-					}
+					ss += mc.totBaseDamage+"";
+					prevDmg = true;
 					currentMonsters[x].currHP -= mc.totBaseDamage;
 				}
 				if(mc.totFireDamage > 0){
-					ss += "Your attack "+getDamageString(mc.totFireDamage, currentMonsters[x].hp)+" the "+currentMonsters[x].name+" for <span style='color:red'>"+mc.totFireDamage+"</span> damage.<br>";
+					if(prevDmg)
+						ss += ",";
+					prevDmg = true;
+					ss += "<span style='color:red'>"+mc.totFireDamage+"</span>";
 					currentMonsters[x].currHP -= mc.totFireDamage;
 				}
 				if(mc.totColdDamage > 0){
-					ss += "Your attack "+getDamageString(mc.totColdDamage, currentMonsters[x].hp)+" the "+currentMonsters[x].name+" for <span style='color:cyan'>"+mc.totColdDamage+"</span> damage.<br>";
+					if(prevDmg)
+						ss += ",";
+					prevDmg = true;
+					ss += "<span style='color:cyan'>"+mc.totColdDamage+"</span>";
 					currentMonsters[x].currHP -= mc.totColdDamage;
 				}
 				if(mc.totShockDamage > 0){
-					ss += "Your attack "+getDamageString(mc.totShockDamage, currentMonsters[x].hp)+" the "+currentMonsters[x].name+" for <span style='color:yellow'>"+mc.totShockDamage+"</span> damage.<br>";
+					if(prevDmg)
+						ss += ",";
+					prevDmg = true;
+					ss += "<span style='color:yellow'>"+mc.totShockDamage+"</span>";
 					currentMonsters[x].currHP -= mc.totShockDamage;
 				}
 				if(mc.totDarkDamage > 0){
-					ss += "Your attack "+getDamageString(mc.totDarkDamage, currentMonsters[x].hp)+" the "+currentMonsters[x].name+" for <span style='color:purple'>"+mc.totDarkDamage+"</span> damage.<br>";
+					if(prevDmg)
+						ss += ",";
+					prevDmg = true;
+					ss += "<span style='color:purple'>"+mc.totDarkDamage+"</span>";
 					currentMonsters[x].currHP -= mc.totDarkDamage;
 				}
+				ss += ") damage.<br>";
 				if(currentMonsters[x].currHP <= 0){
 					ss += monsterDies(currentMonsters[x]);
 					removeMonster(x);

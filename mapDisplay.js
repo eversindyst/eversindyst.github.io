@@ -106,5 +106,5 @@
 		$('#mapOverlay').html(ss);
 	}
 	function showMapOverlay(){
-		$('#mapOverlay').toggle();
+		$('#mapContainer').toggle();
 	}

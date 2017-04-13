@@ -11,6 +11,7 @@
 		<div id="centerField" class="gameWindow">
 			<span id="counter" class="map"></span>
 			<span id="zoneName" class="zoneNameHolder"></span>
+			<span id="bigMap" style="position:absolute;top:0px;left:262px;cursor:hand; background-image:url('art/plsBtn.png'); width:21px;height:21px;" onClick="showMapOverlay()"></span>
 			<div id="combatContainer" class="combatContainer">
 			<div id="combatText" class="combatText"></div>
 			</div>
@@ -39,7 +40,10 @@
 			<span style="position:absolute;bottom:145px;right:0px;color:white;cursor:hand;" onclick="multiLevelEnable()">Level up</span> -->
 			
 		</div>
-		<div id="mapOverlay" class="mapOverlay">
+		<div id="mapContainer" class="mapOverlay">
+			<span id="bigMap" style="position:absolute;top:0px;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onClick="showMapOverlay()"></span>
+			<div id="mapOverlay">
+			</div>
 		</div>
 		<div id="multiclassMenu" class="multiclassMenu">
 		</div>
