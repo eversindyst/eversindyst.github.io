@@ -7,8 +7,8 @@
 		hpRegen : 0,
 		manaRegen : 0,
 		staminaRegen : 0,
-		hp : 100,
-		maxHP : 96,
+		hp : 112,
+		maxHP : 108,
 		hpRPer : .0015,
 		mana : 50,
 		maxMana : 40,
@@ -30,7 +30,7 @@
 		darkDamage : 0,
 		critChnc : 3,
 		critDmg : 140,
-		armor : 5,
+		armor : 10,
 		evasion : 10,
 		flatArmor : 0,
 		flatEvasion : 0,
@@ -91,13 +91,13 @@
 		staminaRegen : 0,
 		hp : 100,
 		maxHP : 96,
-		hpRPer : .0015,
+		hpRPer : .002,
 		mana : 50,
 		maxMana : 40,
-		manaRPer : .00083,
+		manaRPer : .00097,
 		stamina : 150,
 		maxStamina : 141,
-		staminaRPer : .0017,
+		staminaRPer : .0019,
 		strength : 10,	//Every 2 Strength gives 1 base damage. Every 5 Strength gives 1 hp
 		intelligence : 10, //Every 2 Intelligence gives 1% spell damage. Every 5 intelligence gives 2 mana
 		dexterity : 10, //Every 2 agility gives 1 stamina. Every 5 agility gives 1% increase crit, 5% crit damage.
@@ -174,6 +174,17 @@
 		if(mc.stamina >= mc.functionalMaxStamina)
 			mc.stamina = mc.functionalMaxStamina;
 	}
+	function playerRest(){
+		mc.stamina += (mc.staminaRegen*5);
+		if(mc.stamina >= mc.functionalMaxStamina)
+			mc.stamina = mc.functionalMaxStamina;
+	}
+	function deadRegen(){
+		mc.hp += (mc.hpRegen * 4);
+		if(mc.hp >= mc.functionalMaxHP)
+			mc.hp = mc.functionalMaxHP;
+	}
+	
 	function showCharacterStats(){
 		$('#profilePage').toggle();
 	}
@@ -190,31 +201,31 @@
 		$('#evaPerc').text(calcEva(mc.functionalEvasion, mc.level, mc.agility, mc.flatEvasion));
 		$('#resPerc').text(calcRes(mc.functionalResist, mc.level, mc.wisdom, mc.flatResist));
 		$('#statLeech').text(mc.functionalLeech);
-		$('#statHp').text(Math.round(mc.hp));      $('#statMHp').text(mc.functionalMaxHP);
-		$('#statMn').text(Math.round(mc.mana));    $('#statMMn').text(mc.functionalMaxMana);
-		$('#statSt').text(Math.round(mc.stamina)); $('#statMSt').text(mc.functionalMaxStamina);
+		$('#statHp').text(Math.floor(mc.hp));      $('#statMHp').text(mc.functionalMaxHP);
+		$('#statMn').text(Math.floor(mc.mana));    $('#statMMn').text(mc.functionalMaxMana);
+		$('#statSt').text(Math.floor(mc.stamina)); $('#statMSt').text(mc.functionalMaxStamina);
 		$('#hpReg').text(Math.round(mc.hpRegen*100)/100);
 		$('#manaReg').text(Math.round(mc.manaRegen*100)/100);
 		$('#stamReg').text(Math.round(mc.staminaRegen*100)/100);
 		$('#className').text(mc.charClass);
 	}
-	function calcArmor(x, y, z, a){
-		var damReduc = Math.round(((Math.round((x/(x+(50+y*2.5))+z/1000)*10000)/100)+a) * 100)/100;
+	function calcArmor(curVal, targetLevel, statBonus, flatVal){
+		var damReduc = Math.round(((Math.round((curVal/(curVal+(50+targetLevel*2.5))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
 		return damReduc;
 	}
-	function calcEva(x, y, z, a){
-		var damReduc = Math.round(((Math.round((x/(x+(100+y*1.2))+z/1000)*10000)/100)+a) * 100)/100;
+	function calcEva(curVal, targetLevel, statBonus, flatVal){
+		var damReduc = Math.round(((Math.round((curVal/(curVal+(100+targetLevel*1.2))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
 		return damReduc;
 	}
-	function calcRes(x, y, z, a){
-		var damReduc = Math.round(((Math.round((x/(x+(25+y*1.5))+z/1000)*10000)/100)+a) * 100)/100;
+	function calcRes(curVal, targetLevel, statBonus, flatVal){
+		var damReduc = Math.round(((Math.round((curVal/(curVal+(25+targetLevel*1.5))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
 		return damReduc;
 	}
 	function displayStats(){
 	//	$('#counter').text(counter);	
-		$('#currentHP').text(Math.round(mc.hp));
-		$('#currentMana').text(Math.round(mc.mana));
-		$('#currentStamina').text(Math.round(mc.stamina));
+		$('#currentHP').text(Math.floor(mc.hp));
+		$('#currentMana').text(Math.floor(mc.mana));
+		$('#currentStamina').text(Math.floor(mc.stamina));
 		colorizeStats();
 	}
 	function calculateFunctionalStats(){
@@ -276,17 +287,23 @@
 	}
 	function gainXP(x){
 		mc.exp += x;
+		var ss = "";
 		if(mc.exp >= mc.TNL){
-			gainLevel();
+			ss = gainLevel();
 		}
 		$('#expTNL').text(Math.round((mc.exp/mc.TNL)*10000)/100);
+		return ss;
 	}
 	function gainLevel(){
 		mc.level += 1;
 		mc.exp = 0;
-		mc.maxHP = 96 + Math.round(mc.level * 4.3);
-		mc.maxMana = 40 + Math.round(mc.level * 2.4);
-		mc.maxStamina = 141 + Math.round(mc.level * 1.3);
+		var oldHp = mc.maxHP;
+		var oldM = mc.maxMana;
+		var oldS = mc.maxStamina;
+		mc.maxHP = 108 + Math.round(mc.level * 7.3);
+		mc.maxMana = 40 + Math.round(mc.level * 4.4);
+		mc.maxStamina = 141 + Math.round(mc.level * 5.7);
+		var ss = "<span style='color:red'>Ding! Congratulations, you are now level "+mc.level+"<br>You gain "+(mc.maxHP - oldHp)+" Hp, "+(mc.maxMana - oldM)+" Mana, and "+(mc.maxStamina-oldS)+" Stamina.</span><br>";
 		calculateFunctionalStats()
 		mc.hp = mc.functionalMaxHP;
 		mc.mana = mc.functionalMaxMana;
@@ -302,6 +319,7 @@
 				mc.TNL = 4000000 + Math.round((6*(Math.pow(mc.level,3.6))/2));
 			}
 		checkMulticlass();
+		return ss;
 	}
 	
 	/* Each sub/final class needs a perma and temp passive. Along with their own skilllist and talents per level. You can multiclass at level 15 * x (x is classes youv'e been) AKA: first:15. Second:30. Third:45. Fourth:60. Final: 75

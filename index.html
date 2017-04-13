@@ -11,6 +11,9 @@
 		<div id="centerField" class="gameWindow">
 			<span id="counter" class="map"></span>
 			<span id="zoneName" class="zoneNameHolder"></span>
+			<div id="combatContainer" class="combatContainer">
+			<div id="combatText" class="combatText"></div>
+			</div>
 			<div class="statContainer">
 				<div class="expContainer" style="color:#A100A1; margin-left:0px;">
 					<span style="color:#FF00FF">[</span><div id="expTNL" class="expBar" style="margin-right:0;">0</div>%
@@ -27,12 +30,13 @@
 					<div id="currentStamina" class="stamina"></div>stam<span style="color:#FF00FF">]</span>
 				</div>
 			</div>
+			<!--
 			<span style="position:absolute;bottom:0px;right:0px;color:white;cursor:hand;" onclick="newRandomZone()">Click me for random zone!</span>
 			<span style="position:absolute;bottom:30px;right:0px;color:white;cursor:hand;" onclick="changeClass(1)">Mage</span>
 			<span style="position:absolute;bottom:60px;right:0px;color:white;cursor:hand;" onclick="changeClass(0)">Warrior</span>
 			<span style="position:absolute;bottom:90px;right:0px;color:white;cursor:hand;" onclick="changeClass(2)">Rogue</span>
 			<span style="position:absolute;bottom:115px;right:0px;color:white;cursor:hand;" onclick="changeClass(3)">Monk</span>
-			<span style="position:absolute;bottom:145px;right:0px;color:white;cursor:hand;" onclick="multiLevelEnable()">Level up</span>
+			<span style="position:absolute;bottom:145px;right:0px;color:white;cursor:hand;" onclick="multiLevelEnable()">Level up</span> -->
 			
 		</div>
 		<div id="mapOverlay" class="mapOverlay">
@@ -161,4 +165,5 @@
 	<script src="mapMove.js"></script>
 	<script src="terrainDB.js"></script>
 	<script src="multiclass.js"></script>
+	<script src="combat.js"></script>
 </HTML>

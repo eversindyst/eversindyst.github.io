@@ -1,8 +1,8 @@
 	var itemDB = [
-		"0,helmet,Iron Helmet,BaseDamage:-10,,BaseDamage:1;HP:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
-		"1,body,Iron Breastplate Of Destruction + 4,Armor:2,,HP:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
+		"0,helmet,Iron Helmet,BaseDamage:1,,BaseDamage:1;HP:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
+		"1,body,Iron Breastplate,Armor:2,,HP:1;Armor:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
 		"2,gloves,Iron Gloves,Armor:1,,BaseDamage:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
-		"3,gloves,Steel Gloves,Armor:-52;BaseDamage:1,,BaseDamage:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5"
+		"3,gloves,Steel Gloves,Armor:2;BaseDamage:2,,BaseDamage:1;Armor:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5"
 	];
 
 	function getItem(x){
@@ -14,13 +14,13 @@
 	function itemDrop(dropChnc, itemList, maxLoot){
 		var s = [];
 		for(var x=0; x<maxLoot; x++){
-			if(Math.random()*100 <= dropChnc){
+			if(Math.random() <= dropChnc){
 				var dropFlag = false;
 				var items = itemList.split(";");
 				while(!dropFlag){
 					for(var j=0; j<items.length; j++){
 						var t = items[j].split(":");
-						if(Math.random()*100 >= t[1]){
+						if(Math.random() >= t[1]){
 							s.push(t[0]);
 							dropFlag = true;
 						}
