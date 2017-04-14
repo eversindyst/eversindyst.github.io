@@ -187,7 +187,7 @@
 			var elapsedTime = endTime - Date.now();
 			if(elapsedTime < 0){
 				var timesRan = 1+Math.floor(Math.abs(elapsedTime)/(x*1000));
-				console.log(timesRan);
+			//	console.log(timesRan);
 			//	counter += timesRan;
 				for(var i=0; i< timesRan; i++){
 					mainLoop();
