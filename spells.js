@@ -31,7 +31,7 @@
 			}
 		}
 		for(var x=0; x < spellsHolder.length; x++){
-			if(spellHolder[x].name == sn)
+			if(spellsHolder[x].name == sn)
 				flag = true;
 		}
 		return flag;
