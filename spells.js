@@ -193,7 +193,7 @@
 	}
 	function modSkill(x){
 		if(equipSpells["slot"+x] != null){
-			$('#modPage:hidden').toggle();
+			$('#modPage').toggle();
 			var spellHolder = equipSpells["slot"+x];
 			buildSpellMod(spellHolder, x);
 		}
