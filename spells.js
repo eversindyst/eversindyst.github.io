@@ -192,9 +192,11 @@
 		}
 	}
 	function modSkill(x){
-		$('#modPage:hidden').toggle();
-		var spellHolder = equipSpells["slot"+x];
-		buildSpellMod(spellHolder, x);
+		if(equipSpells["slot"+x] != null){
+			$('#modPage:hidden').toggle();
+			var spellHolder = equipSpells["slot"+x];
+			buildSpellMod(spellHolder, x);
+		}
 	}
 	function closeMod(){
 		$('#modPage:visible').toggle();
@@ -226,6 +228,7 @@
 		var spellHolder = equipSpells["slot"+x];
 		equipSpells["slot"+x] = null;
 		spellsHolder.push(spellHolder);
+		closeMod();
 		buildSpellMenuList();
 	}
 	function equipSelectedSpell(x){
