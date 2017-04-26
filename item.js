@@ -27,25 +27,10 @@
 		}
 	}
 	function giveItemXP(item){
-		item.xp += Number(Math.pow(item.xpMult, (item.level-1)) * item.xpGain);
+		item.xp += Math.floor(Number(Math.pow(item.xpMult, (item.level-1)) * item.xpGain));
 		if(item.xp >= 100){
 			item.xp = 0;
 			itemLevelUp(item);
-		}
-	}
-	
-	function calcEQItemStats(){
-		for(var key in bonus){
-			bonus[key] = 0;
-		}
-		for(var key in equipHolder){
-			if(equipHolder[key] != null){
-				var item = equipHolder[key];
-				for(var index=0; index<item.base.length; index++){
-					var statHold = item.base[index].split(":");
-					bonus[statHold[0]] += Number(statHold[1]);
-				}
-			}
 		}
 	}
 	
@@ -56,6 +41,7 @@
 		if(item.level == 6){
 			item.name = item.upgName;
 			item.base = item.upgStats;
+			item.effects = item.upgEffects;
 		}
 		else{
 			item.name = item.baseName+" +"+(item.level-1);
@@ -77,9 +63,15 @@
 			}
 			item.base = base;
 		}
-		calcEQItemStats();
 		if(item.equip)
 			genItemTooltip(item);
+	}
+	function genEquipTooltip(){
+		for(var key in equipHolder){
+			if(equipHolder[key] != null){
+				genItemTooltip(equipHolder[key]);
+			}
+		}
 	}
 	function equipItem(item){
 		if(equipHolder[item.slot] != null)
@@ -87,7 +79,6 @@
 		item.equip = true;
 		equipHolder[item.slot] = item;
 		genItemTooltip(item);
-		calcEQItemStats();
 	}
 	function genItemTooltip(item){
 		var slot = item.slot;
@@ -97,7 +88,7 @@
 	function genTTString(item){
 		var base = item.base
 		var showPositive = "+";
-		var stringBuild = "<span class='tooltip' id='"+item.slot+"TT'><span>Slot: "+item.slot.charAt(0).toUpperCase()+item.slot.slice(1)+"</span><br>";
+		var stringBuild = "<span class='tooltip' id='"+item.slot+"TT'><span>Slot: "+item.slot.charAt(0).toUpperCase()+item.slot.slice(1)+"</span> <span style='position:absolute;right:15%'>Exp: "+item.xp+"%</span><br><br>";
 		for(var index=0; index<base.length; index++){
 			var statHold = base[index].split(":");
 			if(statHold[1] < 0){
@@ -107,12 +98,12 @@
 				showPositive = "+";
 			}
 			switch(statHold[0]){
-				case("Strength"):stringBuild = stringBuild + "<span style='color:grey'>Strength <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
-				case("Intelligence"):stringBuild = stringBuild + "<span style='color:grey'>Intelligence <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
-				case("Dexterity"):stringBuild = stringBuild + "<span style='color:grey'>Dexterity <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
-				case("Endurance"):stringBuild = stringBuild + "<span style='color:grey'>Endurance <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
-				case("Wisdom"):stringBuild = stringBuild + "<span style='color:grey'>Wisdom <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
-				case("Agility"):stringBuild = stringBuild + "<span style='color:grey'>Agility <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Str"):stringBuild = stringBuild + "<span style='color:grey'>Strength <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Int"):stringBuild = stringBuild + "<span style='color:grey'>Intelligence <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Dex"):stringBuild = stringBuild + "<span style='color:grey'>Dexterity <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("End"):stringBuild = stringBuild + "<span style='color:grey'>Endurance <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Wis"):stringBuild = stringBuild + "<span style='color:grey'>Wisdom <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
+				case("Agi"):stringBuild = stringBuild + "<span style='color:grey'>Agility <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
 				case("HP"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max HP <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
 				case("Mana"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max Mana <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
 				case("Stamina"):stringBuild = stringBuild + "<span style='color:#154FAF'>Max Stamina <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"</span></span><br>";break;
@@ -132,6 +123,13 @@
 				case("ShockResist"):stringBuild = stringBuild + "<span style='color:yellow'>Shock Resist <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
 				case("Leech"):stringBuild = stringBuild + "<span style='color:darkred'>Life Leech <span style='position:absolute;right:15%;'>"+showPositive+statHold[1]+"%</span></span><br>";break;
 				
+			}
+		}
+		if(item.effects[0].length > 0){
+			stringBuild += "<br>";
+			for(var x = 0; x < item.effects.length; x++){
+				var effect = item.effects[x].split(":");
+				stringBuild = stringBuild + "<span style='color:#6751D7'>"+effect[0]+"<span style=''><br>"+getEffectString(effect)+"</span></span><br>";break;
 			}
 		}
 		stringBuild = stringBuild + "</span>";
@@ -158,7 +156,6 @@
 			inventoryHolder.push(item);
 			removeItemTT(item);
 			item.equip = false;
-			calcEQItemStats();
 			generateInventory();
 		}
 	}

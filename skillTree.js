@@ -1,0 +1,7 @@
+	var skillTree = {
+	
+	}
+	
+	function checkSkills(){
+		
+	}

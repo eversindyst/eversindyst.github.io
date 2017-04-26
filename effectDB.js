@@ -2,10 +2,10 @@
 		addedDamage : function(dmgPer, type){
 			var dmg = dmgPer/100;
 			switch(type){
-				case("fire"): mc.totFireDamage += Math.floor(Number((mc.functionalBaseDamage * (1+mc.functionalFireDamage/100) * dmg))); break;
-				case("cold"): mc.totColdDamage += Math.floor(Number((mc.functionalBaseDamage * (1+mc.functionalColdDamage/100) * dmg))); break;
-				case("shock"): mc.totShockDamage += Math.floor(Number((mc.functionalBaseDamage * (1+mc.functionalShockDamage/100) * dmg))); break;
-				case("dark"): mc.totDarkDamage += Math.floor(Number((mc.functionalBaseDamage * (1+mc.functionalDarkDamage/100) * dmg))); break;
+				case("fire"): mc.totFireDamage += Math.floor(Number((mc.totBaseDamage * (1+mc.functionalFireDamage/100) * dmg))); break;
+				case("cold"): mc.totColdDamage += Math.floor(Number((mc.totBaseDamage * (1+mc.functionalColdDamage/100) * dmg))); break;
+				case("shock"): mc.totShockDamage += Math.floor(Number((mc.totBaseDamage * (1+mc.functionalShockDamage/100) * dmg))); break;
+				case("dark"): mc.totDarkDamage += Math.floor(Number((mc.totBaseDamage * (1+mc.functionalDarkDamage/100) * dmg))); break;
 			}
 		},
 		statUpBonus : function(stat, val, chnc, dur){
@@ -60,17 +60,35 @@
 	function statTimer(stat, val, MB, dur){
 		var endTime = dur*1000;
 		if(MB == "bonus"){
-			bonus[stat] += Number(val);
+			iBonus[stat] += Number(val);
 		}
 		else{
-			more[stat] *= Number(val);
+			iMore[stat] *= Number(val);
 		}
 		var interval = setTimeout(function() {
 			if(MB == "bonus"){
-				bonus[stat] -= Number(val);
+				iBonus[stat] -= Number(val);
 			}
 			else{
-				more[stat] /= Number(val);
+				iMore[stat] /= Number(val);
 			}
 		}, endTime);
+	}
+	
+	function getEffectString(e){
+		var ss = "";
+		switch(e[1]){
+			case("statUpBonus"):
+				ss = "Attacks have a "+e[4]+"% chance to increase "+getEffectAttribute(e[2])+" by "+e[3]+" for "+e[5]+" seconds"; break;
+			case("addedDamage"):
+				ss = "Attacks deal "+e[2]+"% extra damage as "+e[3]+" damage"; break;
+		}
+		return ss;
+	}
+	function getEffectAttribute(s){
+		var ss = "";
+		switch(s){
+			case("Str"): ss = "Strength"; break;
+		}
+		return ss;
 	}

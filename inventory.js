@@ -24,6 +24,7 @@
 			}
 		}
 		generateInventory();
+		genEquipTooltip();
 	}
 	function equipItemFromInventory(x){
 		if(sellOn){

@@ -68,7 +68,8 @@
 			}	
 		}
 		else{
-			gainLevel();
+			completeZone(zoneHolder.id);
+			unlockZone();
 			newMap()
 			return(zoneHolder.map);
 		}

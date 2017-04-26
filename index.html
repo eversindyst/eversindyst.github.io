@@ -8,17 +8,45 @@
 	</HEAD>
 	<BODY id="gameBackground" style="background-color:black;" onLoad="pageInit()">
 		<div id="worldMapContainer" class="worldMapContainer">
-			<div id="zone0" class="mapNode" style="bottom:40px;left:50px;">
-				<div class="tooltip">
-					Tranquil Forest
-					Level 1
+			<div id="zoneType0" class="zoneType">Forest
+				<div id="zone0" class="mapNode" style="top:5px;left:100px;" onclick="changeZone(0)">
+					<div class="tooltip">
+						Tranquil Forest<br>Level 1
+					</div>
 				</div>
+				<div id="zone5" class="mapNode" style="top:5px;left:120px;" onclick="changeZone(5)">
+					<div class="tooltip">
+						Jungle<br>Level 8
+					</div>
+				</div>
+			</div>
+			<div id="zoneType1" class="zoneType">Field
+				<div id="zone1" class="mapNode" style="top:5px;left:100px;" onclick="changeZone(1)">
+					<div class="tooltip">
+						Dry Field<br>Level 2
+					</div>
+				</div>
+			</div>
+			<div id="zoneType2" class="zoneType">Coast
+			</div>
+			<div id="zoneType3" class="zoneType">Mountain
+			</div>
+			<div id="zoneType4" class="zoneType">Cave
+			</div>
+			<div id="zoneType5" class="zoneType">Sea
+			</div>
+			<div id="zoneType6" class="zoneType">Town
+			</div>
+			<div id="zoneType7" class="zoneType">Castle
+			</div>
+			<div id="zoneType8" class="zoneType">Graveyard
+			</div>
+			<div id="zoneType9" class="zoneType">Tundra
 			</div>
 		</div>
 		<div id="centerField" class="gameWindow">
 			<span id="counter" class="map"></span>
 			<span id="zoneName" class="zoneNameHolder"></span>
-			<span id="bigMap" style="position:absolute;top:0px;left:262px;cursor:hand; background-image:url('art/plsBtn.png'); width:21px;height:21px;" onClick="showMapOverlay()"></span>
 			<div id="combatContainer" class="combatContainer">
 			<div id="combatText" class="combatText"></div>
 			</div>
@@ -79,12 +107,12 @@
 			<div id="eqPanel" class="eqMenu">
 			
 			<span class="statLine">Main Hand: 
-				<span class="eqColumn" id="mhEQ">None
+				<span class="eqColumn" id="mainHandEQ">None
 				</span>
 			</span>
 			<br>
 			<span class="statLine">Off Hand: 
-				<span class="eqColumn" id="ohEQ">None
+				<span class="eqColumn" id="offHandEQ">None
 				</span>
 			</span>
 			<br>
@@ -148,12 +176,31 @@
 			<div id="sortBtn3" class="sortBtn3" onclick="setSort(3)"></div>
 		</div>
 		
+		<div id="skillPage" class="skillMenu">
+			<div id="equipSkills" class="eqSkills">
+				Slot 1:<div id="skill1" class="skillColumn" onClick="removeSpell(1)"></div><span class="modBtn" onclick="modSkill(1)"></span><br><br><br>
+				Slot 2:<div id="skill2" class="skillColumn" onClick="removeSpell(2)"></div><span class="modBtn" onclick="modSkill(2)"></span><br><br><br>
+				Slot 3:<div id="skill3" class="skillColumn" onClick="removeSpell(3)"></div><span class="modBtn" onclick="modSkill(3)"></span>
+			</div>
+			<div id="avaliableSkills" class="availSkills">
+			</div>
+		</div>
+		<div id="modPage" class="modMenu">
+			<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="closeMod()"></span>
+			<div id="modSpellName" class="skillModName"></div>
+			<div id="mod1" style="left:15px;top:50px;" class="skillMod"><div id="mod1Name" class="modName"></div><span id="mod1List" class="modList"></span></div>
+			<div id="mod2" style="left:180px;top:50px;" class="skillMod"><div id="mod2Name" class="modName"></div><div id="mod2List" class="modList"></div></div>
+			<div id="mod3" style="left:15px;top:230px;" class="skillMod"><div id="mod3Name" class="modName"></div><div id="mod3List" class="modList"></div></div>
+			<div id="mod4" style="left:180px;top:230px;" class="skillMod"><div id="mod4Name" class="modName"></div><div id="mod4List" class="modList"></div></div>
+		</div>
+		
 		<div id="menuHold" class="menuHolder">
 			<div id="statMenu" style="cursor:hand; background-image:url('art/statBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showCharacterStats()"></div>
 			<div id="gearMenu" style="cursor:hand; background-image:url('art/gearBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showGearStats()"></div>
 			<div id="mapMenu" style="cursor:hand; background-image:url('art/mapBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showWorldMap()"></div>
+			<span id="bigMap" style="position:absolute;top:54px;left:70px;cursor:hand; background-image:url('art/plsBtn.png'); width:22px;height:22px;" onClick="showMapOverlay()"></span>
 			<div id="multiMenu" style="cursor:hand; background-image:url('art/multiclassBtn.png'); width:67px;height:22px;margin-bottom:5px;display:none;" onClick="showMulticlass()"></div>
-			<div id="skillMenu" style="cursor:hand; background-image:url('art/skillBtn.png'); width:67px;height:22px;margin-bottom:5px;"></div>
+			<div id="skillMenu" style="cursor:hand; background-image:url('art/skillBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showSpells()"></div>
 			<div id="helpMenu" style="cursor:hand; background-image:url('art/helpBtn.png'); width:67px;height:22px;margin-bottom:5px;"></div>
 		</div>
 	</BODY>
@@ -178,4 +225,7 @@
 	<script src="multiclass.js"></script>
 	<script src="combat.js"></script>
 	<script src="worldMap.js"></script>
+	<script src="spellsDB.js"></script>
+	<script src="spells.js"></script>
+	<script src="skillTree.js"></script>
 </HTML>

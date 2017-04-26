@@ -1,12 +1,11 @@
-	function mapItem(map, x, y, mc, t){
+	function mapItem(map, x, y, mc){
 		this.map = map;
 		this.x = x;
 		this.y = y;
 		this.previous = mc;
-		this.terrain = t;
 		this.visited = deepCopyArray(mc);
 	}
-	function generateMap(x, y, terrain){
+	function generateMap(x, y, layout){
 		var moves = [];
 		var maze = [];
 		var mazeCopy = [];
@@ -18,7 +17,7 @@
 				maze[i][j] = 1;
 			}
 		}
-		maze = placeRandomRoom(maze, terrain);
+		maze = placeRandomRoom(maze, layout);
 		var posX = getRandomX(x);
 		var posY = getRandomY(posX, x, y);
 		startingX = posX;
@@ -79,7 +78,7 @@
 		maze = preventSoloMap(maze, startingX, startingY);
 	//	maze = removeCenters(maze);
 	
-		var m = new mapItem(maze, startingX, startingY, mazeCopy, terrain);
+		var m = new mapItem(maze, startingX, startingY, mazeCopy);
 		return m;
 		
 	}
@@ -117,11 +116,11 @@
 		var noOverlap2 = false;
 		switch(t){
 			case("forest"): 
-				freq = .7;
+				freq = .4;
 				sizeX = 4;
-				sizeY = 4;
+				sizeY = 3;
 				fieldType = 4;
-				attempts = Math.floor((maxX*maxY)/(sizeX*sizeY) * .6); break;
+				attempts = Math.floor((maxX*maxY)/(sizeX*sizeY) * .3); break;
 			case("field"): 
 				freq = 1;
 				sizeX = maxX-2;

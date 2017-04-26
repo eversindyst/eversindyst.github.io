@@ -20,7 +20,7 @@
 		intelligence : 10, //Every 2 Intelligence gives 1% spell damage. Every 5 intelligence gives 2 mana
 		dexterity : 10, //Every 2 agility gives 1 stamina. Every 5 agility gives 1% increase crit, 5% crit damage.
 		endurance : 10, //Every 5 endurance gives 1 hp and 1 stamina. Every 10 endurance gives 1% physical damage reduction
-		wisdom : 10,  //Every 5 wisdom gives 2 mana and 1% chance to avoid status effects. Every 10 wisdom gives 1% magical damage reduction
+		wisdom : 10,  //Every 5 wisdom gives 2 mana and 1% chance to avoid status effects. Every 10 wisdom gives 1% resist
 		agility : 10,  //Every 5 agility gives 1 stamina and 1 mana. Every 10 agility gives 1% evasion chance
 		baseDamage : 0,
 		spellDamage : 0,
@@ -40,8 +40,8 @@
 		coldResist : 0,
 		shockResist : 0,
 		leech : 0,
-		charClass : "Warrior",  //warrior, mage, rogue, priest for base classes. Assassin, Illusionist, Berserker, Fencer, Warlock, Shaman, Tactician, Alchemist, Psion, Myrmidon, Shadow, Elementalist other classes. Hero Ninja Sorcerer Avatar as final classes
-		charClassNum : 0,	//warrior 0, mage 1, rogue 2, priest 3. fencer 4. tactician 5. myrmidon 6. assassin 7. alchemist 8. shadow 9. illusionist 10. warlock 11. elementalist 12. berserker 13. shaman 14. psion 15. Hero 16. Ninja 17. Sorcerer 18. Avatar 19
+		charClass : "Warrior",  //warrior, mage, rogue, monk for base classes. Assassin, Illusionist, Berserker, Fencer, Warlock, Shaman, Tactician, Alchemist, Psion, Myrmidon, Shadow, Elementalist other classes. Hero Ninja Sorcerer Avatar as final classes
+		charClassNum : 0,	//warrior 0, mage 1, rogue 2, monk 3. fencer 4. tactician 5. myrmidon 6. assassin 7. alchemist 8. shadow 9. illusionist 10. warlock 11. elementalist 12. berserker 13. shaman 14. psion 15. Hero 16. Ninja 17. Sorcerer 18. Avatar 19
 		baseClassNum : 0,
 		classPath : "0",	//"0,7" = warrior and then assassin
 		classesTaken : 1,
@@ -80,87 +80,13 @@
 	};
 	
 	function resetMC(){
-		var newMC = {
-	
-		level : 1,
-		exp : 0,
-		gold : 0,
-		TNL : 50,
-		hpRegen : 0,
-		manaRegen : 0,
-		staminaRegen : 0,
-		hp : 100,
-		maxHP : 96,
-		hpRPer : .002,
-		mana : 50,
-		maxMana : 40,
-		manaRPer : .00097,
-		stamina : 150,
-		maxStamina : 141,
-		staminaRPer : .0019,
-		strength : 10,	//Every 2 Strength gives 1 base damage. Every 5 Strength gives 1 hp
-		intelligence : 10, //Every 2 Intelligence gives 1% spell damage. Every 5 intelligence gives 2 mana
-		dexterity : 10, //Every 2 agility gives 1 stamina. Every 5 agility gives 1% increase crit, 5% crit damage.
-		endurance : 10, //Every 5 endurance gives 1 hp and 1 stamina. Every 10 endurance gives 1% physical damage reduction
-		wisdom : 10,  //Every 5 wisdom gives 2 mana and 1% chance to avoid status effects. Every 10 wisdom gives 1% magical damage reduction
-		agility : 10,  //Every 5 agility gives 1 stamina and 1 mana. Every 10 agility gives 1% evasion chance
-		baseDamage : 0,
-		spellDamage : 0,
-		fireDamage : 0,
-		coldDamage : 0,
-		shockDamage : 0,
-		darkDamage : 0,
-		critChnc : 3,
-		critDmg : 140,
-		armor : 5,
-		evasion : 10,
-		flatArmor : 0,
-		flatEvasion : 0,
-		flatResist : 0,
-		resist : 5,
-		fireResist : 0,
-		coldResist : 0,
-		shockResist : 0,
-		leech : 0,
-		charClass : "Warrior",  //warrior, mage, rogue, priest for base classes. Assassin, Illusionist, Berserker, Fencer, Warlock, Shaman, Tactician, Alchemist, Psion, Myrmidon, Shadow, Elementalist other classes. Hero Ninja Sorcerer Avatar as final classes
-		charClassNum : 0,	//warrior 0, mage 1, rogue 2, priest 3. fencer 4. tactician 5. myrmidon 6. assassin 7. alchemist 8. shadow 9. illusionist 10. warlock 11. elementalist 12. berserker 13. shaman 14. psion 15. Hero 16. Ninja 17. Sorcerer 18. Avatar 19
-		baseClassNum : 0,
-		classPath : "0",	//"0,7" = warrior and then assassin
-		classesTaken : 1,
+		mc.level = 1;
+		mc.exp = 0;
+		mc.TNL = 50;
+		mc.maxHP = 108;
+		mc.maxMana = 40;
+		mc.maxStamina = 141;
 		
-		totBaseDamage : 0,
-		totFireDamage : 0,
-		totColdDamage : 0,
-		totShockDamage : 0,
-		totDarkDamage : 0,
-		
-		functionalBaseDamage : 0,
-		functionalSpellDamage : 0,
-		functionalFireDamage : 0,
-		functionalColdDamage : 0,
-		functionalShockDamage : 0,
-		functionalDarkDamage : 0,
-		functionalCritChnc : 5,
-		functionalCritDmg : 1.5,
-		functionalArmor : 0,
-		functionalEvasion : 0,
-		functionalResist : 0,
-		functionalFireResist : 0,
-		functionalColdResist : 0,
-		functionalShockResist : 0,
-		functionalLeech : 0,
-		
-		functionalMaxHP : 0,
-		functionalMaxMana : 0,
-		functionalMaxStamina : 0,
-		functionalStrength : 0,
-		functionalIntelligence : 0,
-		functionalDexterity : 0,
-		functionalEndurance : 0,
-		functionalWisdom : 0,
-		functionalAgility : 0
-	};
-	return newMC;
 	}
 	
 	function regen(){
@@ -175,7 +101,7 @@
 			mc.stamina = mc.functionalMaxStamina;
 	}
 	function playerRest(){
-		mc.stamina += (mc.staminaRegen*5);
+		mc.stamina += (mc.staminaRegen*4);
 		if(mc.stamina >= mc.functionalMaxStamina)
 			mc.stamina = mc.functionalMaxStamina;
 	}
@@ -197,9 +123,9 @@
 		$('#statCR').text(mc.functionalColdResist);$('#statSR').text(mc.functionalShockResist);$('#statFD').text(mc.functionalFireDamage);
 		$('#statCD').text(mc.functionalColdDamage);$('#statSD').text(mc.functionalShockDamage);$('#statDD').text(mc.functionalDarkDamage);
 		$('#statGold').text(shortenLargeNumber(mc.gold));$('#statExp').text(shortenLargeNumber((mc.TNL - mc.exp)));
-		$('#armPerc').text(calcArmor(mc.functionalArmor, mc.level, mc.endurance, mc.flatArmor));
-		$('#evaPerc').text(calcEva(mc.functionalEvasion, mc.level, mc.agility, mc.flatEvasion));
-		$('#resPerc').text(calcRes(mc.functionalResist, mc.level, mc.wisdom, mc.flatResist));
+		$('#armPerc').text(calcArmor(mc.functionalArmor, mc.level, mc.functionalEndurance, mc.flatArmor));
+		$('#evaPerc').text(calcEva(mc.functionalEvasion, mc.level, mc.functionalAgility, mc.flatEvasion));
+		$('#resPerc').text(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist));
 		$('#statLeech').text(mc.functionalLeech);
 		$('#statHp').text(Math.floor(mc.hp));      $('#statMHp').text(mc.functionalMaxHP);
 		$('#statMn').text(Math.floor(mc.mana));    $('#statMMn').text(mc.functionalMaxMana);
@@ -210,15 +136,15 @@
 		$('#className').text(mc.charClass);
 	}
 	function calcArmor(curVal, targetLevel, statBonus, flatVal){
-		var damReduc = Math.round(((Math.round((curVal/(curVal+(50+targetLevel*2.5))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
+		var damReduc = Math.round(((Math.round((curVal/(curVal+(100+targetLevel*2.5))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
 		return damReduc;
 	}
 	function calcEva(curVal, targetLevel, statBonus, flatVal){
-		var damReduc = Math.round(((Math.round((curVal/(curVal+(100+targetLevel*1.2))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
+		var damReduc = Math.round(((Math.round((curVal/(curVal+(150+targetLevel*1.2))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
 		return damReduc;
 	}
 	function calcRes(curVal, targetLevel, statBonus, flatVal){
-		var damReduc = Math.round(((Math.round((curVal/(curVal+(25+targetLevel*1.5))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
+		var damReduc = Math.round(((Math.round((curVal/(curVal+(225+targetLevel*2.2))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
 		return damReduc;
 	}
 	function displayStats(){
@@ -229,6 +155,28 @@
 		colorizeStats();
 	}
 	function calculateFunctionalStats(){
+		for(var key in bonus){
+			bonus[key] = 0;
+		}
+		for(var key in more){
+			more[key] = 0;
+		}
+		for(var key in equipHolder){
+			if(equipHolder[key] != null){
+				var item = equipHolder[key];
+				for(var index=0; index<item.base.length; index++){
+					var statHold = item.base[index].split(":");
+					bonus[statHold[0]] += Number(statHold[1]);			
+				}
+			}
+		}
+		for(var key in bonus){
+			bonus[key] += iBonus[key];
+		}
+		for(var key in more){
+			more[key] += iMore[key];
+		}
+
 		mc.functionalStrength = Math.round(Number((mc.strength + bonus["Str"]) * more["Str"]));
 		mc.functionalIntelligence = Math.round(Number((mc.intelligence + bonus["Int"]) * more["Int"]));
 		mc.functionalDexterity = Math.round(Number((mc.dexterity + bonus["Dex"]) * more["Dex"]));
@@ -236,11 +184,11 @@
 		mc.functionalWisdom = Math.round(Number((mc.wisdom + bonus["Wis"]) * more["Wis"]));
 		mc.functionalAgility = Math.round(Number((mc.agility + bonus["Agi"]) * more["Agi"]));
 		mc.functionalMaxHP = Math.round(Number((mc.maxHP + Math.floor((mc.functionalStrength/5) + (mc.functionalEndurance/5))+bonus["HP"])*more["HP"]));
-		mc.functionalMaxMana = Math.round(Number((mc.maxMana + Math.floor(((mc.functionalIntelligence/5)*2) + ((mc.functionalWisdom/5)*2) + (mc.functionalAgility/5))+bonus["Mana"])*more["Mana"]));
-		mc.functionalMaxStamina = Math.round(Number((mc.maxStamina + Math.floor((mc.functionalDexterity/2) + (mc.functionalEndurance/5) + (mc.functionalAgility/5))+bonus["Stamina"])*more["Stamina"]));
-		mc.hpRegen = Math.round(Number((mc.functionalMaxHP * (mc.hpRPer * more["HReg"])))*1000)/1000;
-		mc.manaRegen = Math.round(Number((mc.functionalMaxMana * (mc.manaRPer * more["MReg"])))*1000)/1000;
-		mc.staminaRegen = Math.round(Number((mc.functionalMaxStamina * (mc.staminaRPer * more["SReg"])))*1000)/1000;
+		mc.functionalMaxMana = Math.round(Number((mc.maxMana + Math.floor(((mc.functionalIntelligence/5)*2) + ((mc.functionalWisdom/5)*2))+bonus["Mana"])*more["Mana"]));
+		mc.functionalMaxStamina = Math.round(Number((mc.maxStamina + Math.floor((mc.functionalDexterity/2)  + (mc.functionalAgility/5))+bonus["Stamina"])*more["Stamina"]));
+		mc.hpRegen = Math.round(Number((mc.functionalMaxHP * (mc.hpRPer * more["HReg"] * (1+(mc.functionalEndurance/100)))))*1000)/1000;
+		mc.manaRegen = Math.round(Number((mc.functionalMaxMana * (mc.manaRPer * more["MReg"] * (1+(mc.functionalWisdom/100)))))*1000)/1000;
+		mc.staminaRegen = Math.round(Number((mc.functionalMaxStamina * (mc.staminaRPer * more["SReg"] * (1+(mc.functionalAgility/100)))))*1000)/1000;
 		
 		mc.functionalBaseDamage = Math.round(Number((mc.baseDamage + Math.floor(mc.functionalStrength/2) + bonus["BaseDamage"])*more["BaseDamage"]));
 		mc.functionalSpellDamage = Math.round(Number((mc.spellDamage + Math.floor(mc.functionalIntelligence/2) + bonus["SpellDamage"])*more["SpellDamage"]));
@@ -289,7 +237,9 @@
 		mc.exp += x;
 		var ss = "";
 		if(mc.exp >= mc.TNL){
+			x= mc.exp - mc.TNL
 			ss = gainLevel();
+			gainXP(x);
 		}
 		$('#expTNL').text(Math.round((mc.exp/mc.TNL)*10000)/100);
 		return ss;
@@ -303,7 +253,7 @@
 		mc.maxHP = 108 + Math.round(mc.level * 7.3);
 		mc.maxMana = 40 + Math.round(mc.level * 4.4);
 		mc.maxStamina = 141 + Math.round(mc.level * 5.7);
-		var ss = "<span style='color:red'>Ding! Congratulations, you are now level "+mc.level+"<br>You gain "+(mc.maxHP - oldHp)+" Hp, "+(mc.maxMana - oldM)+" Mana, and "+(mc.maxStamina-oldS)+" Stamina.</span><br>";
+		var ss = "<br><span style='color:red'>Ding! Congratulations, you are now level "+mc.level+"<br>You gain "+(mc.maxHP - oldHp)+" Hp, "+(mc.maxMana - oldM)+" Mana, and "+(mc.maxStamina-oldS)+" Stamina.</span><br>";
 		calculateFunctionalStats()
 		mc.hp = mc.functionalMaxHP;
 		mc.mana = mc.functionalMaxMana;
@@ -319,6 +269,7 @@
 				mc.TNL = 4000000 + Math.round((6*(Math.pow(mc.level,3.6))/2));
 			}
 		checkMulticlass();
+		getPlayerSpells();
 		return ss;
 	}
 	

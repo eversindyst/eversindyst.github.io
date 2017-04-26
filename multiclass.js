@@ -1,5 +1,5 @@
 	function checkMulticlass(){
-		if(mc.level >= mc.classesTaken * 15){
+		if(mc.level >= 40){
 			if(mc.charClassNum < 16)
 				showMulticlassBtn();
 		}
@@ -108,7 +108,7 @@
 				case(8):stringBuild = stringBuild + "8)'> Alchemist <span class='tooltip'>"+
 				"Base class: Rogue<br>Crazed and resilient, the Alchemist brews deadly and helpful concoctions to assault his foes and benefit itself."+
 				"<br><br>Selecting this class will grant the following:<br><br>"+
-				"<span style='color:lightblue'>+Using a kill has a 20% chance to use a random potion</span><br>"+
+				"<span style='color:lightblue'>+Using a skill has a 20% chance to use a random potion</span><br>"+
 				"<span style='color:lightgreen'>+Increases the damage reduction from Resist by 5%</span></span>";break;
 				case(9):stringBuild = stringBuild + "9)'> Shadow <span class='tooltip'>"+
 				"Base class: Rogue<br>With a deep background in the elements, the Shadow is able to delve deeper and reach the power of Darkness."+
@@ -167,7 +167,7 @@
 		}
 		var costColor = 'red';
 		var multiCost = getMultiCost();
-		if(multiCost < mc.gold){
+		if(multiCost <= mc.gold){
 			costColor = 'green';
 		}
 		stringBuild = stringBuild + "<br><br><br>It will cost you <span style='color:"+costColor+";'>"+shortenLargeNumber(multiCost)+"</span> Platinum to multiclass.</div>";
@@ -177,27 +177,47 @@
 		return Number(mc.classesTaken * 250000);
 	}
 	function selectMulticlass(x){
-		mc.charClassNum = x;
-		mc.classPath += ","+x;
-		mc.classesTaken += 1;
-		switch(x){
-			case(4): mc.charClass = "Fencer"; mc.baseClassNum = 0; mc.flatArmor += 5; break;
-			case(5): mc.charClass = "Tactician"; mc.baseClassNum = 0; more["Mana"] *= 1.1; break;
-			case(6): mc.charClass = "Myrmidon"; mc.baseClassNum = 0; mc.critChnc += 3; break;
-			case(7): mc.charClass = "Assassin"; mc.baseClassNum = 2; mc.critDmg += 25; break;
-			case(8): mc.charClass = "Alchemist"; mc.baseClassNum = 2; mc.flatResist += 5; break;
-			case(9): mc.charClass = "Shadow"; mc.baseClassNum = 2; more["Stamina"] *= 1.1; break;
-			case(10): mc.charClass = "Illusionist"; mc.baseClassNum = 1; mc.flatEvasion += 5; break;
-			case(11): mc.charClass = "Warlock"; mc.baseClassNum = 1; more["HP"] *= 1.1; break;
-			case(12): mc.charClass = "Elementalist"; mc.baseClassNum = 1; mc.fireResist += 5; mc.coldResist += 5; mc.shockResist += 5;break;
-			case(13): mc.charClass = "Berserker"; mc.baseClassNum = 3; mc.leech += 2; break;
-			case(14): mc.charClass = "Shaman"; mc.baseClassNum = 3; more["Stamina"] *= 1.03; more["Mana"] *= 1.03; more["HP"] *= 1.03; break;
-			case(15): mc.charClass = "Psion"; mc.baseClassNum = 3; mc.flatEvasion += 1.5; mc.flatArmor += 1.5; mc.flatResist += 1.5; break;
-			case(16): mc.charClass = "Hero"; mc.baseClassNum = 0; more["BaseDamage"] *= 1.15; break;
-			case(17): mc.charClass = "Ninja"; mc.baseClassNum = 2; more["CritDmg"] *= 1.1; break;
-			case(18): mc.charClass = "Sorcerer"; mc.baseClassNum = 1; more["SpellDamage"] *= 1.2; break;
-			case(19): mc.charClass = "Avatar"; mc.baseClassNum = 3; more["FireDamage"] *= 1.1; more["ColdDamage"] *= 1.1; more["ShockDamage"] *= 1.1; break;
+		var mcCost = getMultiCost();
+		if(mc.gold >= mcCost){
+			mc.gold -= mcCost;
+			mc.charClassNum = x;
+			mc.classPath += ","+x;
+			mc.classesTaken += 1;
+			switch(x){
+				case(4): mc.charClass = "Fencer"; mc.baseClassNum = 0; mc.flatArmor += 5; break;
+				case(5): mc.charClass = "Tactician"; mc.baseClassNum = 0; iMore["Mana"] *= 1.1; break;
+				case(6): mc.charClass = "Myrmidon"; mc.baseClassNum = 0; mc.critChnc += 3; break;
+				case(7): mc.charClass = "Assassin"; mc.baseClassNum = 2; mc.critDmg += 25; break;
+				case(8): mc.charClass = "Alchemist"; mc.baseClassNum = 2; mc.flatResist += 5; break;
+				case(9): mc.charClass = "Shadow"; mc.baseClassNum = 2; iMore["Stamina"] *= 1.1; break;
+				case(10): mc.charClass = "Illusionist"; mc.baseClassNum = 1; mc.flatEvasion += 5; break;
+				case(11): mc.charClass = "Warlock"; mc.baseClassNum = 1; iMore["HP"] *= 1.1; break;
+				case(12): mc.charClass = "Elementalist"; mc.baseClassNum = 1; mc.fireResist += 5; mc.coldResist += 5; mc.shockResist += 5;break;
+				case(13): mc.charClass = "Berserker"; mc.baseClassNum = 3; mc.leech += 2; break;
+				case(14): mc.charClass = "Shaman"; mc.baseClassNum = 3; iMore["Stamina"] *= 1.03; iMore["Mana"] *= 1.03; iMore["HP"] *= 1.03; break;
+				case(15): mc.charClass = "Psion"; mc.baseClassNum = 3; mc.flatEvasion += 1.5; mc.flatArmor += 1.5; mc.flatResist += 1.5; break;
+				case(16): mc.charClass = "Hero"; mc.baseClassNum = 0; iMore["BaseDamage"] *= 1.15; break;
+				case(17): mc.charClass = "Ninja"; mc.baseClassNum = 2; iMore["CritDmg"] *= 1.1; break;
+				case(18): mc.charClass = "Sorcerer"; mc.baseClassNum = 1; iMore["SpellDamage"] *= 1.2; break;
+				case(19): mc.charClass = "Avatar"; mc.baseClassNum = 3; iMore["FireDamage"] *= 1.1; iMore["ColdDamage"] *= 1.1; iMore["ShockDamage"] *= 1.1; break;
+			}
+			$('#multiMenu:visible').toggle();
+			$('#multiclassMenu:visible').toggle();
+			changeClass();
 		}
-		$('#multiMenu:visible').toggle();
-		$('#multiclassMenu:visible').toggle();
+	}
+	function loadMultiClass(){
+		var classHolder = mc.classPath.split(",");
+		for(var x=0; x < classHolder.length; x++){
+			switch(Number(classHolder[x])){
+				case(5):iMore["Mana"] *= 1.1; break;
+				case(9):iMore["Stamina"] *= 1.1; break;
+				case(11):iMore["HP"] *= 1.1; break;
+				case(14):iMore["Stamina"] *= 1.03; iMore["Mana"] *= 1.03; iMore["HP"] *= 1.03; break;
+				case(16):iMore["BaseDamage"] *= 1.15; break;
+				case(17):iMore["CritDmg"] *= 1.1; break;
+				case(18):iMore["SpellDamage"] *= 1.2; break;
+				case(19):iMore["FireDamage"] *= 1.1; iMore["ColdDamage"] *= 1.1; iMore["ShockDamage"] *= 1.1; break;
+			}
+		}
 	}

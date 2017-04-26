@@ -3,7 +3,7 @@
 		var a = m.map;
 		var x = m.x;
 		var y = m.y;
-		var terrain = m.terrain;
+		var terrain = zoneHolder.terrain;
 		var displayString = terrainDB[terrain].split("!");
 		var ss = "";
 		var maxX = a.length;
@@ -21,13 +21,6 @@
 		var unMoveColor = displayString[2];
 		var moveableColor = displayString[3];
 		
-		
-		if(startingLine < 0){
-			startingLine = 0;
-		}
-		if(startingLineY < 0){
-			startingLineY = 0;
-		}
 		if(underX < 0){
 			midLines += underX;
 		}
@@ -42,6 +35,12 @@
 		if(overY > 0){
 			innerSpace -= (overY);
 			startingLineY = (y - (maxY-y+overY) +1);
+		}
+		if(startingLine < 0){
+			startingLine = 0;
+		}
+		if(startingLineY < 0){
+			startingLineY = 0;
 		}
 		debugStats = "x: "+x+" y: "+y+" underX: "+underX+" overX: "+overX+" overY: "+overY+" underY: "+underY+" midLines: "+midLines+" innerSpace: "+innerSpace+" starting: "+startingLine+" startingY: "+startingLineY;
 		for(var i=0; i< (0-underX); i++){
@@ -79,7 +78,7 @@
 		var a = m.map;
 		var maxX = a.length;
 		var maxY = a[0].length;
-		var terrain = m.terrain;
+		var terrain = zoneHolder.terrain;
 		var displayString = terrainDB[terrain].split("!");
 		var unMove = displayString[0];
 		var moveable = displayString[1];

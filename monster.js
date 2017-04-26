@@ -59,7 +59,7 @@
 		var lvlDiff = Math.max(Math.abs(mc.level-monster.level) - (4+(mc.level/16)),0);
 		var xpMult = Math.max(Math.pow(((mc.level + 5)/(mc.level+5+Math.pow(lvlDiff,2.5))),1.5),0.01);
 		var totalXp = Math.floor(monster.xp * xpMult);
-		ss += "<span style='color:red'>The "+monster.name+" is dead!</span><br><span style='color:green'>You earn "+totalXp+" experience points!<br>You earn "+monster.gold+" Platinum!</span><br>";
+		ss += "<span style='color:red'>The "+monster.name+" is dead!</span><br><span style='color:green'>You earn "+totalXp+" experience points!<br>You earn "+monster.gold+" Platinum!</span>";
 		mc.gold += Math.round(Number(monster.gold));
 		ss += gainXP(totalXp);
 		return ss;
