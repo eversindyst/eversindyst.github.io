@@ -33,7 +33,7 @@
 		}
 	};
 	var spellList = {
-		Warrior : "1:Kick",
+		Warrior : "1:Kick,2:Fireball",
 		Mage : "1:Fireball",
 		Rogue : "",
 		Monk : ""
