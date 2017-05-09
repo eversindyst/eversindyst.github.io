@@ -31,6 +31,9 @@
 		this.maxLoot = Number(s[27]);
 		this.gold = Number(s[28]);
 		this.ggold = Number(s[29]);
+		this.stun = 0;
+		this.weak = 0;
+		this.vuln = 0;
 		
 		
 		
@@ -54,6 +57,7 @@
 		this.levelUp(s[24]);
 	}
 	function monsterDies(monster){
+		mobKilled += 1;
 		var ss = "";
 		itemDrop(monster.dropChnc, monster.itemList, monster.maxLoot);
 		var lvlDiff = Math.max(Math.abs(mc.level-monster.level) - (4+(mc.level/16)),0);

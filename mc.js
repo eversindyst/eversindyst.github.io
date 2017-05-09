@@ -1,5 +1,6 @@
 	var mc = {
 	
+		skillsRemain : 0,
 		level : 1,
 		exp : 0,
 		gold : 0,
@@ -87,6 +88,13 @@
 		mc.maxMana = 40;
 		mc.maxStamina = 141;
 		
+		for(var key in cBonus){
+			cBonus[key] = 0;
+		}
+		for(var key in cMore){
+			cMore[key] = 1;
+		}
+		
 	}
 	
 	function regen(){
@@ -159,7 +167,7 @@
 			bonus[key] = 0;
 		}
 		for(var key in more){
-			more[key] = 0;
+			more[key] = 1;
 		}
 		for(var key in equipHolder){
 			if(equipHolder[key] != null){
@@ -171,10 +179,10 @@
 			}
 		}
 		for(var key in bonus){
-			bonus[key] += iBonus[key];
+			bonus[key] = bonus[key] + iBonus[key] + cBonus[key];
 		}
 		for(var key in more){
-			more[key] += iMore[key];
+			more[key] = more[key] * iMore[key] * cMore[key];
 		}
 
 		mc.functionalStrength = Math.round(Number((mc.strength + bonus["Str"]) * more["Str"]));
@@ -263,13 +271,15 @@
 			mc.TNL = 50 + Math.round((4*(Math.pow(mc.level,3))/5));
 		}
 		else if(mc.level < 60){
-				mc.TNL = 10000 + Math.round((4*(Math.pow(mc.level,3.2))/4));
+				mc.TNL = 10000 + Math.round((4*(Math.pow(mc.level,3.2))/3.5));
 			}
 			else{
-				mc.TNL = 4000000 + Math.round((6*(Math.pow(mc.level,3.6))/2));
+				mc.TNL = 4000000 + Math.round((6*(Math.pow(mc.level,3.6))/1.5));
 			}
 		checkMulticlass();
 		getPlayerSpells();
+		mc.skillsRemain += 1;
+		handleSkillBtn();
 		return ss;
 	}
 	

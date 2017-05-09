@@ -1,14 +1,33 @@
 	var spellDB = {
 		Fireball: function(s){
 			var ss = "";
-			var dmg = spellDMGDB[s.name](s);	
-			mc.totFireDamage = dmg;
+			if(mc.mana >= s.mCost){
+				mc.mana -= s.mCost;
+				var dmg = spellDMGDB[s.name](s);	
+				mc.totFireDamage = dmg;
+			}
+			else{
+				ss = "<span style='color:#266A69'>FIZZZZ- You do not have enough mana to cast Fireball</span>";
+			}
+			
 			return ss;
 		},
 		Kick: function(s){
 			var ss = "";
-			var dmg = spellDMGDB[s.name](s);
-			mc.totBaseDamage = dmg;
+			if(mc.stamina >= s.sCost){
+				mc.stamina -= s.sCost;
+				var dmg = spellDMGDB[s.name](s);
+				mc.totBaseDamage = dmg;
+				stun_g = .5;
+				stunDur_g = 2;
+				weak_g = .5;
+				weakDur_g = 1;
+				vuln_g = .5;
+				vulnDur_g = 2;
+			}
+			else{
+				ss = "<span style='color:#266A69'>You try but you do not have enough stamina to Kick</span>";
+			}
 			return ss;
 		}
 	};

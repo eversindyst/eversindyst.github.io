@@ -77,7 +77,7 @@
 		vertical-align: bottom;
 		overflow:scroll;
 	}
-	.multiclassMenu{
+	.multiHolder{
 		position:absolute;
 		top:40%;
 		left:50%;
@@ -86,12 +86,18 @@
 		width:800px;
 		height:600px;
 		border: 1px solid white;
-		color:white;
 		white-space: pre-wrap;
-		display:none;
 		cursor:default;
 		background-color:black;
-		z-index:5;
+		display:none;
+	}
+	.multiclassMenu{
+		position:absolute;
+		display:none;
+		width:800px;
+		height:600px;
+		color:white;
+
 	}
 	.multiclassHolder{
 		position:absolute;
@@ -509,6 +515,84 @@
 		color:red;
 	}
 	
+	.skillTreeHolder{
+		position:absolute;
+		top:40%;
+		left:800px;
+		margin-top:-250px;
+		margin-left:-400px;
+		width:800px;
+		height:600px;
+		border: 1px solid white;
+		white-space: pre-wrap;
+		cursor:default;
+		background-color:black;
+		display:none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+	}
+	.skillTree{
+		position:absolute;
+		display:none;
+		width:800px;
+		height:600px;
+		color:white;
+
+	}
+	.skillLineHolder{
+		position:absolute;
+		text-align:center;
+		font-size:150%;
+		width:800px;
+		
+	}
+	.skillTreeList{
+		display:inline-block;
+		position:relative;
+		text-align:left;
+		font-size: 140%;
+		margin-left:40px;
+		cursor:hand;
+		
+	}
+	.skillTreeList .tooltip{
+		position:absolute;
+		visibility:hidden;
+		width:200px;
+		background-color: black;
+		border: solid 1px white;
+		color: #fff;
+		font-size: 15px;
+		bottom:-40px;
+		left:0px;
+		z-index: 1;
+	}
+	.skillTreeList:hover .tooltip{
+		visibility:visible;
+	}
+	.helpMenu{
+		position:absolute;
+		width:1150px;
+		height:700px;
+		overflow-y:scroll;
+		color:white;
+		top:5px;
+		left:5px;
+		border: 1px solid white;
+		background-color: black;
+		z-index:10;
+	}
+	summary:: -webkit-details-marker{
+		color:blue;
+		
+	}
+	summary{
+		cursor:hand;
+		font-size:150%;
+	}
+	summary:focus{
+		outline-style:none;
+	}
 	::-webkit-scrollbar {
 		display:none;
 	}

@@ -5,7 +5,8 @@
 		"Coastal Ledge,5,0,.15,ledge,none,1,.2,1.1,ledge,3",
 		"Cliffs,7,0,.1,edge,none,1,.2,1.5,edge,4",
 		"Jungle,8,0,.22,jungle,none,2,.35,2,jungle,5",
-		"City of Zaath,12,0,.1,town,none,1,.1,.5,town,6"
+		"City of Zaath,12,0,.1,town,none,1,.1,.5,town,6",
+		"Death's Domain,99,0,.3,edge,none,1,.1,.5,town,7"
 	]
 	var mapCompletion = [];
 	var mapUnlock = [];

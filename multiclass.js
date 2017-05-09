@@ -8,8 +8,9 @@
 		$('#multiMenu:hidden').toggle();
 	}
 	function showMulticlass(){
-		$('#multiclassMenu').toggle();
-		if($('#multiclassMenu').is(":visible")){
+		$('#multiClassHolder').toggle();
+		if($('#multiClassHolder').is(":visible")){
+			$('#multiclassMenu:hidden').toggle();
 			showMulticlassOptions();
 		}
 	}
@@ -202,6 +203,7 @@
 				case(19): mc.charClass = "Avatar"; mc.baseClassNum = 3; iMore["FireDamage"] *= 1.1; iMore["ColdDamage"] *= 1.1; iMore["ShockDamage"] *= 1.1; break;
 			}
 			$('#multiMenu:visible').toggle();
+			$('#multiclassHolder:visible').toggle();
 			$('#multiclassMenu:visible').toggle();
 			changeClass();
 		}

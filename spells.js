@@ -41,7 +41,7 @@
 		var spellHolder;
 		switch(sn){
 			case("Fireball") : spellHolder = new spell("Fireball",3,3,0,7,1,40,2); break;
-			case("Kick") : spellHolder = new spell("Kick",1,0,2,1,.8,10,2.75); break;
+			case("Kick") : spellHolder = new spell("Kick",1,0,2,1,.8,70,2.75); break;
 		}
 		return spellHolder;
 	}

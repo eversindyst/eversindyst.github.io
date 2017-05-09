@@ -1,7 +1,14 @@
+		var stun_g;
+		var weak_g;
+		var vuln_g;
+		var stunDur_g;
+		var weakDur_g;
+		var vulnDur_g;
+		
 		function doCombat(){
 			var ss = "<br><hr>";
 			var pCrit = false;
-			mc.totBaseDamage = mc.totFireDamage = mc.totColdDamage = mc.totShockDamage = mc.totDarkDamage = 0;
+			mc.totBaseDamage = mc.totFireDamage = mc.totColdDamage = mc.totShockDamage = mc.totDarkDamage = stun_g = weak_g = vuln_g = stunDur_g = weakDur_g = vulnDur_g = 0;
 		//	mc.totFireDamage = mc.totColdDamage = mc.totShockDamage = 50;
 			/* Run buff effects here */
 			doStatEffects();
@@ -24,7 +31,8 @@
 				displayStats();
 				var monEvasion = ((calcEva(currentMonsters[0].armor, currentMonsters[0].level, 0, 0)/100));
 				if(Math.random() > monEvasion){
-					ss += applyDamage(0, pCrit, "attack");
+					mc.hp += mc.totBaseDamage * (mc.functionalLeech/100);
+					ss += applyDamage(0, pCrit, "Attack");
 				}
 				else{
 					ss += "<span style='color:#4A66B4'>The "+currentMonsters[0].name+"(1) swifty dodges your attack.</span><br>";
@@ -59,6 +67,20 @@
 									mc.totShockDamage = Math.round((mc.totShockDamage  + Math.round(Math.random()*(mc.totShockDamage*2.8)+1) - Math.round(Math.random()*(mc.totShockDamage*.95)+1)) * (1-(currentMonsters[x].shockResist/100)) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100)));
 									
 									ss += applyDamage(x, pCrit, spell.name);
+									if(currentMonsters[x].currHP > 0){
+										if(stun_g > Math.random()){
+											currentMonsters[x].stun = stunDur_g;
+											ss += "<span style='color:#04B1AE'>The "+currentMonsters[x].name+" is stunned by your "+spell.name+"</span><br>";
+										}
+										if(weak_g > Math.random()){
+											currentMonsters[x].weak = weakDur_g;
+											ss += "<span style='color:#9DC912'>The "+currentMonsters[x].name+" is weakened by your "+spell.name+"</span><br>";
+										}
+										if(vuln_g > Math.random()){
+											currentMonsters[x].vuln = vulnDur_g;
+											ss += "<span style='color:#B40800'>The vulnerability of the "+currentMonsters[x].name+" is exposed by your "+spell.name+"</span><br>";
+										}
+									}
 								}
 							}
 							for(var x=0; x < spell.targets; x++){
@@ -84,41 +106,50 @@
 			if(currentMonsters.length > 0)
 				ss += "<br>";
 			for(var i = 0; i < currentMonsters.length; i++){
-				var dmgAmt = currentMonsters[i].damage;
-				var dmgType = currentMonsters[i].dmgType;
-				var dmgColor = "white";
-				var eva = calcEva(mc.functionalEvasion, mc.level, mc.agility, mc.flatEvasion);
-				if(Math.random()*100 > eva){
-					switch(dmgType){
-						case("base"):dmgColor = "white";
-						dmgAmt = Math.floor((dmgAmt + Math.round(Math.random()*(dmgAmt*.3)+1) - Math.round(Math.random()*(dmgAmt*.3)+1)) * (1-(calcArmor(mc.functionalArmor, mc.level, mc.functionalEndurance, mc.flatArmor)/100)) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100)));break;
-						case("fire"):dmgColor = "red"; 
-						dmgAmt = Math.floor((dmgAmt * (1+(dmgAmt/mc.functionalMaxHP))) * (1-(mc.functionalFireResist/100)) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100))); break;
-						case("cold"):dmgColor = "cyan"; 
-						dmgAmt = Math.floor(.8 * (dmgAmt * (1-((mc.functionalColdResist -(dmgAmt/mc.functionalMaxHP*100))/100))) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100))); break;
-						case("shock"):dmgColor = "yellow"; 
-						dmgAmt = Math.floor((dmgAmt  + Math.round(Math.random()*(dmgAmt*2.8)+1) - Math.round(Math.random()*(dmgAmt*.95)+1)) * (1-(mc.functionalShockResist/100)) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100))); break;
-						case("dark"):dmgColor = "purple"; break;
+				if(currentMonsters[i].vuln > 0)
+					currentMonsters[i].vuln -= 1;
+				if(currentMonsters[i].stun <= 0){
+					var dmgAmt = currentMonsters[i].damage;
+					var dmgType = currentMonsters[i].dmgType;
+					var dmgColor = "white";
+					var eva = calcEva(mc.functionalEvasion, mc.level, mc.agility, mc.flatEvasion);
+					if(currentMonsters[i].weak > 0){
+						dmgAmt = Math.floor(dmgAmt/2);
+						currentMonsters[i].weak -= 1;
 					}
-					if(dmgType == "base"){
-						
-					}
-					mc.hp -= dmgAmt;
-					if(mc.hp < 1){
-						ss += "<span style='color:red'>With a savage hit, the "+currentMonsters[i].name+"("+(i+1)+") snaps your neck, killing you.</span><br>";
-						i = currentMonsters.length;
-						isDead = true;
+					if(Math.random()*100 > eva){
+						switch(dmgType){
+							case("base"):dmgColor = "white";
+							dmgAmt = Math.floor((dmgAmt + Math.round(Math.random()*(dmgAmt*.3)+1) - Math.round(Math.random()*(dmgAmt*.3)+1)) * (1-(calcArmor(mc.functionalArmor, mc.level, mc.functionalEndurance, mc.flatArmor)/100)) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100)));break;
+							case("fire"):dmgColor = "red"; 
+							dmgAmt = Math.floor((dmgAmt * (1+(dmgAmt/mc.functionalMaxHP))) * (1-(mc.functionalFireResist/100)) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100))); break;
+							case("cold"):dmgColor = "cyan"; 
+							dmgAmt = Math.floor(.8 * (dmgAmt * (1-((mc.functionalColdResist -(dmgAmt/mc.functionalMaxHP*100))/100))) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100))); break;
+							case("shock"):dmgColor = "yellow"; 
+							dmgAmt = Math.floor((dmgAmt  + Math.round(Math.random()*(dmgAmt*2.8)+1) - Math.round(Math.random()*(dmgAmt*.95)+1)) * (1-(mc.functionalShockResist/100)) * (1-(calcRes(mc.functionalResist, mc.level, mc.functionalWisdom, mc.flatResist)/100))); break;
+							case("dark"):dmgColor = "purple"; break;
+						}
+						mc.hp -= dmgAmt;
+						if(mc.hp < 1){
+							ss += "<span style='color:red'>With a savage hit, the "+currentMonsters[i].name+"("+(i+1)+") snaps your neck, killing you.</span><br>";
+							i = currentMonsters.length;
+							isDead = true;
+						}
+						else{
+							ss += "The "+currentMonsters[i].name+"("+(i+1)+") "+getDamageString(dmgAmt, mc.functionalMaxHP)+" you for <span style='color:"+dmgColor+"'>"+dmgAmt+"</span> damage.<br>";
+							
+						}
 					}
 					else{
-						ss += "The "+currentMonsters[i].name+"("+(i+1)+") "+getDamageString(dmgAmt, mc.functionalMaxHP)+" you for <span style='color:"+dmgColor+"'>"+dmgAmt+"</span> damage.<br>";
-						
+						ss += "<span style='color:#4A66B4'>The "+currentMonsters[i].name+"("+(i+1)+") lunges at you but you evade the attack.</span><br>";
 					}
+					if(!isDead && i == currentMonsters.length-1)
+						ss += "You are "+getConditionString(mc.functionalMaxHP, mc.hp)+"";
 				}
 				else{
-					ss += "<span style='color:#4A66B4'>The "+currentMonsters[i].name+"("+(i+1)+") lunges at you but you evade the attack.</span><br>";
+					ss += "<span style='color:#04B1AE'>The "+currentMonsters[i].name+" is stunned</span><br>";
+					currentMonsters[i].stun -= 1;
 				}
-				if(!isDead && i == currentMonsters.length-1)
-					ss += "You are "+getConditionString(mc.functionalMaxHP, mc.hp)+"";
 			}				
 			return ss;
 		}
@@ -126,6 +157,13 @@
 		function applyDamage(x, crit, attStr){
 			var ss = "";
 			var prevDmg = false;
+			if(currentMonsters[x].vuln > 0){
+				mc.totBaseDamage = Math.floor(mc.totBaseDamage * 1.5);
+				mc.totFireDamage = Math.floor(mc.totFireDamage * 1.5);
+				mc.totColdDamage = Math.floor(mc.totColdDamage * 1.5);
+				mc.totShockDamage = Math.floor(mc.totShockDamage * 1.5);
+				mc.totDarkDamage = Math.floor(mc.totDarkDamage * 1.5);
+			}
 			
 			var totDmg = mc.totBaseDamage + mc.totFireDamage + mc.totColdDamage + mc.totShockDamage + mc.totDarkDamage;
 			if(crit){
@@ -168,7 +206,7 @@
 				ss += "<span style='color:purple'>"+mc.totDarkDamage+"</span>";
 				currentMonsters[x].currHP -= mc.totDarkDamage;
 			}
-			ss += ") damage.<br>";
+			ss += ") damage<br>";
 			
 			return ss;
 		}

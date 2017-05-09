@@ -117,8 +117,8 @@
 		switch(t){
 			case("forest"): 
 				freq = .4;
-				sizeX = 4;
-				sizeY = 3;
+				sizeX = Math.min(maxX-2, 4);
+				sizeY = Math.min(maxY-2, 3);
 				fieldType = 4;
 				attempts = Math.floor((maxX*maxY)/(sizeX*sizeY) * .3); break;
 			case("field"): 

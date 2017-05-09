@@ -1,4 +1,7 @@
 <HTML>
+	<Title>
+		Argtura
+	</Title>
 	<HEAD>
 	<meta http-equiv='cache-control' content='no-cache'>
 	<meta http-equiv='expires' content='0'>
@@ -80,7 +83,10 @@
 			<div id="mapOverlay">
 			</div>
 		</div>
-		<div id="multiclassMenu" class="multiclassMenu">
+		<div id="multiClassHolder" class="multiHolder">
+			<span style="position:absolute;top:0px;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onClick="showMulticlass()"></span>
+			<div id="multiclassMenu" class="multiclassMenu">
+			</div>
 		</div>
 		<div id="profilePage" class="profile">
 			<span style="color:#01FF00">Level <span id="statLv"></span> <span id="className"></span></span><br><br>
@@ -194,14 +200,62 @@
 			<div id="mod4" style="left:180px;top:230px;" class="skillMod"><div id="mod4Name" class="modName"></div><div id="mod4List" class="modList"></div></div>
 		</div>
 		
+		<div id="skillTHolder" class="skillTreeHolder">
+			<span style="position:absolute;top:0px;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onClick="showSkillTreeMenu()"></span>
+			<div id="skillTreePage" class="skillTree">
+			</div>
+		</div>
+		
 		<div id="menuHold" class="menuHolder">
 			<div id="statMenu" style="cursor:hand; background-image:url('art/statBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showCharacterStats()"></div>
 			<div id="gearMenu" style="cursor:hand; background-image:url('art/gearBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showGearStats()"></div>
 			<div id="mapMenu" style="cursor:hand; background-image:url('art/mapBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showWorldMap()"></div>
 			<span id="bigMap" style="position:absolute;top:54px;left:70px;cursor:hand; background-image:url('art/plsBtn.png'); width:22px;height:22px;" onClick="showMapOverlay()"></span>
-			<div id="multiMenu" style="cursor:hand; background-image:url('art/multiclassBtn.png'); width:67px;height:22px;margin-bottom:5px;display:none;" onClick="showMulticlass()"></div>
 			<div id="skillMenu" style="cursor:hand; background-image:url('art/skillBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showSpells()"></div>
-			<div id="helpMenu" style="cursor:hand; background-image:url('art/helpBtn.png'); width:67px;height:22px;margin-bottom:5px;"></div>
+			<span id="skillBtn" style="position:absolute;top:81px;left:70px;cursor:hand; background-image:url('art/plsBtn2.png'); width:22px;height:22px; display:none;" onClick="showSkillTreeMenu()"></span>
+			<div id="multiMenu" style="cursor:hand; background-image:url('art/multiclassBtn.png'); width:67px;height:22px;margin-bottom:5px;display:none;" onClick="showMulticlass()"></div>
+			<div id="helpMenu" style="cursor:hand; background-image:url('art/helpBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showHelpMenu()"></div>
+		</div>
+		
+		<div id="helpPage" class="helpMenu">
+		<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="showHelpMenu()"></span>
+		<div style="position:absolute;width:1120px;text-align:center;color:#8B34EA;font-size:250%;">Argtura Help Page</div><br><br><br>
+		<div>
+		<details>
+		<summary>Table of contents</summary>
+			<details style="width:1100px;">
+			<summary style="margin-left:20px;">What is my quest?</summary>
+			<span style="position:relative;left:50px;">The goal of Argtura is to defeat the High King, Zurguran.
+			The game will play itself for the most part, handling movement, combat, and looting.
+			You will have to manage your character to ensure you are able to complete your quest.
+			You have the ability to select which zone your character explores, what gear your character wears, and what skills and spells they have at their arsenal.</span>
+			</details>
+			
+			<details style="width:1100px;">
+			<summary style="margin-left:20px;">What are my stats?</summary>
+			<span style="position:relative;left:50px;">Your character has the following Stats:<br>
+			<span style="color:#01FF00">Level</span><br>Your Level is an indicator of how strong you are. When exploring a new zone be sure to use your level as a reference for the zone's difficulty.<br><br>
+			<span style="color:grey">Strength</span><br>Your Strength is a measurement of how powerful you are. Every 2 Strength increases your Base Damage by 1 and every 5 Strength increases your <span style="color:#204FAF">HP</span> by 1.<br><br>
+			<span style="color:grey">Intelligence</span><br>Your Intelligence indicates your mental capacity. Every 2 Intelligence increases your <span style="color:#A54996">Spell Damage</span> by 1% and every 5 Intelligence increases your <span style="color:#204FAF">Mana</span> by 2.<br><br>
+			<span style="color:grey">Dexterity</span><br>Dexterity is how swift and accurate you are. Every 2 Dexterity increases your <span style="color:#204FAF">Stamina</span> by 1 and every 5 Dexterity increases your <span style="color:orange">Critical Strike Chance</span> by 1 and your <span style="color:orange">Critical Strike Damage</span> by 5.<br><br>
+			<span style="color:grey">Endurance</span><br>Your Endurance is a measurement of how much your body can endure. Every 5 Endurance increases your <span style="color:#204FAF">Stamina</span> and <span style="color:#204FAF">HP</span> by 1 and every 10 Endurance increases your <span style="color:brown">Armor</span> by 1%.<br><br>
+			<span style="color:grey">Wisdom</span><br>Wisdom is a measurement of problem solving and reasoning skills. Every 5 Wisdom increases your <span style="color:#204FAF">Mana</span> by 2 and every 10 Wisdom increases your <span style="color:lightblue">Resist</span> by 1%.<br><br>
+			<span style="color:grey">Agility</span><br>Your Agility is a measurement of how quick and fleet you are. Every 2 Agility increases your <span style="color:#204FAF">Stamina</span> and <span style="color:#204FAF">Mana</span> by 1 and every 10 Agility increases your <span style="color:green">Evasion</span> by 1%.<br><br>
+			<span style="color:brown">Armor</span><br>Armor reduces the damage you take from physical attacks. Physical attacks are color coded white and is the most common attack type.<br><br>			
+			</span>
+			</details>
+			
+			<details>
+			<summary style="margin-left:20px;">How do I get stronger?</summary>
+			am I hidden
+			</details>
+			
+			<details>
+			<summary style="margin-left:20px;">How does it all work?</summary>
+			am I hidden
+			</details>
+		</details>
+		</div>
 		</div>
 	</BODY>
 

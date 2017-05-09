@@ -10,6 +10,8 @@
 	var deadMessage = false;
 	var showAnimation = true;
 	var endTime;
+	var mobKilled = 0;
+	
 	var bonus ={Str:0,Int:0,Dex:0,End:0,Wis:0,
 				Agi:0,HP:0,Mana:0,Stamina:0,
 				BaseDamage:0,SpellDamage:0,FireDamage:0,
@@ -19,6 +21,14 @@
 				ShockResist:0,Leech:0
 	}
 	var iBonus ={Str:0,Int:0,Dex:0,End:0,Wis:0,
+				Agi:0,HP:0,Mana:0,Stamina:0,
+				BaseDamage:0,SpellDamage:0,FireDamage:0,
+				ColdDamage:0,ShockDamage:0,DarkDamage:0,
+				CritChnc:0,CritDmg:0,Armor:0,Evasion:0,
+				Resist:0,FireResist:0,ColdResist:0,
+				ShockResist:0,Leech:0
+	}
+	var cBonus ={Str:0,Int:0,Dex:0,End:0,Wis:0,
 				Agi:0,HP:0,Mana:0,Stamina:0,
 				BaseDamage:0,SpellDamage:0,FireDamage:0,
 				ColdDamage:0,ShockDamage:0,DarkDamage:0,
@@ -43,67 +53,13 @@
 				Resist:1,FireResist:1,ColdResist:1,
 				ShockResist:1,Leech:1,HReg:1,MReg:1,SReg:1
 	}
-	
-	function resetMore(){
-		var moreHolder = {
-		Str:1,
-		Int:1,
-		Dex:1,
-		End:1,
-		Wis:1,
-		Agi:1,
-		HP:1,
-		Mana:1,
-		Stamina:1,
-		HReg:1,
-		MReg:1,
-		SReg:1,
-		BaseDamage:1,
-		SpellDamage:1,
-		FireDamage:1,
-		ColdDamage:1,
-		ShockDamage:1,
-		DarkDamage:1,
-		CritChnc:1,
-		CritDmg:1,
-		Armor:1,
-		Evasion:1,
-		Resist:1,
-		FireResist:1,
-		ColdResist:1,
-		ShockResist:1,
-		Leech:1
-	};
-	return moreHolder;
-	}
-	function resetBonus(){
-		bonusHolder = {
-		Str:0,
-		Int:0,
-		Dex:0,
-		End:0,
-		Wis:0,
-		Agi:0,
-		HP:0,
-		Mana:0,
-		Stamina:0,
-		BaseDamage:0,
-		SpellDamage:0,
-		FireDamage:0,
-		ColdDamage:0,
-		ShockDamage:0,
-		DarkDamage:0,
-		CritChnc:0,
-		CritDmg:0,
-		Armor:0,
-		Evasion:0,
-		Resist:0,
-		FireResist:0,
-		ColdResist:0,
-		ShockResist:0,
-		Leech:0
-	};
-	return bonusHolder;
+	var cMore ={Str:1,Int:1,Dex:1,End:1,Wis:1,
+				Agi:1,HP:1,Mana:1,Stamina:1,
+				BaseDamage:1,SpellDamage:1,FireDamage:1,
+				ColdDamage:1,ShockDamage:1,DarkDamage:1,
+				CritChnc:1,CritDmg:1,Armor:1,Evasion:1,
+				Resist:1,FireResist:1,ColdResist:1,
+				ShockResist:1,Leech:1,HReg:1,MReg:1,SReg:1
 	}
 	
 	var lookupTable;
@@ -279,11 +235,10 @@
 	}
 	function changeClass(){
 		resetMC();
-		more = resetMore();
-		bonus = resetBonus();
-		equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, ring:null, trinket:null, aura:null};;
+		equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, ring:null, trinket:null, aura:null};
 		inventoryHolder = new Array();
 		allItemHolder = new Array();
+		equipSpells = {slot1: null,slot2: null,slot3: null};
 		changeZone(0);
 	}
 	
@@ -303,10 +258,14 @@
 		localStorage.setItem("invItem", JSON.stringify(inventoryHolder));
 		localStorage.setItem("allItem", JSON.stringify(allItemHolder));
 		localStorage.setItem("mapProg", JSON.stringify(mapCompletion));
+		localStorage.setItem("charBonus", JSON.stringify(iBonus));
+		localStorage.setItem("charMore", JSON.stringify(iMore));
+		localStorage.setItem("savedTree", selectedSkills);
 	}
 	function loadGame(){
 		if(localStorage.getItem("endTime"))
 			endTime = localStorage.getItem("endTime");
+	//	endTime = Number(Date.now()-(60*1000*60*24));
 		if(localStorage.getItem("zone"))
 			zoneHolder = getZone(localStorage.getItem("zone"));
 		if(localStorage.getItem("2player"))
@@ -323,7 +282,12 @@
 			allItemHolder = JSON.parse(localStorage.getItem("allItem"));	
 		if(localStorage.getItem("mapProg"))
 			mapCompletion = JSON.parse(localStorage.getItem("mapProg"));
-		
+		if(localStorage.getItem("charBonus"))
+			iBonus = JSON.parse(localStorage.getItem("charBonus"));
+		if(localStorage.getItem("charMore"))
+			iMore = JSON.parse(localStorage.getItem("charMore"));
+		if(localStorage.getItem("savedTree"))
+			selectedSkills = localStorage.getItem("savedTree");
 		generateInventory();
 		genEquipTooltip();
 		
@@ -333,6 +297,8 @@
 		calculateMapData();
 		unlockZone();
 		getPlayerSpells();
+		handleSkillBtn();
+		loadSavedSkills();
 		saveGame();
 	}
 	function calculateMapData(){
@@ -348,14 +314,10 @@
 			var timesRan = 1+Math.floor(Math.abs(elapsedTime)/(1000));
 			if(timesRan >= 120){
 				calculateFunctionalStats();
-				var maxX = zoneHolder.map.map.length;
-				var maxY = zoneHolder.map.map[0].length;
-				var packSize = zoneHolder.packSize;
-				var dens = zoneHolder.density;
-				var mobchnc = (maxX * maxY * packSize * (1+dens))/(maxX * maxY);
+				var mobchnc = .015;
 				var pcDmg = .4 * (mc.functionalBaseDamage *(1+(mc.functionalSpellDamage + mc.functionalFireDamage + mc.functionalColdDamage + mc.functionalShockDamage + mc.functionalDarkDamage)/100) * ((mc.functionalCritChnc/100) * (mc.functionalCritDmg+1)));
-				var mobHp = 50 + (6 * Math.pow(1.11,zoneHolder.level) * (zoneHolder.level/2));
-				var combatTurns = Math.min((mobHp / pcDmg),1);
+				var mobHp = 50 + (6 * Math.pow(1.125,zoneHolder.level) * (zoneHolder.level/1.5));
+				var combatTurns = Math.max((mobHp / pcDmg),1);
 				var oldLvl = mc.level;
 				var lvlDiff = zoneHolder.level - oldLvl;
 				var effness = 1;
@@ -369,8 +331,8 @@
 					effness *= .7;
 				}
 				var fights = Math.round(((timesRan * mobchnc) / combatTurns) * effness);
-				var mobxp = 4 + (4 * Math.pow(1.07, zoneHolder.level * 2));
-				var mobplat = 1.5 + (2 * Math.pow(1.04, zoneHolder.level * 2));
+				var mobxp = 4 + (3 * Math.pow(1.07, zoneHolder.level * 1.5));
+				var mobplat = 1 + (1.1 * Math.pow(1.03, zoneHolder.level * 1.5));
 				var platGain = Math.round(mobplat * fights);
 				var xpGain = Math.round(mobxp * fights);
 				var totXpGain = 0;
@@ -415,6 +377,10 @@
 				godMode();
 			}
 		}, 100);
+	}
+	
+	function showHelpMenu(){
+		$('#helpPage').toggle();
 	}
 	
 	function shortenLargeNumber(number){
