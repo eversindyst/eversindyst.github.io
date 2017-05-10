@@ -581,6 +581,7 @@
 		border: 1px solid white;
 		background-color: black;
 		z-index:10;
+		display:none;
 	}
 	summary:: -webkit-details-marker{
 		color:blue;
