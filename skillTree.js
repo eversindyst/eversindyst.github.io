@@ -237,17 +237,23 @@
 				if(sArea != ""){
 					var whichTree = 0;
 					var index;
-					index = currTree1.indexOf(sArea);
-					if(index == 0){
-						freeSkillTree(1, sArea);
+					if(currTree1 != null){
+						index = currTree1.indexOf(sArea);
+						if(index == 0){
+							freeSkillTree(1, sArea);
+						}
 					}
-					index = currTree2.indexOf(sArea);
-					if(index == 0){
-						freeSkillTree(2, sArea);
+					if(currTree2 != null){
+						index = currTree2.indexOf(sArea);
+						if(index == 0){
+							freeSkillTree(2, sArea);
+						}
 					}
-					index = currTree3.indexOf(sArea);
-					if(index == 0){
-						freeSkillTree(3, sArea);
+					if(currTree3 != null){
+						index = currTree3.indexOf(sArea);
+						if(index == 0){
+							freeSkillTree(3, sArea);
+						}
 					}
 				}
 			}

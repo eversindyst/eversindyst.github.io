@@ -78,7 +78,7 @@
 										}
 										if(vuln_g > Math.random()){
 											currentMonsters[x].vuln = vulnDur_g;
-											ss += "<span style='color:#B40800'>The vulnerability of the "+currentMonsters[x].name+" is exposed by your "+spell.name+"</span><br>";
+											ss += "<span style='color:#B40800'>The "+currentMonsters[x].name+" is vulnerable from your "+spell.name+"</span><br>";
 										}
 									}
 								}
