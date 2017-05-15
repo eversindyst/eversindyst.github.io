@@ -40,10 +40,15 @@
 		}
 	}
 	function giveItemXP(item){
-		item.xp += Math.floor(Number(Math.pow(item.xpMult, (item.level-1)) * item.xpGain));
-		if(item.xp >= 100){
-			item.xp = 0;
-			itemLevelUp(item);
+		if(item.level != 6){
+			item.xp += Math.floor(Number(Math.pow(item.xpMult, (item.level-1)) * item.xpGain));
+			if(item.xp >= 100){
+				item.xp = 0;
+				itemLevelUp(item);
+			}
+		}
+		else{
+			item.xp = 99;
 		}
 	}
 	

@@ -124,7 +124,7 @@
 							for(var x=0; x < spell.targets; x++){
 								if(currentMonsters[x] != null){
 								if(currentMonsters[x].currHP > 0){
-									mc.totBaseDamage = Math.max(Math.round(mc.totBaseDamage * (1-(calcArmor(currentMonsters[x].armor, currentMonsters[x].level, 0, 0)/100)) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100))),1);
+									mc.totBaseDamage = Math.round(mc.totBaseDamage * (1-(calcArmor(currentMonsters[x].armor, currentMonsters[x].level, 0, 0)/100)) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100)));
 									mc.totFireDamage = Math.round((mc.totFireDamage * (1+(mc.totFireDamage/currentMonsters[x].hp))) * (1-(currentMonsters[x].fireResist/100)) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100)));
 									mc.totColdDamage = Math.round(.8 * (mc.totColdDamage * (1-((currentMonsters[x].coldResist -(mc.totColdDamage/currentMonsters[x].hp*100))/100))) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100)));
 									mc.totShockDamage = Math.round((mc.totShockDamage  + Math.round(Math.random()*(mc.totShockDamage*2.8)+1) - Math.round(Math.random()*(mc.totShockDamage*.95)+1)) * (1-(currentMonsters[x].shockResist/100)) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100)));

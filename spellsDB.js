@@ -29,6 +29,30 @@
 				ss = "<span style='color:#266A69'>You try but you do not have enough stamina to Kick</span><br>";
 			}
 			return ss;
+		},
+		Backstab: function(s){
+			var ss = "";
+			if(mc.stamina >= s.sCost){
+				mc.stamina -= s.sCost;
+				var dmg = spellDMGDB[s.name](s);
+				mc.totBaseDamage = dmg;
+			}
+			else{
+				ss = "<span style='color:#266A69'>You do not have enough stamina to attempt a Backstab</span><br>";
+			}
+			return ss;
+		},
+		Darkblade: function(s){
+			var ss = "";
+			if(mc.stamina >= s.sCost){
+				mc.stamina -= s.sCost;
+				var dmg = spellDMGDB[s.name](s);
+				mc.totDarkDamage = dmg;
+			}
+			else{
+				ss = "<span style='color:#266A69'>You do not have enough stamina to perform a Darkblade attack</span><br>";
+			}
+			return ss;
 		}
 	};
 	var spellDMGDB = {
@@ -37,24 +61,40 @@
 			return dmg;
 		},
 		Kick: function(s){
-			var dmg = Math.floor((((s.damage*(s.level/2))+(mc.functionalBaseDamage * 1.15))/2) * Math.pow(1.04,s.level) * s.effectiveness * s.multi);
+			var dmg = Math.floor((((s.damage*(s.level/2))+(mc.functionalBaseDamage * 1.25))/1.5) * Math.pow(1.04,s.level) * s.effectiveness * s.multi);
+			return dmg;
+		},
+		Backstab: function(s){
+			var dmg = Math.floor((((s.damage*s.level)+(mc.functionalBaseDamage * Math.pow(1.04,s.level) * 1.45))) * s.effectiveness * s.multi);
+			return dmg;
+		},
+		Darkblade: function(s){
+			var dmg = Math.floor((s.damage + (mc.functionalBaseDamage*.7)) * (Math.pow(1.021,s.level)) * s.effectiveness * s.multi * (1+mc.functionalDarkDamage/100));
 			return dmg;
 		}
 	};
 	var spellDesc = {
 		Fireball: function(s){
-			var ss = "Hurls a fireball at the enemy dealing "+spellDMGDB["Fireball"](s)+" fire damage.<br>Costs "+s.mCost+" mana.<br>"+s.chnc+"% chance to cast.";
+			var ss = "Hurls a fireball at the enemy dealing "+spellDMGDB["Fireball"](s)+" <span style='color:red'>fire</span> damage.<br>Costs "+s.mCost+" mana.<br>"+s.chnc+"% chance to cast.";
 			return ss;
 		},
 		Kick: function(s){
-			var ss = "Delivers a swift kick to the enemy dealing "+spellDMGDB["Kick"](s)+" physical damage.<br>Costs "+s.sCost+" stamina.<br>"+s.chnc+"% chance to activate.";
+			var ss = "Delivers a swift kick to the enemy dealing "+spellDMGDB["Kick"](s)+" <span style='color:white'>physical</span> damage.<br>Costs "+s.sCost+" stamina.<br>"+s.chnc+"% chance to activate.";
+			return ss;
+		},
+		Backstab: function(s){
+			var ss = "Stabs the enemy in the back dealing "+spellDMGDB["Backstab"](s)+" <span style='color:red'>physical</span> damage.<br>Costs "+s.sCost+" stamina.<br>"+s.chnc+"% chance to activate.";
+			return ss;
+		},
+		Darkblade: function(s){
+			var ss = "Channels dark energy into your blade dealing "+spellDMGDB["Darkblade"](s)+" <span style='color:purple'>dark</span> damage.<br>Costs "+s.sCost+" stamina.<br>"+s.chnc+"% chance to activate.";
 			return ss;
 		}
 	};
 	var spellList = {
-		Warrior : "1:Kick,2:Fireball",
+		Warrior : "1:Kick,10:Darkblade",
 		Mage : "1:Fireball",
-		Rogue : "1:Kick",
+		Rogue : "1:Backstab",
 		Monk : "1:Kick",
 		Fencer : "1:Kick",
 		Tactician : "1:Kick",
@@ -68,26 +108,34 @@
 		Berserker : "1:Kick",
 		Shaman : "1:Kick",
 		Psion : "1:Kick",
-		Hero : "1:Kick",
+		Hero : "1:Kick,10:Darkblade",
 		Ninja : "1:Kick",
 		Sorcerer : "1:Kick",
 		Avatar : "1:Kick"
 	};
 	var modList1 = {
 		Fireball: "Split Fire,Empower,Blaze",
-		Kick: "Bladed Boot"
+		Kick: "Bladed Boot",
+		Backstab: "Bladed Boot",
+		Darkblade: "Bladed Boot"
 	};
 	var modList2 = {
 		Fireball: "Split Fire,Kindling,Wild Fire",
-		Kick: "Curb Stomp"
+		Kick: "Curb Stomp",
+		Backstab: "Curb Stomp",
+		Darkblade: "Bladed Boot"
 	};
 	var modList3 = {
 		Fireball: "Soul Flame,Conflagration,Blaze",
-		Kick: "Flutter Kick"
+		Kick: "Flutter Kick",
+		Backstab: "Flutter Kick",
+		Darkblade: "Bladed Boot"
 	};
 	var modList4 = {
 		Fireball: "Wild Fire,Ignite,Scorch",
-		Kick: "Iron Boot"
+		Kick: "Iron Boot",
+		Backstab: "Iron Boot",
+		Darkblade: "Bladed Boot"
 	};
 	var modDesc = {
 		'Empty': "No Mod Selected",
@@ -109,7 +157,9 @@
 		var spellHolder;
 		switch(sn){
 			case("Fireball") : spellHolder = new spell("Fireball",3,3,0,7,1,40,2); break;
-			case("Kick") : spellHolder = new spell("Kick",1,0,2,1,.8,20,2.63); break;
+			case("Kick") : spellHolder = new spell("Kick",1,0,2,1,.9,20,2.63); break;
+			case("Backstab") : spellHolder = new spell("Backstab",1,0,6,3,1.1,30,2); break;
+			case("Darkblade") : spellHolder = new spell("Darkblade",1,0,4,3,1,41,1); break;
 		}
 		return spellHolder;
 	}
