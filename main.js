@@ -227,7 +227,7 @@
 				restingMessage = 1;
 			}
 		}
-		if(mc.stamina >= mc.functionalMaxStamina){
+		if(mc.stamina >= mc.functionalMaxStamina && mc.hp >= mc.functionalMaxHP){
 			ss = "<br><span style='color:cyan'>You stop resting and stand up. Ready to go again!</span><br>";
 			if(showAnimation)
 				addText(ss);
