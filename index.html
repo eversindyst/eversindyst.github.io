@@ -194,6 +194,9 @@
 		<div id="modPage" class="modMenu">
 			<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="closeMod()"></span>
 			<div id="modSpellName" class="skillModName"></div>
+			<div id="modSpellLvl" class="modSpellLvl">Level Up
+			<div id="modSpellLvlToolTip" class="tooltip"></div>
+			</div>
 			<div id="mod1" style="left:15px;top:50px;" class="skillMod"><div id="mod1Name" class="modName"></div><span id="mod1List" class="modList"></span></div>
 			<div id="mod2" style="left:180px;top:50px;" class="skillMod"><div id="mod2Name" class="modName"></div><div id="mod2List" class="modList"></div></div>
 			<div id="mod3" style="left:15px;top:230px;" class="skillMod"><div id="mod3Name" class="modName"></div><div id="mod3List" class="modList"></div></div>
@@ -213,6 +216,7 @@
 			<span id="bigMap" style="position:absolute;top:54px;left:70px;cursor:hand; background-image:url('art/plsBtn.png'); width:22px;height:22px;" onClick="showMapOverlay()"></span>
 			<div id="skillMenu" style="cursor:hand; background-image:url('art/skillBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showSpells()"></div>
 			<span id="skillBtn" style="position:absolute;top:81px;left:70px;cursor:hand; background-image:url('art/plsBtn2.png'); width:22px;height:22px; display:none;" onClick="showSkillTreeMenu()"></span>
+			<div id="restBtn" style="cursor:hand; background-image:url('art/restBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="setManRest()"></div>
 			<div id="multiMenu" style="cursor:hand; background-image:url('art/multiclassBtn.png'); width:67px;height:22px;margin-bottom:5px;display:none;" onClick="showMulticlass()"></div>
 			<div id="helpMenu" style="cursor:hand; background-image:url('art/helpBtn.png'); width:67px;height:22px;margin-bottom:5px;" onClick="showHelpMenu()"></div>
 		</div>
@@ -226,26 +230,25 @@
 			<details style="width:1100px;">
 			<summary style="margin-left:20px;">What is my quest?</summary>
 			<span style="position:relative;left:50px;">The goal of Argtura is to defeat the High King, Zurguran.
-			The game will play itself for the most part, handling movement, combat, and looting.
-			You will have to manage your character to ensure you are able to complete your quest.
+			The game will handle movement, combat, and looting. Your job is to manage your character and ensure you are able to complete the quest.
 			You have the ability to select which zone your character explores, what gear your character wears, and what skills and spells they have at their arsenal.</span>
 			</details>
 			<details style="width:1100px;">
 			<summary style="margin-left:20px;">What are my stats?</summary>
 			<span style="position:relative;left:50px;">Your character has the following Stats:<br>
 			<span style="color:#01FF00">Level</span><br>Your Level is an indicator of how strong you are. When exploring a new zone be sure to use your level as a reference for the zone's difficulty.<br><br>
-			<span style="color:grey">Strength</span><br>Your Strength is a measurement of how powerful you are. Every 2 Strength increases your Base Damage by 1 and every 5 Strength increases your <span style="color:#204FAF">HP</span> by 1.<br><br>
-			<span style="color:grey">Intelligence</span><br>Your Intelligence indicates your mental capacity. Every 2 Intelligence increases your <span style="color:#A54996">Spell Damage</span> by 1% and every 5 Intelligence increases your <span style="color:#204FAF">Mana</span> by 2.<br><br>
-			<span style="color:grey">Dexterity</span><br>Dexterity is how swift and accurate you are. Every 2 Dexterity increases your <span style="color:#204FAF">Stamina</span> by 1 and every 5 Dexterity increases your <span style="color:orange">Critical Strike Chance</span> by 1 and your <span style="color:orange">Critical Strike Damage</span> by 5.<br><br>
-			<span style="color:grey">Endurance</span><br>Your Endurance is a measurement of how much your body can endure. Every 5 Endurance increases your <span style="color:#204FAF">Stamina</span> and <span style="color:#204FAF">HP</span> by 1 and every 10 Endurance increases your <span style="color:brown">Armor</span> by 1%.<br><br>
-			<span style="color:grey">Wisdom</span><br>Wisdom is a measurement of problem solving and reasoning skills. Every 5 Wisdom increases your <span style="color:#204FAF">Mana</span> by 2 and every 10 Wisdom increases your <span style="color:lightblue">Resist</span> by 1%.<br><br>
-			<span style="color:grey">Agility</span><br>Your Agility is a measurement of how quick and fleet you are. Every 2 Agility increases your <span style="color:#204FAF">Stamina</span> and <span style="color:#204FAF">Mana</span> by 1 and every 10 Agility increases your <span style="color:green">Evasion</span> by 1%.<br><br>
+			<span style="color:grey">Strength</span><br>Your Strength is a measurement of how powerful you are. Every 2 Strength increases your Base Damage by 1% and every 5 Strength increases your Base Damage by 1.<br><br>
+			<span style="color:grey">Intelligence</span><br>Your Intelligence indicates your mental capacity. Every 2 Intelligence increases your <span style="color:#A54996">Spell Damage</span> by 1% and every 5 Intelligence increases your elemental damage by 2%.<br><br>
+			<span style="color:grey">Dexterity</span><br>Your Dexterity is how swift and accurate you are. Every 2 Dexterity increases your <span style="color:orange">Critical Strike Chance</span> by 1% and every 5 Dexterity increases your <span style="color:orange">Critical Strike Damage</span> by 5%.<br><br>
+			<span style="color:grey">Endurance</span><br>Your Endurance is a measurement of how much your body can endure. Every 5 Endurance increases your <span style="color:#204FAF">HP</span> by 1% and every 10 Endurance increases your <span style="color:brown">Armor</span> and <span style="color:#204FAF">HP Regen</span> by 1% .<br><br>
+			<span style="color:grey">Wisdom</span><br>Your Wisdom is a measurement of problem solving and reasoning skills. Every 5 Wisdom increases your <span style="color:#204FAF">Mana</span> by 2% and every 10 Wisdom increases your <span style="color:lightblue">Resist</span> and <span style="color:#204FAF">Mana Regen</span> by 1%.<br><br>
+			<span style="color:grey">Agility</span><br>Your Agility is a measurement of how quick and fleet you are. Every 5 Agility increases your <span style="color:#204FAF">Stamina</span> by 1% and every 10 Agility increases your <span style="color:green">Evasion</span> and <span style="color:#204FAF">Stamina Regen</span> by 1%.<br><br>
 			<span style="color:brown">Armor</span><br>Armor reduces the physical damage you take. Physical damage is color coded <span style="color:white">white</span>.<br><br>			
 			<span style="color:green">Evasion</span><br>Evasion is the chance that you will avoid a basic attack from an enemy.<br><br>			
 			<span style="color:lightblue">Resist</span><br>Resist reduces all damage you take. It is a multiplicative bonus on top of Armor and Elemental Resists.<br><br>			
-			<span style="color:red">Fire Resist</span><br>Fire Resist reduces the fire damage you take. Fire damage is color coded <span style="color:red">red</span>.<br><br>
-			<span style="color:cyan">Cold Resist</span><br>Cold Resist reduces the cold damage you take. Cold damage is color coded <span style="color:cyan">cyan</span>.<br><br>
-			<span style="color:yellow">Shock Resist</span><br>Shock Resist reduces the shock damage you take. Shock damage is color coded <span style="color:yellow">yellow</span>.<br><br>
+			<span style="color:red">Fire Resist</span><br>Fire Resist reduces the fire damage you take.<br><br>
+			<span style="color:cyan">Cold Resist</span><br>Cold Resist reduces the cold damage you take.<br><br>
+			<span style="color:yellow">Shock Resist</span><br>Shock Resist reduces the shock damage you take.<br><br>
 			<span style="color:red">Life Leech</span><br>Life Leech converts a percent of your basic attack's damage into <span style="color:#204FAF">HP</span>.<br><br>
 			<span style="color:#204FAF">HP</span><br>HP is how many Health Points you have. If this reaches 0, you die.<br><br>
 			<span style="color:#204FAF">Mana</span><br>Mana is a resource primarily used for casting spells.<br><br>
@@ -267,76 +270,146 @@
 			<summary style="margin-left:20px;">How do I get stronger?</summary>
 				<details>
 				<summary style="margin-left:50px;">Leveling</summary>
-				<span style="position:relative;left:80px;width:1050px;display:block">As you kill enemies and gain XP you will eventually <span style="color:#01FF00">Level Up</span>. Upon leveling up you will be awarded a talent point.
+				<span style="position:relative;left:80px;width:1050px;display:block">As you kill enemies and gain XP you will eventually <span style="color:#01FF00">Level Up</span>. You start with 1 talent point and upon leveling up you will be awarded an additional talent point.
 				This is indicated by a red + button showing up beside the "SKILL" button on the right. Clicking this button will bring up a talent tree menu where you can select from your available talents.
-				These are flat stat increases that will help you throughout your journey. Initially there are 3 lines of upgrades to select from. Each line has 65 total choices. Every 5 choices will be a 
+				These increase base stats by a fixed amount and will help you throughout your journey. Initially there are 3 lines of upgrades to select from. Each line has 65 total choices. Every 5 choices will be a 
 				stronger than normal upgrade. Once all choices have been made in an upgrade line, that line will go away. 
 				</span>
 				</details>
 				<details>
 				<summary style="margin-left:50px;">Skills and Spells</summary>
+				<span style="position:relative;left:80px;width:1050px;display:block">Skills and Spells are gained while leveling up. Each class has a different list of spells and skills available to it.
+				In general Warrior and Thief classes will use Skills, while Mage and Monk classes use Spells. Skills cost <span style="color:#204FAF">Stamina</span> and Spells cost <span style="color:#204FAF">Mana</span>. 
+				However, they both work the same way. By clicking the "SKILL" button the skill/spell menu will show up. The bottom section will show the skills and spells available to your character. By clicking
+				on one of them, they will be equipped, if there is an open slot. Only 3 skills/spells may be equipped at a time.<br><br>
+				Spells and Skills have a % chance to activate during combat. This chance will typically increase as the skill/spell levels up. By clicking the "MOD" button next to a equipped skill/spell, the Mod menu will come up.
+				Inside the mod menu you will be able to level up the skill/spell by clicking the "Level Up" text. This will have an increasing cost of <span style="color:#C5C5C5">Platinum</span>. Skills and Spells have a level
+				limit of 20. Also on the Mod menu are 4 boxes that can be used to modify the skill/spell. Initially they are locked and can be unlocked with <span style="color:#C5C5C5">Platinum</span>. Once a mod box is unlocked 
+				it will display a list of Modifications that can be applied. Hovering over a Mod will reveal more details about it and clicking a Mod will equip it. Clicking an equipped Mod will remove it.
+				</span>
 				</details>
 				<details>
 				<summary style="margin-left:50px;">Equipment</summary>
 				<span style="position:relative;left:80px;width:1050px;display:block">Slain enemies have a chance to drop equipment on their death. Each enemy has a different limit on how many
 				items it can drop at once, along with which items and how rare those items are. Equipment can be worn or removed from the "GEAR" menu. Clicking an item in your inventory will
-				equip the item. Clicking an item that's equip will remove the item.<br> Hovering over an item will show you the slot
+				equip the item. Clicking an item that's equipped will remove the item.<br> Hovering over an item will show you the slot
 				that the item goes in along with its stats. When you collect a duplicate of an item, the duplicate will be destroyed and grant some XP to the original version of the item. Once 
 				the original reaches 100 XP it will <span style="color:#01FF00">Level Up</span> into a stronger version of itself. When an item reaches level 5 it will transform into a new more powerful item.<br><br>
-				Your inventory can be sorted in in Alphabetical order, by the slot type, or by the level of the items. You can also click the "SELL" button to enter sell mode. While in sell mode
+				Your inventory can be sorted in Alphabetical order, by the slot type, or by the level of the items. You can also click the "SELL" button to enter sell mode. While in sell mode
 				clicking an item in your inventory will sell it. Items are worth 0 <span style="color:#C5C5C5">Platinum</span>. If you reacquire a sold item it will retain its previous experience and level.
 				</span>
 				</details>
 				<details>
-				<summary style="margin-left:50px;">Multiclass</summary>
-				<span style="position:relative;left:80px;width:1050px;display:block">Upon reaching <span style="color:#01FF00">Level</span> 40 a new menu will show up called "CLASS". This menu will bring up the
-				multiclass screen. Multiclassing will allow you to change into another class to further improve your power. There is a <span style="color:#C5C5C5">Platinum</span> cost
-				associated wtih multiclassing that will increase each time you multiclass. Each mutliclass has a base class tied to it. You can only be each base class once except for your
-				starting class. Once you have been each base class you will be able to multiclass one final time back to your original base class.<br><br>Example: If you start as the Mage class, the first time you multiclass you will be able to choose from a Warrior, Thief, or Monk base class. If you pick Warrior
-				then the next time you multiclass you will only be able to choose from a Thief or Monk base class.<br><br>When you multiclass you will be reset to <span style="color:#01FF00">Level</span> 1 and your item progress will also be reset. You do not keep your bonuses from your talent tree.
-				Each multiclass will have bonuses that are only present while you are still that class along with bonuses that will last through multiclassing.<br><br>
-				</span>
-				<details>
-					<summary style="margin-left:80px;">List of Multiclasses</summary>
+					<summary style="margin-left:50px;">Class</summary>
 					<details>
-					<summary style="margin-left:110px;">Warrior Base Class</summary>
-					<span style="position:relative;left:140px;width:1000px;display:block">
-					Fencer<br>
-					Tactician<br>
-					Myrmidon<br>
-					Hero<br>
-					</span>
+						<summary style="margin-left:80px;">Base Classes</summary>
+						<span style="position:relative;left:110px;width:1050px;display:block">There are 4 base classes in the world of Argtura. The base classes have different
+						strengths, weaknesses, and starting stats.<br><br>
+						Warrior: The Warrior class excels in strong basic attacks and utilizes skills for support. The Warrior starts with +2 to <span style="color:grey">Strength</span> and <span style="color:grey">Endurance</span>.<br>
+						Thief: The Thief class has strong basic attacks but relies on skills to make it through life. The Thief starts with +1 to <span style="color:grey">Dexterity</span> and +3 to <span style="color:grey">Agility</span>.<br>
+						Mage: The Mage class has very low basic damage but makes up for this with a powerful and vast arsenal of spells. The Mage starts with +4 to <span style="color:grey">Intelligence</span>.<br>
+						Monk: The Monk class utilizes the elements to empower its basic attacks and has the support of spells. The Monk starts with +3 to <span style="color:grey">Wisdom</span> and +1 to <span style="color:grey">Strength</span>.<br>
 					</details>
 					<details>
-					<summary style="margin-left:110px;">Thief Base Class</summary>
-					<span style="position:relative;left:140px;width:1000px;display:block">
-					Assassin<br>
-					Alchemist<br>
-					Shadow<br>
-					Ninja<br>
-					</span>
+						<summary style="margin-left:80px;">Multiclasses</summary>
+						<span style="position:relative;left:110px;width:1050px;display:block">Upon reaching <span style="color:#01FF00">Level</span> 40 a new menu will show up called "CLASS". This menu will bring up the
+						multiclass screen. Multiclassing will allow you to change into another class to further improve your power. There is a <span style="color:#C5C5C5">Platinum</span> cost
+						associated wtih multiclassing that will increase each time you multiclass. Each mutliclass has a base class tied to it. You can only be each base class once except for your
+						starting class. Once you have been each base class you will be able to multiclass one final time back to your original base class.<br><br>Example: If you start as the Mage class, the first time you multiclass you will be able to choose from a Warrior, Thief, or Monk base class. If you pick Warrior
+						then the next time you multiclass you will only be able to choose from a Thief or Monk base class.<br><br>When you multiclass you will be reset to <span style="color:#01FF00">Level</span> 1 and your item progress will also be reset. You do not keep your bonuses from your talent tree.
+						Each multiclass will have bonuses that are only present while you are still that class along with bonuses that will last through multiclassing.<br><br>
+						</span>
+						<details>
+							<summary style="margin-left:110px;">List of Multiclasses</summary>
+							<details>
+							<summary style="margin-left:140px;">Warrior Base Class</summary>
+							<span style="position:relative;left:170px;width:950px;display:block">
+							Fencer: The Fencer is a Warrior who has a Thief background. They specialize in dual wielding and attacking ferociously. Fencers gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Fencers gain 20% increased basic attack damage while dual wielding.</span><br>
+							<span style='color:lightgreen'>Legacy Fencers gain 5% additional damage reduction from <span style="color:brown">Armor</span>.<br>
+							Legacy Fencers gain 3% increased <span style="color:grey">Dexterity</span> and 6% increased <span style="color:grey">Strength</span>.</span><br><br>
+							Tactician: The Tactician is a Warrior who has studied in the art of the Mage. The Tactician utilizes their perception and wit to perform devastating blows to their enemies. Tacticians gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Tactician's skills consume up to 5% of maximum <span style="color:#204FAF">Mana</span> to deal 1% increased damage per 2 <span style="color:#204FAF">Mana</span> consumed</span>.<br>
+							<span style='color:lightgreen'>Legacy Tacticians gain 10% increased maximum <span style="color:#204FAF">Mana</span>.<br>
+							Legacy Tacticians gain 6% increased <span style="color:grey">Wisdom</span> and 3% increased <span style="color:grey">Endurance</span>.</span><br><br>
+							Myrmidon: The Myrmidon is a Warrior who has fine tuned their combat ability by first being a Monk. The Myrmidon hones in on their surroundings to strike precisely and efficiently.
+							Myrmidons gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Myrmidons are healed for 50% of the damage their basic attack Critical Strikes do.</span><br>
+							<span style='color:lightgreen'>Legacy Myrmidons gain 3% increased <span style="color:orange">Critical Strike Chance</span>.<br>
+							<span style='color:lightgreen'>Legacy Myrmidons gain 3% increased <span style="color:grey">Dexterity</span> and 6% increased <span style="color:grey">Agility</span>.</span><br><br>
+							Hero: The hero is a Warrior who has mastered the base classes. The Hero accumulates all it has learned to push its expertise to the next level. Heroes gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Heroes have 200% increased <span style="color:#204FAF">HP Regen</span>.</span><br>
+							<span style='color:lightblue'>Current class Heroes have 15% increased <span style="color:white">Base Damage</span>.</span><br>
+							<span style='color:lightblue'>Current class Heroes gain 15% increased <span style="color:grey">Strength</span>.</span><br>
+							</span>
+							</details>
+							<details>
+							<summary style="margin-left:140px;">Thief Base Class</summary>
+							<span style="position:relative;left:170px;width:950px;display:block">
+							Assassin: The Assassin is a Thief who has combat expertise from the Warrior class. They specialize in dispatching targets quickly and efficiently. Assassins gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Assassins gain 50% increased damage for 7 seconds after killing an enemy. This effect stacks.</span><br>
+							<span style='color:lightgreen'>Legacy Assassins gain 25% <span style="color:orange">Critical Strike Damage</span>.<br>
+							Legacy Assassins gain 6% increased <span style="color:grey">Dexterity</span> and 3% increased <span style="color:grey">Strength</span>.</span><br><br>
+							Alchemist: The Alchemist is a Thief who have expansive mental capacity from the Mage class. They use potions to harm foes and help themselves. Alchemist gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Alchemists have a 20% chance to use a random potion when using a skill.</span><br>
+							<span style='color:lightgreen'>Legacy Alchemists gain 5% additional damage reduction from <span style="color:lightblue">Resist</span>.<br>
+							Legacy Alchemists gain 3% increased <span style="color:grey">Agility</span> and 6% increased <span style="color:grey">Wisdom</span>.</span><br><br>
+							Shadow: The Shadow is a Thief who has reached past the elemental connections of a Monk and entered the darkness. Shadows gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Shadows deal 10% additional damage as <span style="color:purple">Dark Damage</span> with skills.</span><br>
+							<span style='color:lightgreen'>Legacy Shadows gain 10% increased maximum <span style="color:#204FAF">Stamina</span>.<br>
+							Legacy Shadows gain 3% increased <span style="color:grey">Agility</span>, <span style="color:grey">Dexterity</span>, and <span style="color:grey">Strength</span>.</span><br><br>
+							Ninja: The Ninja is a Thief who has previously mastered all of the base classes. By analysing the enemy the Ninja can delivery swift and deadly blows. Ninjas gain the following bonuses:<br>
+							<span style='color:lightblue'>Ninja skills have no resource cost.</span><br>
+							<span style='color:lightblue'>Current class Ninjas have 20% increased <span style="color:orange">Critical Strike Damage</span>.</span><br>
+							<span style='color:lightblue'>Current class Ninjas gain 15% increased <span style="color:grey">Dexterity</span>.</span><br>
+							</span>
+							</details>
+							<details>
+							<summary style="margin-left:140px;">Mage Base Class</summary>
+							<span style="position:relative;left:170px;width:950px;display:block">
+							Illusionist: The Illusionist is a Mage who has lived on the battlefield as a Warrior. They specialize in deceptive and powerful magic. Illusionists gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Illusionists restore 3% of their maximum <span style="color:#204FAF">Mana</span> when they evade an attack.</span><br>
+							<span style='color:lightgreen'>Legacy Illusionists gain 5% additional chance to <span style="color:lightblue">Evade</span> attacks.<br>
+							Legacy Illusionists gain 6% increased <span style="color:grey">Intelligence</span> and 3% increased <span style="color:grey">Wisdom</span>.</span><br><br>
+							Warlock: The Warlock is a Mage with a background in the cunning arts of the Thief. Warlocks twist their magic and life force together to create powerful spells. Warlocks gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Warlock's spells consume up to 5% of maximum <span style="color:#204FAF">HP</span> to deal 1% increased damage per 3 <span style="color:#204FAF">HP</span> consumed</span>.<br>
+							<span style='color:lightgreen'>Legacy Warlocks gain 10% increased <span style="color:#204FAF">HP</span>.<br>
+							Legacy Warlocks gain 6% increased <span style="color:grey">Endurance</span> and 3% increased <span style="color:grey">Intelligence</span>.</span><br><br>
+							Elementalist: The Elementalist is a Mage who uses their knowledge as a Monk to become fully intuned with the elements. Elementalists gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Elementalist's spells deal 30% additional damage as a random element.</span><br>
+							<span style='color:lightgreen'>Legacy Elementalists gain a 5% increase to all elemental resistance.<br>
+							Legacy Elementalists gain 9% increased <span style="color:grey">Intelligence</span>.</span><br><br>
+							Sorcerer: The Sorcerer is a Mage that has learned all it can from the other base classes. Sorcerers are the master of all that is arcane and mystic. Sorcerers gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Sorcerer's basic attacks restore 1% of maximum <span style="color:#204FAF">Mana</span>.</span><br>
+							<span style='color:lightblue'>Current class Sorcerers have 25% increased <span style="color:#A54996">Spell Damage</span>.</span><br>
+							<span style='color:lightblue'>Current class Sorcerers gain 15% increased <span style="color:grey">Intelligence</span>.</span><br>
+							</span>
+							</details>
+							<details>
+							<summary style="margin-left:140px;">Monk Base Class</summary>
+							<span style="position:relative;left:170px;width:950px;display:block">
+							Berserker: The Berserker is a Monk who has mastered hand to hand combat as a Warrior. Berserkers gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Berserkers deal 1% increased damage for every 1% missing <span style="color:#204FAF">HP</span>.</span><br>
+							<span style='color:lightgreen'>Legacy Berserkers gain 2% increased <span style="color:red">Life Leech</span>.<br>
+							Legacy Berserkers gain 6% increased <span style="color:grey">Endurance</span> and 3% increased <span style="color:grey">Strength</span>.</span><br><br>
+							Shaman: The Shaman is a spiritual Monk that used to prowl the land as a Thief. Shamans gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Shaman's spells have an additional 20% chance to <span style='color:#04B1AE'>stun</span> enemies.</span><br>
+							<span style='color:lightgreen'>Legacy Shamans gain 3% increased <span style="color:#204FAF">HP</span>, <span style="color:#204FAF">Mana</span>, and <span style="color:#204FAF">Stamina</span>.<br>
+							Legacy Shamans gain 6% increased <span style="color:grey">Wisdom</span> and 3% increased <span style="color:grey">Intelligence</span>.</span><br><br>
+							Psion: The Psion is a Monk that has ascended the knowledge of common Mages. The Psion infuses the power of the arcane with the physical body to create a deadly unstable entity. Psions gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Psions will <span style='color:#04B1AE'>stun</span> enemies they attack that are <span style='color:#B40800'>Vulnerable</span>.</span><br>
+							<span style='color:lightgreen'>Legacy Psions gain 1.5% increased damage reduction from <span style="color:brown">Armor</span> and <span style="color:lightblue">Resist</span> and 1.5% additional chance to <span style="color:lightblue">Evade</span> attacks.<br>
+							Legacy Psions gain 6% increased <span style="color:grey">Intelligence</span> and 3% increased <span style="color:grey">Dexterity</span>.</span><br><br>
+							Avatar: The Avatar is a Monk that has become one with the other base classes. Avatars wield the elements with ease and rain down destruction on their foes. Avatars gain the following bonuses:<br>
+							<span style='color:lightblue'>Current class Avatars have 10% increased elemental damage.</span><br>
+							<span style='color:lightblue'>Current class Avatars have 5% increased elemental resistance.</span><br>
+							<span style='color:lightblue'>Current class Avatars gain 6% increased <span style="color:grey">Endurance</span>, <span style="color:grey">Wisdom</span>, and <span style="color:grey">Agility</span>.</span><br>
+							</span>
+							</details>
+						</details>
 					</details>
-					<details>
-					<summary style="margin-left:110px;">Mage Base Class</summary>
-					<span style="position:relative;left:140px;width:1000px;display:block">
-					Illusionist<br>
-					Warlock<br>
-					Elementalist<br>
-					Sorcerer<br>
-					</span>
-					</details>
-					<details>
-					<summary style="margin-left:110px;">Monk Base Class</summary>
-					<span style="position:relative;left:140px;width:1000px;display:block">
-					Berserker<br>
-					Shaman<br>
-					Psion<br>
-					Avatar<br>
-					</span>
-					</details>
-					</details>
-				
 				</details>
+				
 			</details>
 			
 			<details>
@@ -412,8 +485,8 @@
 					<span style="color:yellow">visibly in pain</span>: the target is between 49% and 66% <span style="color:#204FAF">max HP</span><br>
 					<span style="color:green">in okay condition</span>: the target is between 65% and 79% <span style="color:#204FAF">max HP</span><br>
 					<span style="color:lightgreen">doing fine</span>: the target is between 78% and 91% <span style="color:#204FAF">max HP</span><br>
-					<span style="color:lightgreen">in great condition</span>: the target is above 90% <span style="color:#204FAF">max HP</span>
-
+					<span style="color:#50FF64">in great condition</span>: the target is between 90% and 99% <span style="color:#204FAF">max HP</span><br>
+					<span style="color:#00FF1E">in perfect condition</span>: the target is above 99% <span style="color:#204FAF">max HP</span>
 					<span>
 					</details>
 				</details>
@@ -425,7 +498,9 @@
 					<span style="color:#204FAF">Stamina Regeneration</span> is increased by 300%. Basic attacks and Skills in combat use up <span style="color:#204FAF">Stamina</span>. If you do not have enough <span style="color:#204FAF">Stamina</span> to perform that action you will
 					do nothing on that turn. There are ways to reduce or change the stat that is used to perform movement, basic attacks, and skills/spells.<br><br>
 					If your character's <span style="color:#204FAF">HP</span> hits 0 in combat they will die. While your character is dead all they will be able to do is lie there until
-					they have regenerated all of their <span style="color:#204FAF">HP</span> and then they will be revived. Upon revival they will start the current zone over again.
+					they have regenerated all of their <span style="color:#204FAF">HP</span> and then they will be revived. Upon revival they will start the current zone over again.<br><br>
+					You can manually rest by clicking the "REST" button on the right. It will make your character sit and rest until they are at maximum <span style="color:#204FAF">Stamina</span>.
+					During the manual rest the character will regen <span style="color:#204FAF">HP</span> and <span style="color:#204FAF">Stamina</span> at an increased rate.
 				</span>
 				</details>
 			</details>

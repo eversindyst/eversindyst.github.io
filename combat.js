@@ -15,6 +15,10 @@
 			calculateFunctionalStats();
 			
 			mc.totBaseDamage = Math.max(Math.round((mc.functionalBaseDamage + Math.round(Math.random()*(mc.functionalBaseDamage*.3)+1) - Math.round(Math.random()*(mc.functionalBaseDamage*.3)+1)) * (1-(calcArmor(currentMonsters[0].armor, currentMonsters[0].level, 0, 0)/100)) * (1-(calcRes(currentMonsters[0].resist, currentMonsters[0].level, 0, 0)/100))),1);
+			if(mc.charClassNum == 4 && mc.dualWield){
+				mc.totBaseDamage = Math.round(mc.totBaseDamage * 1.2);
+			}
+			
 			if(Math.random()*100 <= mc.functionalCritChnc){
 				mc.totBaseDamage = Math.round(mc.totBaseDamage * (mc.functionalCritDmg/100));
 				pCrit = true;
@@ -32,7 +36,20 @@
 				var monEvasion = ((calcEva(currentMonsters[0].armor, currentMonsters[0].level, 0, 0)/100));
 				if(Math.random() > monEvasion){
 					mc.hp += mc.totBaseDamage * (mc.functionalLeech/100);
+					if(pCrit && mc.charClassNum == 6){
+						var totDmg = mc.totBaseDamage + mc.totFireDamage + mc.totColdDamage + mc.totShockDamage + mc.totDarkDamage;
+						mc.hp += (totDmg * .5);
+					}
+					if(mc.charClassNum == 18)
+						mc.mana += (mc.functionalMaxMana * .01);
+					if(mc.charClassNum == 13)
+						berserkerClassEffect();
+						
 					ss += applyDamage(0, pCrit, "Attack");
+					if(mc.charClassNum == 15 && currentMonsters[0].vuln > 0){
+						currentMonsters[0].stun = 1;
+						ss += "<span style='color:#04B1AE'>The "+currentMonsters[0].name+"("+(x+1)+") is stunned by your Attack</span><br>";
+					}
 				}
 				else{
 					ss += "<span style='color:#4A66B4'>The "+currentMonsters[0].name+"(1) swifty dodges your attack.</span><br>";
@@ -46,11 +63,56 @@
 				if(equipSpells[key] != null){
 					pCrit = false;
 					var spell = equipSpells[key];
-					mc.totBaseDamage = mc.totFireDamage = mc.totColdDamage = mc.totShockDamage = mc.totDarkDamage = 0;
+					mc.totBaseDamage = mc.totFireDamage = mc.totColdDamage = mc.totShockDamage = mc.totDarkDamage = stun_g = weak_g = vuln_g = stunDur_g = weakDur_g = vulnDur_g = 0;
 					if(Math.random()*100 <= spell.chnc){
 						spellCast = true;
-						var bb = spell.cast();
-						if( (mc.totBaseDamage + mc.totFireDamage + mc.totColdDamage + mc.totShockDamage + mc.totDarkDamage) > 0){
+						var bb = castSelectedSpells(spell);
+						
+						if(mc.charClassNum == 5 && playerDidDamage()){
+							var manaDrain = mc.functionalMaxMana * .05;
+							if(manaDrain > mc.mana)
+								manaDrain = mc.mana;
+							mc.mana -= manaDrain;
+							var dmgInc = 1+((manaDrain % 2)/100);
+							mc.totBaseDamage = Math.round(mc.totBaseDamage * dmgInc);
+							mc.totFireDamage = Math.round(mc.totFireDamage * dmgInc);
+							mc.totColdDamage = Math.round(mc.totColdDamage * dmgInc);
+							mc.totShockDamage = Math.round(mc.totShockDamage * dmgInc);
+							mc.totDarkDamage = Math.round(mc.totDarkDamage * dmgInc);
+						}
+						
+						if(mc.charClassNum == 11 && playerDidDamage()){
+							var hpDrain = mc.functionalMaxHP * .05;
+							if(hpDrain > mc.hp)
+								hpDrain = (mc.hp-1);
+							mc.hp -= hpDrain;
+							var dmgInc = 1+((hpDrain % 3)/100);
+							mc.totBaseDamage = Math.round(mc.totBaseDamage * dmgInc);
+							mc.totFireDamage = Math.round(mc.totFireDamage * dmgInc);
+							mc.totColdDamage = Math.round(mc.totColdDamage * dmgInc);
+							mc.totShockDamage = Math.round(mc.totShockDamage * dmgInc);
+							mc.totDarkDamage = Math.round(mc.totDarkDamage * dmgInc);
+						}
+						
+						if(mc.charClassNum == 12 && playerDidDamage()){
+							var totDmg = mc.totBaseDamage + mc.totFireDamage + mc.totColdDamage + mc.totShockDamage + mc.totDarkDamage;
+							var ele = Math.floor(Math.random()*3);
+							switch(ele){
+								case 0: mc.totFireDamage += Math.floor(totDmg * 1.3 * (1+mc.functionalFireDamage/100)); break;
+								case 1: mc.totColdDamage += Math.floor(totDmg * 1.3 * (1+mc.functionalColdDamage/100)); break;
+								case 2: mc.totShockDamage += Math.floor(totDmg * 1.3 * (1+mc.functionalShockDamage/100)); break;
+							}
+						}
+						
+						if(mc.charClassNum == 9 && playerDidDamage()){
+							var totDmg = mc.totBaseDamage + mc.totFireDamage + mc.totColdDamage + mc.totShockDamage + mc.totDarkDamage;
+							mc.totDarkDamage = Math.round(mc.totDarkDamage + ((totDmg * .1) * (1+mc.functionalDarkDamage/100)));
+						}
+						if(playerDidDamage()){
+						
+							if(mc.charClassNum == 13)
+								berserkerClassEffect();
+							
 							if(Math.random()*100 <= mc.functionalCritChnc){
 								mc.totBaseDamage = Math.round(mc.totBaseDamage * (mc.functionalCritDmg/100));
 								mc.totFireDamage = Math.round(mc.totFireDamage * (mc.functionalCritDmg/100));
@@ -61,6 +123,7 @@
 							}
 							for(var x=0; x < spell.targets; x++){
 								if(currentMonsters[x] != null){
+								if(currentMonsters[x].currHP > 0){
 									mc.totBaseDamage = Math.max(Math.round(mc.totBaseDamage * (1-(calcArmor(currentMonsters[x].armor, currentMonsters[x].level, 0, 0)/100)) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100))),1);
 									mc.totFireDamage = Math.round((mc.totFireDamage * (1+(mc.totFireDamage/currentMonsters[x].hp))) * (1-(currentMonsters[x].fireResist/100)) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100)));
 									mc.totColdDamage = Math.round(.8 * (mc.totColdDamage * (1-((currentMonsters[x].coldResist -(mc.totColdDamage/currentMonsters[x].hp*100))/100))) * (1-(calcRes(currentMonsters[x].resist, currentMonsters[x].level, 0, 0)/100)));
@@ -70,25 +133,21 @@
 									if(currentMonsters[x].currHP > 0){
 										if(stun_g > Math.random()){
 											currentMonsters[x].stun = stunDur_g;
-											ss += "<span style='color:#04B1AE'>The "+currentMonsters[x].name+" is stunned by your "+spell.name+"</span><br>";
+											ss += "<span style='color:#04B1AE'>The "+currentMonsters[x].name+"("+(x+1)+") is stunned by your "+spell.name+"</span><br>";
 										}
 										if(weak_g > Math.random()){
 											currentMonsters[x].weak = weakDur_g;
-											ss += "<span style='color:#9DC912'>The "+currentMonsters[x].name+" is weakened by your "+spell.name+"</span><br>";
+											ss += "<span style='color:#9DC912'>The "+currentMonsters[x].name+"("+(x+1)+") is weakened by your "+spell.name+"</span><br>";
 										}
 										if(vuln_g > Math.random()){
 											currentMonsters[x].vuln = vulnDur_g;
-											ss += "<span style='color:#B40800'>The "+currentMonsters[x].name+" is vulnerable from your "+spell.name+"</span><br>";
+											ss += "<span style='color:#B40800'>The "+currentMonsters[x].name+"("+(x+1)+") is vulnerable from your "+spell.name+"</span><br>";
 										}
 									}
 								}
-							}
-							for(var x=0; x < spell.targets; x++){
-								if(currentMonsters[x] != null){
-									ss += getMonsterStatus(x);
-									ss += "<br>";
 								}
 							}
+							
 						}
 						if(bb != "")
 						ss += bb;
@@ -97,6 +156,14 @@
 			}
 			if(!spellCast){
 				ss += getMonsterStatus(0)+"<br>";
+			}
+			else{
+				for(var x=0; x < currentMonsters.length; x++){
+					if(currentMonsters[x] != null){
+						ss += getMonsterStatus(x);
+						ss += "<br>";
+					}
+				}
 			}
 			for(var x=currentMonsters.length-1; x >= 0; x--){
 				if(currentMonsters[x].currHP <= 0){
@@ -141,13 +208,16 @@
 						}
 					}
 					else{
+						if(mc.charClassNum == 10)
+							mc.mana += (mc.functionalMaxMana * .03);
+						
 						ss += "<span style='color:#4A66B4'>The "+currentMonsters[i].name+"("+(i+1)+") lunges at you but you evade the attack.</span><br>";
 					}
 					if(!isDead && i == currentMonsters.length-1)
 						ss += "You are "+getConditionString(mc.functionalMaxHP, mc.hp)+"";
 				}
 				else{
-					ss += "<span style='color:#04B1AE'>The "+currentMonsters[i].name+" is stunned</span><br>";
+					ss += "<span style='color:#04B1AE'>The "+currentMonsters[i].name+"("+(i+1)+") is stunned</span><br>";
 					currentMonsters[i].stun -= 1;
 				}
 			}				
@@ -251,12 +321,15 @@
 				case(z > 49 && z < 66): ss+="yellow'>visibly in pain"; break;
 				case(z > 65 && z < 79): ss+="green'>in okay condition"; break;
 				case(z > 78 && z < 91): ss+="lightgreen'>doing fine"; break;
-				case(z > 90): ss+="lightgreen'>in great condition"; break;
+				case(z > 90 && z < 100): ss+="#50FF64'>in great condition"; break;
+				case(z > 99): ss+="#00FF1E'>in perfect condition"; break;
 			}
 			ss += "</span>";
 			return ss;
 		}
 		function removeMonster(x){
+			if(mc.charClassNum == 7)
+				assassinClassEffect();
 			var locX = zoneHolder.map.x;
 			var locY = zoneHolder.map.y;
 			zoneHolder.rooms[locX][locY].monsters.splice(x,1);
@@ -279,6 +352,19 @@
 					}
 				}
 			}
+		}
+		
+		function assassinClassEffect(){
+			statTimer("BaseDamage", 1.5, "more", 7);
+			statTimer("SpellDamage", 1.5, "more", 7);
+		}
+		function berserkerClassEffect(){
+			var dmgInc = 1+(1-(mc.hp/mc.functionalMaxHP));
+			mc.totBaseDamage = Math.round(mc.totBaseDamage * dmgInc);
+			mc.totFireDamage = Math.round(mc.totFireDamage * dmgInc);
+			mc.totColdDamage = Math.round(mc.totColdDamage * dmgInc);
+			mc.totShockDamage = Math.round(mc.totShockDamage * dmgInc);
+			mc.totDarkDamage = Math.round(mc.totDarkDamage * dmgInc);
 		}
 		
 		function doDamageEffects(){
@@ -308,4 +394,7 @@
 					effectDB[effects[1]](effects[2],effects[3]);
 					break;
 			}
+		}
+		function playerDidDamage(){
+			return (mc.totBaseDamage + mc.totFireDamage + mc.totColdDamage + mc.totShockDamage + mc.totDarkDamage) > 0;
 		}

@@ -5,6 +5,7 @@
 	var combatSkip = false;
 	var currentMonsters = [];
 	var isResting = false;
+	var isManResting = false;
 	var restingMessage = 0;
 	var isDead = false;
 	var deadMessage = false;
@@ -70,6 +71,7 @@
 		loadGame();
 		printMap(zoneHolder.map);
 		displayEntireMap(zoneHolder.map);
+		handleSkillBtn();
 		mainTick(1);
 		saveLoop(10);
 	}
@@ -103,7 +105,12 @@
 					doResting();
 				}
 				else{
-					exploreMap();
+					if(isManResting){
+						doManualRest();
+					}
+					else{
+						exploreMap();
+					}
 				}
 			}
 			
@@ -196,20 +203,41 @@
 	function doResting(){
 		var ss = "";
 		if(restingMessage <= 0){
-			ss = "<br><span style='color:cyan'>You are resting to regain your stamina</span>.<br>";
+			ss = "<br><span style='color:cyan'>You are resting to regain your stamina.</span><br>";
 			if(showAnimation){
 				addText(ss);
 				restingMessage = 1;
 			}
 		}
 		if(mc.stamina >= mc.functionalMaxStamina){
-			ss = "<br><span style='color:cyan'>You stop resting and stand up. Ready to go again!</span>.<br>";
+			ss = "<br><span style='color:cyan'>You stop resting and stand up. Ready to go again!</span><br>";
 			if(showAnimation)
 				addText(ss);
 			isResting = false;
 			restingMessage = 0;
 		}
 		playerRest();
+	}
+	function doManualRest(){
+		var ss = "";
+		if(restingMessage <= 0){
+			ss = "<br><span style='color:cyan'>You sit down to rest.</span><br>";
+			if(showAnimation){
+				addText(ss);
+				restingMessage = 1;
+			}
+		}
+		if(mc.stamina >= mc.functionalMaxStamina){
+			ss = "<br><span style='color:cyan'>You stop resting and stand up. Ready to go again!</span><br>";
+			if(showAnimation)
+				addText(ss);
+			isManResting = false;
+			restingMessage = 0;
+		}
+		playerManRest();
+	}
+	function setManRest(){
+		isManResting = true;
 	}
 	function exploreMap(){
 		mc.stamina -= zoneHolder.pathType;
@@ -235,10 +263,20 @@
 	}
 	function changeClass(){
 		resetMC();
+		for(key in equipHolder){
+			if(equipHolder[key] != null){
+				unequipItem(equipHolder[key].slot);
+			}
+		}
 		equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, ring:null, trinket:null, aura:null};
 		inventoryHolder = new Array();
 		allItemHolder = new Array();
+		spellsHolder = new Array();
 		equipSpells = {slot1: null,slot2: null,slot3: null};
+		getPlayerSpells();
+		generateInventory();
+		genEquipTooltip();
+		
 		changeZone(0);
 	}
 	
@@ -261,6 +299,8 @@
 		localStorage.setItem("charBonus", JSON.stringify(iBonus));
 		localStorage.setItem("charMore", JSON.stringify(iMore));
 		localStorage.setItem("savedTree", selectedSkills);
+		localStorage.setItem("eqSpells", JSON.stringify(equipSpells));
+		localStorage.setItem("spellHold", JSON.stringify(spellsHolder));
 	}
 	function loadGame(){
 		if(localStorage.getItem("endTime"))
@@ -288,11 +328,16 @@
 			iMore = JSON.parse(localStorage.getItem("charMore"));
 		if(localStorage.getItem("savedTree"))
 			selectedSkills = localStorage.getItem("savedTree");
+		if(localStorage.getItem("eqSpells"))
+			equipSpells = JSON.parse(localStorage.getItem("eqSpells"));
+		if(localStorage.getItem("spellHold"))
+			spellsHolder = JSON.parse(localStorage.getItem("spellHold"));
+		
+			
 		generateInventory();
 		genEquipTooltip();
-		
-		loadMultiClass();
-			
+					
+		checkMulticlass();
 		calculateLoadedData();
 		calculateMapData();
 		unlockZone();
@@ -300,6 +345,15 @@
 		handleSkillBtn();
 		loadSavedSkills();
 		saveGame();
+	}
+	function tmc(){
+		mc.level = 39;
+		gainLevel();
+	}
+	function tst(){
+		mc.level = 99;
+		gainLevel();
+		mc.skillsRemain = 65;
 	}
 	function calculateMapData(){
 		for(var i=0; i < mapCompletion.length; i++){

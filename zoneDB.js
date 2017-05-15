@@ -6,7 +6,9 @@
 		"Cliffs,7,0,.1,edge,none,1,.2,1.5,edge,4",
 		"Jungle,8,0,.22,jungle,none,2,.35,2,jungle,5",
 		"City of Zaath,12,0,.1,town,none,1,.1,.5,town,6",
-		"Death's Domain,99,0,.3,edge,none,1,.1,.5,town,7"
+		"Cave of the Lost,20,0,.1,path,none,2,.1,.5,jungle,7",
+		"Overgrowth,30,0,.1,forest,none,1,.1,.5,ledge,8",
+		"Death's Domain,99,0,.3,edge,none,1,.1,.5,town,10"
 	]
 	var mapCompletion = [];
 	var mapUnlock = [];

@@ -90,6 +90,7 @@
 		cursor:default;
 		background-color:black;
 		display:none;
+		z-index:2;
 	}
 	.multiclassMenu{
 		position:absolute;
@@ -97,12 +98,14 @@
 		width:800px;
 		height:600px;
 		color:white;
+		z-index:2;
 
 	}
 	.multiclassHolder{
 		position:absolute;
 		text-align:center;
 		font-size:150%;
+		z-index:2;
 		
 	}
 	.multiclassList{
@@ -118,14 +121,14 @@
 		position:absolute;
 		visibility:hidden;
 		width:300px;
-		height:220px;
+		height:240px;
 		background-color: black;
 		border: solid 1px white;
 		color: #fff;
 		font-size: 15px;
-		bottom:-220px;
+		bottom:-250px;
 		left:-75px;
-		z-index: 1;
+		z-index: 2;
 	}
 	.multiclassList:hover .tooltip{
 		visibility:visible;
@@ -371,7 +374,7 @@
 		position:absolute;
 		z-index: 1;
 		left:772px;
-		width:220px;
+		width:250px;
 		height:300px;
 		border:solid 1px white;
 		background-color:#101010;
@@ -384,7 +387,7 @@
 	}
 	.eqSkills{
 		position:absolute;
-		width:220px;
+		width:250px;
 		height:150px;
 		border-bottom:solid 1px white;
 		background-color:#101010;
@@ -400,7 +403,7 @@
 	.skillColumn .tooltip{
 		position:absolute;
 		visibility:hidden;
-		width:200px;
+		width:230px;
 		background-color: black;
 		border: solid 1px white;
 		color: #fff;
@@ -419,7 +422,7 @@
 	.availSkills{
 		position:absolute;
 		top:151px;
-		width:220px;
+		width:250px;
 		height:150px;
 		color:red;
 		background-color:#101010;
@@ -428,7 +431,7 @@
 	.spellSelectLine .tooltip{
 		position:absolute;
 		visibility:hidden;
-		width:200px;
+		width:230px;
 		background-color: black;
 		border: solid 1px white;
 		color: #fff;
@@ -514,7 +517,28 @@
 		font-size:15px;
 		color:red;
 	}
-	
+	.modSpellLvl{
+		width:340px;
+		text-align:center;
+		font-size:15px;
+		cursor:hand;
+		color:red;
+	}
+	.modSpellLvl .tooltip{
+		position:absolute;
+		visibility:hidden;
+		width:145px;
+		background-color: black;
+		border: solid 1px white;
+		color: #fff;
+		font-size: 12px;
+		top:50px;
+		left:100px;
+		z-index: 1;
+	}
+	.modSpellLvl:hover .tooltip{
+		visibility:visible;
+	}
 	.skillTreeHolder{
 		position:absolute;
 		top:40%;

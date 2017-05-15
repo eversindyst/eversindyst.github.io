@@ -77,15 +77,15 @@
 	function giveItem(){
 		var i = getItem(0);
 		handleItemDrop(i);
-		for(var x = 0; x < 51; x++){
-			i = getItem(1);
-			handleItemDrop(i);
-		}
-		for(var x = 0; x < 111; x++){
+		i = getItem(1);
+		handleItemDrop(i);
 		i = getItem(2);
 		handleItemDrop(i);
-		}
 		i = getItem(3);
+		handleItemDrop(i);
+		i = getItem(4);
+		handleItemDrop(i);
+		i = getItem(5);
 		handleItemDrop(i);
 	}
 	function setSort(x){

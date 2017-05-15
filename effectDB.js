@@ -60,17 +60,17 @@
 	function statTimer(stat, val, MB, dur){
 		var endTime = dur*1000;
 		if(MB == "bonus"){
-			iBonus[stat] += Number(val);
+			cBonus[stat] += Number(val);
 		}
 		else{
-			iMore[stat] *= Number(val);
+			cMore[stat] *= Number(val);
 		}
 		var interval = setTimeout(function() {
 			if(MB == "bonus"){
-				iBonus[stat] -= Number(val);
+				cBonus[stat] -= Number(val);
 			}
 			else{
-				iMore[stat] /= Number(val);
+				cMore[stat] /= Number(val);
 			}
 		}, endTime);
 	}

@@ -7,7 +7,7 @@
 				mc.totFireDamage = dmg;
 			}
 			else{
-				ss = "<span style='color:#266A69'>FIZZZZ- You do not have enough mana to cast Fireball</span>";
+				ss = "<span style='color:#266A69'>FIZZZZ- You do not have enough mana to cast Fireball</span><br>";
 			}
 			
 			return ss;
@@ -26,7 +26,7 @@
 				vulnDur_g = 2;
 			}
 			else{
-				ss = "<span style='color:#266A69'>You try but you do not have enough stamina to Kick</span>";
+				ss = "<span style='color:#266A69'>You try but you do not have enough stamina to Kick</span><br>";
 			}
 			return ss;
 		}
@@ -37,7 +37,7 @@
 			return dmg;
 		},
 		Kick: function(s){
-			var dmg = Math.floor((s.damage * Math.pow(1.05,s.level) + (mc.functionalBaseDamage * 1.2)) * s.effectiveness * s.multi);
+			var dmg = Math.floor((((s.damage*(s.level/2))+(mc.functionalBaseDamage * 1.15))/2) * Math.pow(1.04,s.level) * s.effectiveness * s.multi);
 			return dmg;
 		}
 	};
@@ -54,8 +54,24 @@
 	var spellList = {
 		Warrior : "1:Kick,2:Fireball",
 		Mage : "1:Fireball",
-		Rogue : "",
-		Monk : ""
+		Rogue : "1:Kick",
+		Monk : "1:Kick",
+		Fencer : "1:Kick",
+		Tactician : "1:Kick",
+		Myrmidon : "1:Kick",
+		Assassin : "1:Kick",
+		Alchemist : "1:Kick",
+		Shadow : "1:Kick",
+		Illusionist : "1:Kick",
+		Warlock : "1:Kick",
+		Elementalist : "1:Kick",
+		Berserker : "1:Kick",
+		Shaman : "1:Kick",
+		Psion : "1:Kick",
+		Hero : "1:Kick",
+		Ninja : "1:Kick",
+		Sorcerer : "1:Kick",
+		Avatar : "1:Kick"
 	};
 	var modList1 = {
 		Fireball: "Split Fire,Empower,Blaze",
@@ -89,3 +105,11 @@
 		'Flutter Kick': "Kick can now hit up to 3 targets",
 		'Iron Boot': "Kick's stamina cost is doubled but deals 50% more damage"
 	};
+	function makeNewSpell(sn){
+		var spellHolder;
+		switch(sn){
+			case("Fireball") : spellHolder = new spell("Fireball",3,3,0,7,1,40,2); break;
+			case("Kick") : spellHolder = new spell("Kick",1,0,2,1,.8,20,2.63); break;
+		}
+		return spellHolder;
+	}

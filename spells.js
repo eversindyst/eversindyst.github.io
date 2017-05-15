@@ -36,14 +36,15 @@
 		}
 		return flag;
 	}
-	
-	function makeNewSpell(sn){
-		var spellHolder;
-		switch(sn){
-			case("Fireball") : spellHolder = new spell("Fireball",3,3,0,7,1,40,2); break;
-			case("Kick") : spellHolder = new spell("Kick",1,0,2,1,.8,70,2.75); break;
+
+	function spellLevelUp(spell){
+		if(spell.level < 20){
+			spell.level += 1;
+			spell.chnc = Math.round((spell.chnc + spell.chncG) * 100)/100;
 		}
-		return spellHolder;
+	}
+	function castSelectedSpells(spell){
+		return spellDB[spell.name](spell);
 	}
 	
 	function spell(n,t,mc,sc,bd,e,c,cg){
@@ -61,16 +62,6 @@
 		this.mod3 = "Locked";
 		this.mod4 = "Locked";
 		this.multi = 1;
-		
-		this.levelUp = function(){
-			if(this.level < 20){
-				this.level += 1;
-				this.chnc += this.chncG;
-			}
-		}
-		this.cast = function(){
-			return spellDB[this.name](this);
-		}
 	}
 	
 	function buildSpellMod(spell, spellNum){
@@ -84,7 +75,18 @@
 		var m3List = modList3[name];
 		var m4List = modList4[name];
 		
-		$('#modSpellName').html(name);
+		$('#modSpellName').html(name+", Level "+spell.level);
+		if(spell.level == 20){
+			$('#modSpellLvl:visible').toggle();
+		}
+		else{
+			$('#modSpellLvl').unbind("click");
+			$('#modSpellLvl').click(function(){
+			buySpellLvlUp(spellNum);
+			});
+			$('#modSpellLvlToolTip').html(buildSpellLvlTT(spell.level));
+		}
+		
 		$('#mod1Name').html(buildModNameTT(m1, 1, spellNum));
 		$('#mod2Name').html(buildModNameTT(m2, 2, spellNum));
 		$('#mod3Name').html(buildModNameTT(m3, 3, spellNum));
@@ -210,7 +212,7 @@
 		for(var x=0; x< 3; x++){
 			if(equipSpells["slot"+x] != null){
 				spellHolder = equipSpells["slot"+x];
-				ss = spellHolder.name+"<span class='tooltip'>"+spellDesc[spellHolder.name](spellHolder)+"</span>";
+				ss = spellHolder.name+", Level "+spellHolder.level+"<span class='tooltip'>"+spellDesc[spellHolder.name](spellHolder)+"</span>";
 				$('#skill'+x).html(ss);
 			}
 			else{
@@ -220,7 +222,7 @@
 		ss = "";
 		for(var x=0; x < spellsHolder.length; x++){
 			spellHolder = spellsHolder[x];
-			ss += "<span class='spellSelectLine' onClick='equipSelectedSpell("+x+")'>"+(x+1)+". "+spellHolder.name+"<span class='tooltip'>"+spellDesc[spellHolder.name](spellHolder)+"</span></span><br>";
+			ss += "<span class='spellSelectLine' onClick='equipSelectedSpell("+x+")'>"+(x+1)+". "+spellHolder.name+", Level "+spellHolder.level+"<span class='tooltip'>"+spellDesc[spellHolder.name](spellHolder)+"</span></span><br>";
 		}
 		$('#avaliableSkills').html(ss);
 	}
@@ -244,6 +246,24 @@
 			}
 		}
 		buildSpellMenuList();
+	}
+	function buySpellLvlUp(x){
+		var spell = equipSpells["slot"+x];
+		var lvl = spell.level;
+		if(mc.gold >= calcSpellLvlCost(lvl)){
+			mc.gold -= calcSpellLvlCost(lvl);
+			spellLevelUp(spell)
+			buildSpellMod(spell, x)
+		}
+	}
+	function buildSpellLvlTT(lvl){
+		var ss = "Leveling up this spell will cost ";
+		var cost = calcSpellLvlCost(lvl);
+		ss += shortenLargeNumber(cost)+" Platinum";
+		return ss;
+	}
+	function calcSpellLvlCost(lvl){
+		return Math.round(90+(2 * (Math.pow((lvl * .87), 4.1))));
 	}
 	/*
 	var fireball = new spell("Fireball",3,3,0,7,1,40,2);

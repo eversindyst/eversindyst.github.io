@@ -2,7 +2,7 @@
 	var inventoryHolder = new Array();
 	var allItemHolder = new Array();
 	
-	function item(id, slot, name, baseStats, effects, lvlStats, upgStats, upgName, upgEffects, xpMult, xpGain, is2H){
+	function item(id, slot, name, baseStats, effects, lvlStats, upgStats, upgName, upgEffects, xpMult, xpGain, is2H, isOH){
 		this.id = id
 		this.xpMult = xpMult;
 		this.xpGain = xpGain;
@@ -23,7 +23,20 @@
 			this.is2H = false;
 		}
 		else{
-			this.is2H = true;
+			this.is2H = is2H;
+		}
+		if(isOH == null){
+			this.isOH = false;
+		}
+		else{
+			this.isOH = isOH;
+		}
+	}
+	function checkDualWield(){
+		mc.dualWield = false;
+		if(equipHolder["mainHand"] != null && equipHolder["offHand"] != null){
+			if(equipHolder["offHand"].isOH)
+				mc.dualWield = true;
 		}
 	}
 	function giveItemXP(item){
@@ -79,6 +92,7 @@
 		item.equip = true;
 		equipHolder[item.slot] = item;
 		genItemTooltip(item);
+		checkDualWield();
 	}
 	function genItemTooltip(item){
 		var slot = item.slot;
@@ -157,6 +171,7 @@
 			removeItemTT(item);
 			item.equip = false;
 			generateInventory();
+			checkDualWield();
 		}
 	}
 	function removeItemTT(item){
