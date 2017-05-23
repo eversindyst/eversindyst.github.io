@@ -12,12 +12,12 @@
 		hp : 112,
 		maxHP : 108,
 		hpRPer : .0015,
-		mana : 50,
-		maxMana : 40,
-		manaRPer : .00083,
+		mana : 60,
+		maxMana : 60,
+		manaRPer : .00175,
 		stamina : 150,
 		maxStamina : 141,
-		staminaRPer : .0017,
+		staminaRPer : .0019,
 		strength : 10,	//Every 2 Strength gives 1 base damage. Every 5 Strength gives 1 hp
 		intelligence : 10, //Every 2 Intelligence gives 1% spell damage. Every 5 intelligence gives 2 mana
 		dexterity : 10, //Every 2 agility gives 1 stamina. Every 5 agility gives 1% increase crit, 5% crit damage.
@@ -86,7 +86,7 @@
 		mc.exp = 0;
 		mc.TNL = 50;
 		mc.maxHP = 108;
-		mc.maxMana = 40;
+		mc.maxMana = 60;
 		mc.maxStamina = 141;
 		mc.skillsRemain = 1;
 		mc.dualWield = false;
@@ -104,6 +104,20 @@
 		for(var key in cMore){
 			cMore[key] = 1;
 		}
+		
+		for(key in equipHolder){
+			if(equipHolder[key] != null){
+				unequipItem(equipHolder[key].slot);
+			}
+		}
+		equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, ring:null, trinket:null, aura:null};
+		inventoryHolder = new Array();
+		allItemHolder = new Array();
+		spellsHolder = new Array();
+		equipSpells = {slot1: null,slot2: null,slot3: null};
+		getPlayerSpells();
+		generateInventory();
+		genEquipTooltip();
 		
 	}
 	
@@ -210,20 +224,20 @@
 		mc.functionalWisdom = Math.round(Number((mc.wisdom + bonus["Wis"]) * more["Wis"]));
 		mc.functionalAgility = Math.round(Number((mc.agility + bonus["Agi"]) * more["Agi"]));
 		mc.functionalMaxHP = Math.round(Number((mc.maxHP + bonus["HP"])*more["HP"]*(1+((mc.functionalEndurance/5)/100))));
-		mc.functionalMaxMana = Math.round(Number((mc.maxMana + bonus["Mana"])*more["Mana"]*(1+((2*(mc.functionalWisdom/5))/100))));
+		mc.functionalMaxMana = Math.round(Number((mc.maxMana + bonus["Mana"])*more["Mana"]*(1+(((mc.functionalWisdom/5))/100))));
 		mc.functionalMaxStamina = Math.round(Number((mc.maxStamina +bonus["Stamina"])*more["Stamina"]*(1+((mc.functionalAgility/5)/100))));
 		mc.hpRegen = Math.round(Number((mc.functionalMaxHP * (mc.hpRPer * more["HReg"] * (1+(mc.functionalEndurance/100)))))*1000)/1000;
 		mc.manaRegen = Math.round(Number((mc.functionalMaxMana * (mc.manaRPer * more["MReg"] * (1+(mc.functionalWisdom/100)))))*1000)/1000;
 		mc.staminaRegen = Math.round(Number((mc.functionalMaxStamina * (mc.staminaRPer * more["SReg"] * (1+(mc.functionalAgility/100)))))*1000)/1000;
 		
-		mc.functionalBaseDamage = Math.round(Number((mc.baseDamage + Math.floor(mc.functionalStrength/5) + bonus["BaseDamage"])*more["BaseDamage"]*(1+((mc.functionalStrength/2)/100))));
-		mc.functionalSpellDamage = Math.round(Number((mc.spellDamage + Math.floor(mc.functionalIntelligence/2) + bonus["SpellDamage"])*more["SpellDamage"]));
-		mc.functionalFireDamage = Math.round(Number((mc.fireDamage + Math.floor((mc.functionalIntelligence/5) * 2) + bonus["FireDamage"])*more["FireDamage"]));
-		mc.functionalColdDamage = Math.round(Number((mc.coldDamage + Math.floor((mc.functionalIntelligence/5) * 2) + bonus["ColdDamage"])*more["ColdDamage"]));
-		mc.functionalShockDamage = Math.round(Number((mc.shockDamage + Math.floor((mc.functionalIntelligence/5) * 2) + bonus["ShockDamage"])*more["ShockDamage"]));
+		mc.functionalBaseDamage = Math.round(Number((mc.baseDamage + (mc.functionalStrength/5) + bonus["BaseDamage"])*more["BaseDamage"]*(1+((mc.functionalStrength/2)/100))));
+		mc.functionalSpellDamage = Math.round(Number((mc.spellDamage + (mc.functionalIntelligence/2) + bonus["SpellDamage"])*more["SpellDamage"]));
+		mc.functionalFireDamage = Math.round(Number((mc.fireDamage + ((mc.functionalIntelligence/5) * 2) + bonus["FireDamage"])*more["FireDamage"]));
+		mc.functionalColdDamage = Math.round(Number((mc.coldDamage + ((mc.functionalIntelligence/5) * 2) + bonus["ColdDamage"])*more["ColdDamage"]));
+		mc.functionalShockDamage = Math.round(Number((mc.shockDamage + ((mc.functionalIntelligence/5) * 2) + bonus["ShockDamage"])*more["ShockDamage"]));
 		mc.functionalDarkDamage = Math.round(Number((mc.darkDamage + bonus["DarkDamage"])*more["DarkDamage"]));
-		mc.functionalCritChnc = Math.round(Number((mc.critChnc + Math.floor(mc.functionalDexterity/2) + bonus["CritChnc"])*more["CritChnc"]));
-		mc.functionalCritDmg = Math.round(Number((mc.critDmg + (Math.floor(mc.functionalDexterity/5)*5) + bonus["CritDmg"])*more["CritDmg"]));
+		mc.functionalCritChnc = Math.round(Number((mc.critChnc + (mc.functionalDexterity/2) + bonus["CritChnc"])*more["CritChnc"]));
+		mc.functionalCritDmg = Math.round(Number((mc.critDmg + ((mc.functionalDexterity/5)*5) + bonus["CritDmg"])*more["CritDmg"]));
 		mc.functionalArmor = Math.round(Number((mc.armor + bonus["Armor"])*more["Armor"]));
 		mc.functionalEvasion = Math.round(Number((mc.evasion + bonus["Evasion"])*more["Evasion"]));
 		mc.functionalResist = Math.round(Number((mc.resist + bonus["Resist"])*more["Resist"]));
@@ -277,7 +291,7 @@
 		var oldM = mc.maxMana;
 		var oldS = mc.maxStamina;
 		mc.maxHP = 108 + Math.round(mc.level * 7.3);
-		mc.maxMana = 40 + Math.round(mc.level * 4.4);
+		mc.maxMana = 60 + Math.round(mc.level * 5.5);
 		mc.maxStamina = 141 + Math.round(mc.level * 5.7);
 		var ss = "<br><span style='color:red'>Ding! Congratulations, you are now level "+mc.level+"<br>You gain "+(mc.maxHP - oldHp)+" Hp, "+(mc.maxMana - oldM)+" Mana, and "+(mc.maxStamina-oldS)+" Stamina.</span><br>";
 		calculateFunctionalStats()

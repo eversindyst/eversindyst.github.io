@@ -408,7 +408,7 @@
 		border: solid 1px white;
 		color: #fff;
 		font-size: 12px;
-		top:20px;
+		top:25px;
 		left:-40px;
 		z-index: 1;
 	}
@@ -454,6 +454,8 @@
 		background-size:100%;
 		color:white;
 		display:none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
 	}
 	.modName{
 		text-align:center;
@@ -605,6 +607,18 @@
 		border: 1px solid white;
 		background-color: black;
 		z-index:10;
+		display:none;
+	}
+	.firstMenu{
+		position:absolute;
+		width:99%;
+		height:98%;
+		overflow-y:scroll;
+		color:white;
+		font-size:200%;
+		background-color: black;
+		text-align:center;
+		z-index:5;
 		display:none;
 	}
 	summary:: -webkit-details-marker{

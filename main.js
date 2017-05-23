@@ -65,10 +65,26 @@
 	
 	var lookupTable;
 	
+	function pickClass(x){
+		switch(x){
+			case(0): iBonus["Str"] +=2; iBonus["End"] +=2; mc.charClass = "Warrior"; mc.charClassNum = 0; mc.baseClassNum = 0; mc.classPath = "0"; break;
+			case(1): iBonus["Int"] +=4; mc.charClass = "Mage"; mc.charClassNum = 1; mc.baseClassNum = 1; mc.classPath = "1"; break;
+			case(2): iBonus["Dex"] +=1; iBonus["Agi"] +=3; mc.charClass = "Rogue"; mc.charClassNum = 2; mc.baseClassNum = 2; mc.classPath = "2"; break;
+			case(3): iBonus["Str"] +=1; iBonus["Wis"] +=3; mc.charClass = "Monk"; mc.charClassNum = 3; mc.baseClassNum = 3; mc.classPath = "3"; break;
+		}
+		$('#firstTimeMenu').toggle();
+		resetMC();
+		startGame();
+	}
+	function showClassHelp(){
+		$('#classHelpPage').toggle();
+	}
 	function pageInit(){
 		endTime = Date.now() + 1000;
 		zoneHolder = getZone(0);
 		loadGame();
+	}
+	function startGame(){
 		printMap(zoneHolder.map);
 		displayEntireMap(zoneHolder.map);
 		handleSkillBtn();
@@ -263,26 +279,13 @@
 	}
 	function changeClass(){
 		resetMC();
-		for(key in equipHolder){
-			if(equipHolder[key] != null){
-				unequipItem(equipHolder[key].slot);
-			}
-		}
-		equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, ring:null, trinket:null, aura:null};
-		inventoryHolder = new Array();
-		allItemHolder = new Array();
-		spellsHolder = new Array();
-		equipSpells = {slot1: null,slot2: null,slot3: null};
-		getPlayerSpells();
-		generateInventory();
-		genEquipTooltip();
-		
 		changeZone(0);
 	}
-	
 	function resetGame(){
-		localStorage.clear();
-		location.reload();
+		if(confirm("Are you sure you want to reset your game?")){
+			localStorage.clear();
+			location.reload();
+		}
 	}
 	
 	function saveGame(){
@@ -301,50 +304,57 @@
 		localStorage.setItem("savedTree", selectedSkills);
 		localStorage.setItem("eqSpells", JSON.stringify(equipSpells));
 		localStorage.setItem("spellHold", JSON.stringify(spellsHolder));
+		localStorage.setItem("firstTime", "true");
 	}
 	function loadGame(){
-		if(localStorage.getItem("endTime"))
-			endTime = localStorage.getItem("endTime");
-	//	endTime = Number(Date.now()-(60*1000*60*24));
-		if(localStorage.getItem("zone"))
-			zoneHolder = getZone(localStorage.getItem("zone"));
-		if(localStorage.getItem("2player"))
-			mc = JSON.parse(localStorage.getItem("2player"));
-		if(localStorage.getItem("isDead"))
-			isDead = (localStorage.getItem('isDead') == 'true');
-		if(localStorage.getItem("isResting"))
-			isResting = (localStorage.getItem('isResting') == 'true');
-		if(localStorage.getItem("equipItem"))
-			equipHolder = JSON.parse(localStorage.getItem("equipItem"));
-		if(localStorage.getItem("invItem"))
-			inventoryHolder = JSON.parse(localStorage.getItem("invItem"));
-		if(localStorage.getItem("allItem"))
-			allItemHolder = JSON.parse(localStorage.getItem("allItem"));	
-		if(localStorage.getItem("mapProg"))
-			mapCompletion = JSON.parse(localStorage.getItem("mapProg"));
-		if(localStorage.getItem("charBonus"))
-			iBonus = JSON.parse(localStorage.getItem("charBonus"));
-		if(localStorage.getItem("charMore"))
-			iMore = JSON.parse(localStorage.getItem("charMore"));
-		if(localStorage.getItem("savedTree"))
-			selectedSkills = localStorage.getItem("savedTree");
-		if(localStorage.getItem("eqSpells"))
-			equipSpells = JSON.parse(localStorage.getItem("eqSpells"));
-		if(localStorage.getItem("spellHold"))
-			spellsHolder = JSON.parse(localStorage.getItem("spellHold"));
-		
+		if(localStorage.getItem("firstTime")){
+			if(localStorage.getItem("endTime"))
+				endTime = localStorage.getItem("endTime");
+		//	endTime = Number(Date.now()-(60*1000*60*24));
+			if(localStorage.getItem("zone"))
+				zoneHolder = getZone(localStorage.getItem("zone"));
+			if(localStorage.getItem("2player"))
+				mc = JSON.parse(localStorage.getItem("2player"));
+			if(localStorage.getItem("isDead"))
+				isDead = (localStorage.getItem('isDead') == 'true');
+			if(localStorage.getItem("isResting"))
+				isResting = (localStorage.getItem('isResting') == 'true');
+			if(localStorage.getItem("equipItem"))
+				equipHolder = JSON.parse(localStorage.getItem("equipItem"));
+			if(localStorage.getItem("invItem"))
+				inventoryHolder = JSON.parse(localStorage.getItem("invItem"));
+			if(localStorage.getItem("allItem"))
+				allItemHolder = JSON.parse(localStorage.getItem("allItem"));	
+			if(localStorage.getItem("mapProg"))
+				mapCompletion = JSON.parse(localStorage.getItem("mapProg"));
+			if(localStorage.getItem("charBonus"))
+				iBonus = JSON.parse(localStorage.getItem("charBonus"));
+			if(localStorage.getItem("charMore"))
+				iMore = JSON.parse(localStorage.getItem("charMore"));
+			if(localStorage.getItem("savedTree"))
+				selectedSkills = localStorage.getItem("savedTree");
+			if(localStorage.getItem("eqSpells"))
+				equipSpells = JSON.parse(localStorage.getItem("eqSpells"));
+			if(localStorage.getItem("spellHold"))
+				spellsHolder = JSON.parse(localStorage.getItem("spellHold"));
 			
-		generateInventory();
-		genEquipTooltip();
-					
-		checkMulticlass();
-		calculateLoadedData();
-		calculateMapData();
-		unlockZone();
-		getPlayerSpells();
-		handleSkillBtn();
-		loadSavedSkills();
-		saveGame();
+				
+			generateInventory();
+			genEquipTooltip();
+						
+			checkMulticlass();
+			calculateLoadedData();
+			calculateMapData();
+			unlockZone();
+			getPlayerSpells();
+			handleSkillBtn();
+			loadSavedSkills();
+			saveGame();
+			startGame();
+		}
+		else{
+			$('#firstTimeMenu').toggle();
+		}
 	}
 	function tmc(){
 		mc.level = 39;
@@ -354,6 +364,8 @@
 		mc.level = 99;
 		gainLevel();
 		mc.skillsRemain = 65;
+		mc.gold = 12313;
+		mc.gold *= 12389;
 	}
 	function calculateMapData(){
 		for(var i=0; i < mapCompletion.length; i++){

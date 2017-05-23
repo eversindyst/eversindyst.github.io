@@ -4,7 +4,7 @@
 		"2,gloves,Iron Gloves,Armor:1,,BaseDamage:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
 		"3,gloves,Steel Gloves,Armor:2;BaseDamage:2,,BaseDamage:1;Armor:1,BaseDamage:15;HP:10,Burning Helmet of Rage,,.95,5",
 		"4,mainHand,Longsword,BaseDamage:3;Str:3,Might:statUpBonus:Str:5:20:4,BaseDamage:1;HP:1,BaseDamage:10;Str:5;HP:10,Grand Longsword,,.95,5",
-		"5,offHand,Offsword,BaseDamage:3;Str:3,,BaseDamage:1;HP:1,BaseDamage:10;Str:5;HP:10,Grand Offsword,,.95,5,,true"
+		"5,offHand,Offsword,BaseDamage:3;Str:3,Frozen Blade:addedDamage:30:cold,BaseDamage:1;HP:1,BaseDamage:10;Str:5;HP:10,Grand Offsword,,.95,5,,true"
 	];
 
 	function getItem(x){

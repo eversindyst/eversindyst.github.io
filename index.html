@@ -455,8 +455,8 @@
 					does not miss then the calculated damage is tested against the targets defenses to determine the total damage done.<br><br>
 					Each damage type performs differently:<br><br>
 					<span style="color:white">Physical damage</span> has a range of +/- 30% of the base value. It is then reduced by <span style="color:brown">Armor</span> and further reduced by <span style="color:lightblue">Resist</span>.<br><br>
-					<span style="color:red">Fire damage</span> deals 1% more damage per 1% of the targets max <span style="color:#204FAF">HP</span> the hit would originally do. Example, a hit for <span style="color:red">50</span> damage on a target with <span style="color:#204FAF">100 max HP</span> will take <span style="color:red">75</span> damage before resistances.<br><br>
-					<span style="color:cyan">Cold damage</span> penetrates <span style="color:cyan">1 Cold Resist</span> per 1% of the targets max <span style="color:#204FAF">HP</span> the hit would originally do. Example, a hit for <span style="color:cyan">50</span> damage on a target with <span style="color:#204FAF">100 max HP</span> will take <span style="color:cyan">75</span> damage at <span style="color:cyan">0 Cold Resist</span> and <span style="color:cyan">50</span> damage at <span style="color:cyan">50 Cold Resist</span>.<br><br> 
+					<span style="color:red">Fire damage</span> deals 1% more damage per 2% of the targets max <span style="color:#204FAF">HP</span> the hit would originally do. Example, a hit for <span style="color:red">50</span> damage on a target with <span style="color:#204FAF">100 max HP</span> will take <span style="color:red">75</span> damage before resistances.<br><br>
+					<span style="color:cyan">Cold damage</span> penetrates <span style="color:cyan">1 Cold Resist</span> per 2% of the targets max <span style="color:#204FAF">HP</span> the hit would originally do. Example, a hit for <span style="color:cyan">50</span> damage on a target with <span style="color:#204FAF">100 max HP</span> will take <span style="color:cyan">75</span> damage at <span style="color:cyan">0 Cold Resist</span> and <span style="color:cyan">50</span> damage at <span style="color:cyan">50 Cold Resist</span>.<br><br> 
 					<span style="color:yellow">Shock damage</span> can deal anywhere from 5% to 280% of the initial hit before resistances. Example a <span style="color:yellow">50</span> base hit can range between <span style="color:yellow">3</span> and <span style="color:yellow">189</span> damage before resistances.<br><br>
 					<span style="color:purple">Dark damage</span> is not reduced by the <span style="color:lightblue">Resist</span> stat.
 					</span>
@@ -499,13 +499,136 @@
 					do nothing on that turn. There are ways to reduce or change the stat that is used to perform movement, basic attacks, and skills/spells.<br><br>
 					If your character's <span style="color:#204FAF">HP</span> hits 0 in combat they will die. While your character is dead all they will be able to do is lie there until
 					they have regenerated all of their <span style="color:#204FAF">HP</span> and then they will be revived. Upon revival they will start the current zone over again.<br><br>
-					You can manually rest by clicking the "REST" button on the right. It will make your character sit and rest until they are at maximum <span style="color:#204FAF">Stamina</span>.
+					You can manually rest by clicking the "REST" button on the right. It will make your character sit and rest until they are at maximum <span style="color:#204FAF">Stamina</span> and <span style="color:#204FAF">HP</span>.
 					During the manual rest the character will regen <span style="color:#204FAF">HP</span> and <span style="color:#204FAF">Stamina</span> at an increased rate.
 				</span>
 				</details>
 			</details>
 		</details>
+		<br><br><span style="text-align:center;font-size:150%;cursor:hand;" onclick="resetGame()">Reset Game</span>
 		</div>
+		</div>
+		<div id="firstTimeMenu" class="firstMenu">
+			Welcome to Argtura!<br>
+			Please select your class:<br><br>
+			<span style="cursor:hand;" onClick="pickClass(0)">1. Warrior</span><br>
+			<span style="cursor:hand;" onClick="pickClass(1)">2. Mage</span><br>
+			<span style="cursor:hand;" onClick="pickClass(2)">3. Rogue</span><br>
+			<span style="cursor:hand;" onClick="pickClass(3)">4. Monk</span><br><br>
+			<span style="cursor:hand;" onClick="showClassHelp()">Help</span>
+		</div>
+		<div id="classHelpPage" class="helpMenu">
+		<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="showClassHelp()"></span>
+		<details>
+			<summary style="margin-left:50px;">Class</summary>
+			<details>
+				<summary style="margin-left:80px;">Base Classes</summary>
+				<span style="position:relative;left:110px;width:1050px;display:block">There are 4 base classes in the world of Argtura. The base classes have different
+				strengths, weaknesses, and starting stats.<br><br>
+				Warrior: The Warrior class excels in strong basic attacks and utilizes skills for support. The Warrior starts with +2 to <span style="color:grey">Strength</span> and <span style="color:grey">Endurance</span>.<br>
+				Rogue: The Rogue class has strong basic attacks but relies on skills to make it through life. The Rogue starts with +1 to <span style="color:grey">Dexterity</span> and +3 to <span style="color:grey">Agility</span>.<br>
+				Mage: The Mage class has very low basic damage but makes up for this with a powerful and vast arsenal of spells. The Mage starts with +4 to <span style="color:grey">Intelligence</span>.<br>
+				Monk: The Monk class utilizes the elements to empower its basic attacks and has the support of spells. The Monk starts with +3 to <span style="color:grey">Wisdom</span> and +1 to <span style="color:grey">Strength</span>.<br>
+			</details>
+			<details>
+				<summary style="margin-left:80px;">Multiclasses</summary>
+				<span style="position:relative;left:110px;width:1050px;display:block">Upon reaching <span style="color:#01FF00">Level</span> 40 a new menu will show up called "CLASS". This menu will bring up the
+				multiclass screen. Multiclassing will allow you to change into another class to further improve your power. There is a <span style="color:#C5C5C5">Platinum</span> cost
+				associated wtih multiclassing that will increase each time you multiclass. Each mutliclass has a base class tied to it. You can only be each base class once except for your
+				starting class. Once you have been each base class you will be able to multiclass one final time back to your original base class.<br><br>Example: If you start as the Mage class, the first time you multiclass you will be able to choose from a Warrior, Rogue, or Monk base class. If you pick Warrior
+				then the next time you multiclass you will only be able to choose from a Rogue or Monk base class.<br><br>When you multiclass you will be reset to <span style="color:#01FF00">Level</span> 1 and your item progress will also be reset. You do not keep your bonuses from your talent tree.
+				Each multiclass will have bonuses that are only present while you are still that class along with bonuses that will last through multiclassing.<br><br>
+				</span>
+				<details>
+					<summary style="margin-left:110px;">List of Multiclasses</summary>
+					<details>
+					<summary style="margin-left:140px;">Warrior Base Class</summary>
+					<span style="position:relative;left:170px;width:950px;display:block">
+					Fencer: The Fencer is a Warrior who has a Rogue background. They specialize in dual wielding and attacking ferociously. Fencers gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Fencers gain 20% increased basic attack damage while dual wielding.</span><br>
+					<span style='color:lightgreen'>Legacy Fencers gain 5% additional damage reduction from <span style="color:brown">Armor</span>.<br>
+					Legacy Fencers gain 3% increased <span style="color:grey">Dexterity</span> and 6% increased <span style="color:grey">Strength</span>.</span><br><br>
+					Tactician: The Tactician is a Warrior who has studied in the art of the Mage. The Tactician utilizes their perception and wit to perform devastating blows to their enemies. Tacticians gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Tactician's skills consume up to 5% of maximum <span style="color:#204FAF">Mana</span> to deal 1% increased damage per 2 <span style="color:#204FAF">Mana</span> consumed</span>.<br>
+					<span style='color:lightgreen'>Legacy Tacticians gain 10% increased maximum <span style="color:#204FAF">Mana</span>.<br>
+					Legacy Tacticians gain 6% increased <span style="color:grey">Wisdom</span> and 3% increased <span style="color:grey">Endurance</span>.</span><br><br>
+					Myrmidon: The Myrmidon is a Warrior who has fine tuned their combat ability by first being a Monk. The Myrmidon hones in on their surroundings to strike precisely and efficiently.
+					Myrmidons gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Myrmidons are healed for 50% of the damage their basic attack Critical Strikes do.</span><br>
+					<span style='color:lightgreen'>Legacy Myrmidons gain 3% increased <span style="color:orange">Critical Strike Chance</span>.<br>
+					<span style='color:lightgreen'>Legacy Myrmidons gain 3% increased <span style="color:grey">Dexterity</span> and 6% increased <span style="color:grey">Agility</span>.</span><br><br>
+					Hero: The hero is a Warrior who has mastered the base classes. The Hero accumulates all it has learned to push its expertise to the next level. Heroes gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Heroes have 200% increased <span style="color:#204FAF">HP Regen</span>.</span><br>
+					<span style='color:lightblue'>Current class Heroes have 15% increased <span style="color:white">Base Damage</span>.</span><br>
+					<span style='color:lightblue'>Current class Heroes gain 15% increased <span style="color:grey">Strength</span>.</span><br>
+					</span>
+					</details>
+					<details>
+					<summary style="margin-left:140px;">Rogue Base Class</summary>
+					<span style="position:relative;left:170px;width:950px;display:block">
+					Assassin: The Assassin is a Rogue who has combat expertise from the Warrior class. They specialize in dispatching targets quickly and efficiently. Assassins gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Assassins gain 50% increased damage for 7 seconds after killing an enemy. This effect stacks.</span><br>
+					<span style='color:lightgreen'>Legacy Assassins gain 25% <span style="color:orange">Critical Strike Damage</span>.<br>
+					Legacy Assassins gain 6% increased <span style="color:grey">Dexterity</span> and 3% increased <span style="color:grey">Strength</span>.</span><br><br>
+					Alchemist: The Alchemist is a Rogue who have expansive mental capacity from the Mage class. They use potions to harm foes and help themselves. Alchemist gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Alchemists have a 20% chance to use a random potion when using a skill.</span><br>
+					<span style='color:lightgreen'>Legacy Alchemists gain 5% additional damage reduction from <span style="color:lightblue">Resist</span>.<br>
+					Legacy Alchemists gain 3% increased <span style="color:grey">Agility</span> and 6% increased <span style="color:grey">Wisdom</span>.</span><br><br>
+					Shadow: The Shadow is a Rogue who has reached past the elemental connections of a Monk and entered the darkness. Shadows gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Shadows deal 10% additional damage as <span style="color:purple">Dark Damage</span> with skills.</span><br>
+					<span style='color:lightgreen'>Legacy Shadows gain 10% increased maximum <span style="color:#204FAF">Stamina</span>.<br>
+					Legacy Shadows gain 3% increased <span style="color:grey">Agility</span>, <span style="color:grey">Dexterity</span>, and <span style="color:grey">Strength</span>.</span><br><br>
+					Ninja: The Ninja is a Rogue who has previously mastered all of the base classes. By analysing the enemy the Ninja can delivery swift and deadly blows. Ninjas gain the following bonuses:<br>
+					<span style='color:lightblue'>Ninja skills have no resource cost.</span><br>
+					<span style='color:lightblue'>Current class Ninjas have 20% increased <span style="color:orange">Critical Strike Damage</span>.</span><br>
+					<span style='color:lightblue'>Current class Ninjas gain 15% increased <span style="color:grey">Dexterity</span>.</span><br>
+					</span>
+					</details>
+					<details>
+					<summary style="margin-left:140px;">Mage Base Class</summary>
+					<span style="position:relative;left:170px;width:950px;display:block">
+					Illusionist: The Illusionist is a Mage who has lived on the battlefield as a Warrior. They specialize in deceptive and powerful magic. Illusionists gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Illusionists restore 3% of their maximum <span style="color:#204FAF">Mana</span> when they evade an attack.</span><br>
+					<span style='color:lightgreen'>Legacy Illusionists gain 5% additional chance to <span style="color:lightblue">Evade</span> attacks.<br>
+					Legacy Illusionists gain 6% increased <span style="color:grey">Intelligence</span> and 3% increased <span style="color:grey">Wisdom</span>.</span><br><br>
+					Warlock: The Warlock is a Mage with a background in the cunning arts of the Rogue. Warlocks twist their magic and life force together to create powerful spells. Warlocks gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Warlock's spells consume up to 5% of maximum <span style="color:#204FAF">HP</span> to deal 1% increased damage per 3 <span style="color:#204FAF">HP</span> consumed</span>.<br>
+					<span style='color:lightgreen'>Legacy Warlocks gain 10% increased <span style="color:#204FAF">HP</span>.<br>
+					Legacy Warlocks gain 6% increased <span style="color:grey">Endurance</span> and 3% increased <span style="color:grey">Intelligence</span>.</span><br><br>
+					Elementalist: The Elementalist is a Mage who uses their knowledge as a Monk to become fully intuned with the elements. Elementalists gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Elementalist's spells deal 30% additional damage as a random element.</span><br>
+					<span style='color:lightgreen'>Legacy Elementalists gain a 5% increase to all elemental resistance.<br>
+					Legacy Elementalists gain 9% increased <span style="color:grey">Intelligence</span>.</span><br><br>
+					Sorcerer: The Sorcerer is a Mage that has learned all it can from the other base classes. Sorcerers are the master of all that is arcane and mystic. Sorcerers gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Sorcerer's basic attacks restore 1% of maximum <span style="color:#204FAF">Mana</span>.</span><br>
+					<span style='color:lightblue'>Current class Sorcerers have 25% increased <span style="color:#A54996">Spell Damage</span>.</span><br>
+					<span style='color:lightblue'>Current class Sorcerers gain 15% increased <span style="color:grey">Intelligence</span>.</span><br>
+					</span>
+					</details>
+					<details>
+					<summary style="margin-left:140px;">Monk Base Class</summary>
+					<span style="position:relative;left:170px;width:950px;display:block">
+					Berserker: The Berserker is a Monk who has mastered hand to hand combat as a Warrior. Berserkers gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Berserkers deal 1% increased damage for every 1% missing <span style="color:#204FAF">HP</span>.</span><br>
+					<span style='color:lightgreen'>Legacy Berserkers gain 2% increased <span style="color:red">Life Leech</span>.<br>
+					Legacy Berserkers gain 6% increased <span style="color:grey">Endurance</span> and 3% increased <span style="color:grey">Strength</span>.</span><br><br>
+					Shaman: The Shaman is a spiritual Monk that used to prowl the land as a Rogue. Shamans gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Shaman's spells have an additional 20% chance to <span style='color:#04B1AE'>stun</span> enemies.</span><br>
+					<span style='color:lightgreen'>Legacy Shamans gain 3% increased <span style="color:#204FAF">HP</span>, <span style="color:#204FAF">Mana</span>, and <span style="color:#204FAF">Stamina</span>.<br>
+					Legacy Shamans gain 6% increased <span style="color:grey">Wisdom</span> and 3% increased <span style="color:grey">Intelligence</span>.</span><br><br>
+					Psion: The Psion is a Monk that has ascended the knowledge of common Mages. The Psion infuses the power of the arcane with the physical body to create a deadly unstable entity. Psions gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Psions will <span style='color:#04B1AE'>stun</span> enemies they attack that are <span style='color:#B40800'>Vulnerable</span>.</span><br>
+					<span style='color:lightgreen'>Legacy Psions gain 1.5% increased damage reduction from <span style="color:brown">Armor</span> and <span style="color:lightblue">Resist</span> and 1.5% additional chance to <span style="color:lightblue">Evade</span> attacks.<br>
+					Legacy Psions gain 6% increased <span style="color:grey">Intelligence</span> and 3% increased <span style="color:grey">Dexterity</span>.</span><br><br>
+					Avatar: The Avatar is a Monk that has become one with the other base classes. Avatars wield the elements with ease and rain down destruction on their foes. Avatars gain the following bonuses:<br>
+					<span style='color:lightblue'>Current class Avatars have 10% increased elemental damage.</span><br>
+					<span style='color:lightblue'>Current class Avatars have 5% increased elemental resistance.</span><br>
+					<span style='color:lightblue'>Current class Avatars gain 6% increased <span style="color:grey">Endurance</span>, <span style="color:grey">Wisdom</span>, and <span style="color:grey">Agility</span>.</span><br>
+					</span>
+					</details>
+				</details>
+			</details>
+		</details>
 		</div>
 	</BODY>
 

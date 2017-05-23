@@ -40,22 +40,32 @@
 	function spellLevelUp(spell){
 		if(spell.level < 20){
 			spell.level += 1;
-			spell.chnc = Math.round((spell.chnc + spell.chncG) * 100)/100;
+			updateSpellInfo(spell);
 		}
+	}
+	function updateSpellInfo(spell){
+		spell.chnc = Math.floor(spell.cBase + ((spell.level-1) * spell.chncG));
+		spell.mCost = Math.floor(spell.mBase + ((spell.level-1) * spell.mCostg));
+		spell.sCost = Math.floor(spell.sBase + ((spell.level-1) * spell.sCostg));
 	}
 	function castSelectedSpells(spell){
 		return spellDB[spell.name](spell);
 	}
 	
-	function spell(n,t,mc,sc,bd,e,c,cg){
+	function spell(n,t,mc,sc,bd,e,c,cg,mg,sg){
 		this.name = n;
 		this.targets = t;
 		this.mCost = mc;
+		this.mBase = mc;
+		this.mCostg = mg;
 		this.sCost = sc;
+		this.sBase = sc;
+		this.sCostg = sg;
 		this.level = 1;
 		this.damage = bd;
 		this.effectiveness = e;
 		this.chnc = c;
+		this.cBase = c;
 		this.chncG = cg;
 		this.mod1 = "Locked";
 		this.mod2 = "Locked";
@@ -80,6 +90,7 @@
 			$('#modSpellLvl:visible').toggle();
 		}
 		else{
+			$('#modSpellLvl:hidden').toggle();
 			$('#modSpellLvl').unbind("click");
 			$('#modSpellLvl').click(function(){
 			buySpellLvlUp(spellNum);
@@ -209,10 +220,10 @@
 	function buildSpellMenuList(){
 		var spellHolder;
 		var ss = "";
-		for(var x=0; x< 3; x++){
+		for(var x=0; x< 4; x++){
 			if(equipSpells["slot"+x] != null){
 				spellHolder = equipSpells["slot"+x];
-				ss = spellHolder.name+", Level "+spellHolder.level+"<span class='tooltip'>"+spellDesc[spellHolder.name](spellHolder)+"</span>";
+				ss = spellHolder.name+"<br> Level "+spellHolder.level+"<span class='tooltip'>"+spellDesc[spellHolder.name](spellHolder)+"</span>";
 				$('#skill'+x).html(ss);
 			}
 			else{
@@ -240,6 +251,7 @@
 				if(equipSpells["slot"+(j+1)] == null){
 					var spellHolder = spellsHolder[x];
 					equipSpells["slot"+(j+1)] = spellHolder;
+					updateSpellInfo(spellHolder)
 					spellsHolder.splice(x,1);
 					slotFound = true;
 				}
