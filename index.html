@@ -451,8 +451,9 @@
 					<details>
 					<summary style="margin-left:80px;">Advanced</summary>
 					<span style="position:relative;left:110px;width:1000px;display:block">When calculating damage all bonuses and increases are applied first. Then for every
-					target, a check is performed to see if the attack will miss (Spells and Skills cannot miss). This is based on the targets evasion rating. If the attack
-					does not miss then the calculated damage is tested against the targets defenses to determine the total damage done.<br><br>
+					target, a check is performed to see if the attack will miss (Spells and Skills cannot miss). This is based on the targets evasion rating. Enemies cannot evade your attacks. If an enemy were to evade your attack they will instead take a glancing hit.
+					Glancing hits will deal reduced damage based on the enemies evasion. The higher their evasion the more damage the glancing hit is reduced. 
+					If the attack does not miss then the calculated damage is tested against the targets defenses to determine the total damage done.<br><br>
 					Each damage type performs differently:<br><br>
 					<span style="color:white">Physical damage</span> has a range of +/- 30% of the base value. It is then reduced by <span style="color:brown">Armor</span> and further reduced by <span style="color:lightblue">Resist</span>.<br><br>
 					<span style="color:red">Fire damage</span> deals 1% more damage per 2% of the targets max <span style="color:#204FAF">HP</span> the hit would originally do. Example, a hit for <span style="color:red">50</span> damage on a target with <span style="color:#204FAF">100 max HP</span> will take <span style="color:red">75</span> damage before resistances.<br><br>
