@@ -149,6 +149,9 @@
 		mc.hp += (mc.hpRegen * 2);
 		if(mc.hp >= mc.functionalMaxHP)
 			mc.hp = mc.functionalMaxHP;
+		mc.mana += (mc.manaRegen * 2);
+		if(mc.mana >= mc.functionalMaxMana)
+			mc.mana = mc.functionalMaxMana;
 	}
 	
 	function showCharacterStats(){
