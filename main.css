@@ -1,7 +1,7 @@
 	.gameWindow{
 		position:fixed;
 		top:40%;
-		left:50%;
+		left:700px;
 		width:800px;
 		height:400px;
 		margin-top: -200px;
@@ -211,9 +211,8 @@
 	.menuHolder{
 		position:absolute;
 		top:40%;
-		left:760px;
+		left:1200px;
 		margin-top: -200px;
-		margin-left: 450px;
 		height:150px;
 		width:70px;
 		-webkit-user-select: none;
