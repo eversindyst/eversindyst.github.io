@@ -183,7 +183,7 @@
 		return damReduc;
 	}
 	function calcEva(curVal, targetLevel, statBonus, flatVal){
-		var damReduc = Math.round(((Math.round((curVal/(curVal+(150+targetLevel*1.2))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
+		var damReduc = Math.round(((Math.round((curVal/(curVal+(170+targetLevel*1.7))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
 		return damReduc;
 	}
 	function calcRes(curVal, targetLevel, statBonus, flatVal){
@@ -239,7 +239,7 @@
 		mc.functionalColdDamage = Math.round(Number((mc.coldDamage + ((mc.functionalIntelligence/5) * 2) + bonus["ColdDamage"])*more["ColdDamage"]));
 		mc.functionalShockDamage = Math.round(Number((mc.shockDamage + ((mc.functionalIntelligence/5) * 2) + bonus["ShockDamage"])*more["ShockDamage"]));
 		mc.functionalDarkDamage = Math.round(Number((mc.darkDamage + bonus["DarkDamage"])*more["DarkDamage"]));
-		mc.functionalCritChnc = Math.round(Number((mc.critChnc + (mc.functionalDexterity/2) + bonus["CritChnc"])*more["CritChnc"]));
+		mc.functionalCritChnc = Math.round(Number((mc.critChnc + (mc.functionalDexterity/2.5) + bonus["CritChnc"])*more["CritChnc"]));
 		mc.functionalCritDmg = Math.round(Number((mc.critDmg + ((mc.functionalDexterity/5)*5) + bonus["CritDmg"])*more["CritDmg"]));
 		mc.functionalArmor = Math.round(Number((mc.armor + bonus["Armor"])*more["Armor"]));
 		mc.functionalEvasion = Math.round(Number((mc.evasion + bonus["Evasion"])*more["Evasion"]));

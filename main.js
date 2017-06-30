@@ -304,10 +304,10 @@
 		localStorage.setItem("savedTree", selectedSkills);
 		localStorage.setItem("eqSpells", JSON.stringify(equipSpells));
 		localStorage.setItem("spellHold", JSON.stringify(spellsHolder));
-		localStorage.setItem("firstTime", "true");
+		localStorage.setItem("2Time", "true");
 	}
 	function loadGame(){
-		if(localStorage.getItem("firstTime")){
+		if(localStorage.getItem("2Time")){
 			if(localStorage.getItem("endTime"))
 				endTime = localStorage.getItem("endTime");
 		//	endTime = Number(Date.now()-(60*1000*60*24));
@@ -363,7 +363,7 @@
 	function tst(){
 		mc.level = 99;
 		gainLevel();
-		mc.skillsRemain = 65;
+		mc.skillsRemain = 100;
 		mc.gold = 12313;
 		mc.gold *= 12389;
 	}
@@ -472,7 +472,5 @@
 		j = (j = i.length) > 3 ? j % 3 : 0;
 	   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 	};
-	
-	
 	//mapHolder = navigateMap(m);
 //		printMap(maze, startingX, startingY);

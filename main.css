@@ -14,9 +14,7 @@
 		position:absolute;
 		z-index:5;
 		top:40%;
-		left:50%;
 		margin-top:-250px;
-		margin-left:-600px;
 		width:1000px;
 		height:500px;
 		color:white;
@@ -407,7 +405,7 @@
 		border: solid 1px white;
 		color: #fff;
 		font-size: 12px;
-		top:25px;
+		top:30px;
 		left:-40px;
 		z-index: 1;
 	}
@@ -435,7 +433,7 @@
 		border: solid 1px white;
 		color: #fff;
 		font-size: 12px;
-		top:20px;
+		top:30px;
 		left:0px;
 		z-index: 1;
 	}
@@ -543,7 +541,7 @@
 	.skillTreeHolder{
 		position:absolute;
 		top:40%;
-		left:800px;
+		left:795px;
 		margin-top:-250px;
 		margin-left:-400px;
 		width:800px;
@@ -584,11 +582,12 @@
 		position:absolute;
 		visibility:hidden;
 		width:200px;
+		height:70px;
 		background-color: black;
 		border: solid 1px white;
 		color: #fff;
 		font-size: 15px;
-		bottom:-40px;
+		bottom:-90px;
 		left:0px;
 		z-index: 1;
 	}
