@@ -1,5 +1,6 @@
+//Name, level, monsterList, packSize, terrain, effects, size, density, pathType, layout, id
 	var zoneDB = [
-		"Tranquil Forest,1,0,.2,forest,none,0,.4,.8,forest,0",
+		"Tranquil Forest,1,0;1,.2,forest,none,0,.4,.8,forest,0",
 		"Dry Field,2,0,.13,field,none,1,.2,.8,field,1",
 		"Mountain Path,3,0,.12,path,none,1,.2,2,path,2",
 		"Coastal Ledge,5,0,.15,ledge,none,1,.2,1.1,ledge,3",

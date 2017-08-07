@@ -1,0 +1,413 @@
+<HTML>
+<body onload="init()">
+	id  <input id="iid"/>
+	<div style="position:absolute;left:400px">Slot  <select onchange="slotChng()" id="islot">
+			<option value="mainHand">Main Hand</option>
+			<option value="offHand">Off Hand</option>
+			<option value="helmet">Helmet</option>
+			<option value="amulet">Amulet</option>
+			<option value="body">Body</option>
+			<option value="shoulders">Shoulders</option>
+			<option value="gloves">Gloves</option>
+			<option value="pants">Pants</option>
+			<option value="boots">Boots</option>
+			<option value="trinket">Trinket</option>
+			<option value="aura">Aura</option>
+		</select>
+	</div><br><br>
+	Name <input id="iname"/><br>
+	
+	<div style="position:absolute;left:400px;">Stats <div id="iStats1">
+			Stat <select id="iStatList1">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iStat1Val"/><br>
+			</div>
+			<div id="iStats2">
+			Stat <select id="iStatList2">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iStat2Val"/><br>
+			</div>
+			<div id="iStats3">
+			Stat <select id="iStatList3">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iStat3Val"/><br>
+			</div>
+	</div><br><br>
+	Effect  <select onchange="effChange()" id="iEffect">
+				<option value=""></option>
+				<option value="bonusDamage">Bonus Damage</option>
+				<option value="statProc">Stat Proc Bonus</option>
+				<option value="statProcM">Stat Proc More</option>
+			</select><br>
+			Effect Name <input id="ieffName"/><br>
+			<div id="effectDmgAdd">
+				Damage Type <select id="iEffDmgType">
+								<option value="fire">Fire</option>
+								<option value="cold">Cold</option>
+								<option value="shock">Shock</option>
+								<option value="dark">Dark</option>
+							<select><br>
+				Percent Added <input id="iEffPerAdd"/><br>
+			</div>
+			<div id="effectStatProc">
+				Stat to Proc <select id="iEffProcStat">
+								<option value="Str">Strength</option>
+								<option value="Int">Intelligence</option>
+								<option value="Dex">Dexterity</option>
+								<option value="End">Endurance</option>
+								<option value="Wis">Wisdom</option>
+								<option value="Agi">Agility</option>
+								<option value="Armor">Armor</option>
+								<option value="Evasion">Evasion</option>
+								<option value="Resist">Resist</option>
+								<option value="FireResist">Fire Resist</option>
+								<option value="ColdResist">Cold Resist</option>
+								<option value="ShockResist">Shock Resist</option>
+								<option value="Leech">Leech</option>
+							</select><br>					
+				Proc Chance <input id="iEffProcChn"/><br>
+				Proc Value <input id="iEffProcVal"/><br>
+				Proc Duration <input id="iEffProcDur"/><br>
+			</div>
+			<div id="effectStatProcM">
+				Stat to Proc <select id="iEffProcStatM">
+								<option value="Str">Strength</option>
+								<option value="Int">Intelligence</option>
+								<option value="Dex">Dexterity</option>
+								<option value="End">Endurance</option>
+								<option value="Wis">Wisdom</option>
+								<option value="Agi">Agility</option>
+								<option value="Armor">Armor</option>
+								<option value="Evasion">Evasion</option>
+								<option value="Resist">Resist</option>
+							</select><br>					
+				Proc Chance <input id="iEffProcChnM"/><br>
+				Proc Value <input id="iEffProcValM"/><br>
+				Proc Duration <input id="iEffProcDurM"/><br>
+			</div>
+	<br><br><br>
+	<div style="position:absolute;left:400px"><br><br>lvlStats <div id="iLStats1">
+			Stat <select id="iLStatList1">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iLStat1Val"/><br>
+			</div>
+			<div id="iLStats2">
+			Stat <select id="iLStatList2">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iLStat2Val"/><br>
+			</div>
+			<div id="iLStats3">
+			Stat <select id="iLStatList3">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iLStat3Val"/><br>
+			</div>
+	</div><br>
+	upgStats <div id="iUStats1">
+			Stat <select id="iUStatList1">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iUStat1Val"/><br>
+			</div>
+			<div id="iUStats2">
+			Stat <select id="iUStatList2">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iUStat2Val"/><br>
+			</div>
+			<div id="iUStats3">
+			Stat <select id="iUStatList3">
+					<option value=""></option>
+					<option value="Str">Strength</option>
+					<option value="Int">Intelligence</option>
+					<option value="Dex">Dexterity</option>
+					<option value="End">Endurance</option>
+					<option value="Wis">Wisdom</option>
+					<option value="Agi">Agility</option>
+					<option value="HP">Hp</option>
+					<option value="Mana">Mana</option>
+					<option value="Stamina">Stamina</option>
+					<option value="BaseDamage">Base Damage</option>
+					<option value="SpellDamage">Spell Damage</option>
+					<option value="FireDamage">Fire Damage</option>
+					<option value="ColdDamage">Cold Damage</option>
+					<option value="ShockDamage">Shock Damage</option>
+					<option value="DarkDamage">Dark Damage</option>
+					<option value="CritChnc">Crit Chance</option>
+					<option value="CritDmg">Crit Damage</option>
+					<option value="Armor">Armor</option>
+					<option value="Evasion">Evasion</option>
+					<option value="Resist">Resist</option>
+					<option value="FireResist">Fire Resist</option>
+					<option value="ColdResist">Cold Resist</option>
+					<option value="ShockResist">Shock Resist</option>
+					<option value="Leech">Leech</option>
+				</select><br>
+			Value <input id="iUStat3Val"/><br>
+			</div>
+	<br><br>
+	upgName <input id="iupgname"/><br><br><br>
+	<div style="position:absolute;left:400px">upg Effect <select onchange="upgEffChange()" id="iUEffect">
+				<option value=""></option>
+				<option value="bonusDamage">Bonus Damage</option>
+				<option value="statProc">Stat Proc Bonus</option>
+				<option value="statProcM">Stat Proc More</option>
+			</select><br>
+			Effect Name <input id="iueffName"/><br>
+			<div id="UeffectDmgAdd">
+				Damage Type <select id="iUEffDmgType">
+								<option value="fire">Fire</option>
+								<option value="cold">Cold</option>
+								<option value="shock">Shock</option>
+								<option value="dark">Dark</option>
+							<select><br>
+				Percent Added <input id="iUEffPerAdd"/><br>
+			</div>
+			<div id="UeffectStatProc">
+				Stat to Proc <select id="iUEffProcStat">
+								<option value="Str">Strength</option>
+								<option value="Int">Intelligence</option>
+								<option value="Dex">Dexterity</option>
+								<option value="End">Endurance</option>
+								<option value="Wis">Wisdom</option>
+								<option value="Agi">Agility</option>
+								<option value="Armor">Armor</option>
+								<option value="Evasion">Evasion</option>
+								<option value="Resist">Resist</option>
+								<option value="FireResist">Fire Resist</option>
+								<option value="ColdResist">Cold Resist</option>
+								<option value="ShockResist">Shock Resist</option>
+								<option value="Leech">Leech</option>
+							</select><br>					
+				Proc Chance <input id="iUEffProcChn"/><br>
+				Proc Value <input id="iUEffProcVal"/><br>
+				Proc Duration <input id="iUEffProcDur"/><br>
+			</div>
+			<div id="UeffectStatProcM">
+				Stat to Proc <select id="iUEffProcStatM">
+								<option value="Str">Strength</option>
+								<option value="Int">Intelligence</option>
+								<option value="Dex">Dexterity</option>
+								<option value="End">Endurance</option>
+								<option value="Wis">Wisdom</option>
+								<option value="Agi">Agility</option>
+								<option value="Armor">Armor</option>
+								<option value="Evasion">Evasion</option>
+								<option value="Resist">Resist</option>
+							</select><br>					
+				Proc Chance <input id="iUEffProcChnM"/><br>
+				Proc Value <input id="iUEffProcValM"/><br>
+				Proc Duration <input id="iUEffProcDurM"/><br>
+			</div>
+	</div><br>
+	xpMult <input id="ixpmlt"/><br>
+	xpGain <input id="ixpgain"/><br><br>
+	<input type="checkbox" id="is2H">Is two-hand weapon<br>
+	<input type="checkbox" id="isOH">Is off hand weapon<br><br>
+	
+	<textarea id="outputItem" style="position:absolute; left:700px; bottom:300px;" rows="15" cols="50">
+	</textarea>
+	
+	<button onclick="proc()">Click</button>
+	<div style="position:absolute;left:400px"><button onclick="init()">Clear</button></div>
+	</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="zoneCreator.js"></script>
+</HTML>

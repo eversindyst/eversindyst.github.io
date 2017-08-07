@@ -35,7 +35,7 @@
 		else{
 			var weapon2H = false;
 			if(equipHolder["mainHand"] != null){
-				if(equipHolder["mainHand"].is2H){
+				if(equipHolder["mainHand"].is2H == "true"){
 					weapon2H = true;
 				}
 			}
@@ -43,6 +43,11 @@
 			if(item.slot == "offHand" && weapon2H){
 			}
 			else{
+				if(item.slot == "mainHand" && item.is2H == "true"){
+					if(equipHolder["offHand"] != null){
+						unequipItem("offHand");
+					}
+				}
 				equipItem(item);
 				inventoryHolder.splice(inventoryHolder.indexOf(item),1);
 				generateInventory();
@@ -75,18 +80,12 @@
 	}
 	
 	function giveItem(){
-		var i = getItem(0);
-		handleItemDrop(i);
-		i = getItem(1);
-		handleItemDrop(i);
-		i = getItem(2);
-		handleItemDrop(i);
-		i = getItem(3);
-		handleItemDrop(i);
-		i = getItem(4);
-		handleItemDrop(i);
-		i = getItem(5);
-		handleItemDrop(i);
+	showAnimation = false;
+		for(var x=0; x < itemDB.length; x++){
+			var i = getItem(x);
+			handleItemDrop(i);
+		}
+	showAnimation = true;
 	}
 	function setSort(x){
 		sortType = x;

@@ -1,4 +1,4 @@
-	var equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, ring:null, trinket:null, aura:null};
+	var equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, trinket:null, aura:null};
 	var inventoryHolder = new Array();
 	var allItemHolder = new Array();
 	
@@ -107,7 +107,11 @@
 	function genTTString(item){
 		var base = item.base
 		var showPositive = "+";
-		var stringBuild = "<span class='tooltip' id='"+item.slot+"TT'><span>Slot: "+item.slot.charAt(0).toUpperCase()+item.slot.slice(1)+"</span> <span style='position:absolute;right:15%'>Exp: "+item.xp+"%</span><br><br>";
+		var slotDisplay = item.slot;
+		if(item.slot == "body"){
+			slotDisplay = "torso";
+		}
+		var stringBuild = "<span class='tooltip' id='"+item.slot+"TT'><span>Slot: "+slotDisplay.charAt(0).toUpperCase()+slotDisplay.slice(1)+"</span> <span style='position:absolute;right:15%'>Exp: "+item.xp+"%</span><br><br>";
 		for(var index=0; index<base.length; index++){
 			var statHold = base[index].split(":");
 			if(statHold[1] < 0){

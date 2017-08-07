@@ -15,7 +15,7 @@
 		l1:"Endurance,Wisdom,Agility",
 		l2:"Life,Mana,Stamina",
 		l3:"Armor,Resist,Evasion",
-		l4:"Damage,Spell Damage,Critical Strikes"
+		l4:"Damage,Spell Power,Critical Hits"
 	}
 	function skillTreeDesc(c,x){
 		var ss = "";
@@ -47,7 +47,7 @@
 			case("dmg"):ss ="Increases Base Damage by "+x; break;
 			case("mdmg"):ss ="Increases Base Damage by "+x+"%"; break;
 			case("spdmg"):ss ="Increases Spell Damage by "+x+"%"; break;
-			case("crit"):ss ="Increases Critical Strike Chance by "+x+"% and Critical Strike Damage by "+x*6+"%"; break;
+			case("crit"):ss ="Increases Critical Strike Chance by "+x+"% and Critical Strike Damage by "+Math.round(x*3*100)/100+"%"; break;
 			case("cchnc"):ss ="Increases Critical Strike Chance by "+x+"%"; break;
 			case("cdmg"):ss ="Increases Critical Strike Damage by "+x+"%"; break;
 			case("fdmg"):ss ="Increases Fire Damage by "+x+"%"; break;
@@ -102,7 +102,7 @@
 			case("dmg"): cBonus["BaseDamage"] += x; break;
 			case("mdmg"): cMore["BaseDamage"] *= (1+(x/100)); break;
 			case("spdmg"): cBonus["SpellDamage"] += x; break;
-			case("crit"): cBonus["CritChnc"] += x; cBonus["CritDmg"] += (x*6); break;
+			case("crit"): cBonus["CritChnc"] += x; cBonus["CritDmg"] += (Math.round(x*3*100)/100); break;
 			case("cchnc"): cBonus["CritChnc"] += x; break;
 			case("cdmg"): cBonus["CritDmg"] += x; break;
 			case("fdmg"): cBonus["FireDamage"] += x; break;
@@ -171,7 +171,7 @@
 			case(0): switch(slot){
 				case '0': retVal = Math.round(1+((2+modWorth)*.1)); break;
 				case '1': retVal = Math.round(1.5+((2+modWorth)*.07)); break;
-				case '2': retVal = Math.round(.7+(modWorth*.05)); break;
+				case '2': retVal = Math.round((.65+(modWorth*.04))*100)/100; break;
 			}break;
 		}
 		return retVal;

@@ -82,6 +82,8 @@
 				ss = "Attacks have a "+e[4]+"% chance to increase "+getEffectAttribute(e[2])+" by "+e[3]+" for "+e[5]+" seconds"; break;
 			case("addedDamage"):
 				ss = "Attacks deal "+e[2]+"% extra damage as "+e[3]+" damage"; break;
+			case("statUpMore"):
+				ss = "Attacks have a "+e[4]+"% chance to increase "+getEffectAttribute(e[2])+" by "+((e[3]-1)*100)+"% for "+e[5]+" seconds"; break;
 		}
 		return ss;
 	}
@@ -89,6 +91,19 @@
 		var ss = "";
 		switch(s){
 			case("Str"): ss = "Strength"; break;
+			case("Int"): ss = "Intelligence"; break;
+			case("Dex"): ss = "Dexterity"; break;
+			case("End"): ss = "Endurance"; break;
+			case("Wis"): ss = "Wisdom"; break;
+			case("Agi"): ss = "Agility"; break;
+			case("Armor"): ss = "Armor"; break;
+			case("Evasion"): ss = "Evasion"; break;
+			case("Resit"): ss = "Resist"; break;
+			case("FireResist"): ss = "Fire Resist"; break;
+			case("ColdResist"): ss = "Cold Resist"; break;
+			case("ShockResist"): ss = "Shock Resist"; break;
+			case("Leech"): ss = "Leech"; break;
+			
 		}
 		return ss;
 	}

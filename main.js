@@ -13,6 +13,9 @@
 	var endTime;
 	var mobKilled = 0;
 	
+	var mobCounter = 0;
+	var itemCounter = 0;
+	
 	var bonus ={Str:0,Int:0,Dex:0,End:0,Wis:0,
 				Agi:0,HP:0,Mana:0,Stamina:0,
 				BaseDamage:0,SpellDamage:0,FireDamage:0,
@@ -174,6 +177,12 @@
 			}
 		}, 100);
 	}
+	
+	setTimeout(function(){
+		console.log("Mobs per hour: "+mobCounter *3);
+		console.log("Items per hour: "+itemCounter *3);
+	}, 1200000);
+	
 	function addText(ss){
 		var baby = $('#combatText').html();
 		if(baby.length > 20000){

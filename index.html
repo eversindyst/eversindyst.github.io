@@ -11,6 +11,7 @@
 	</HEAD>
 	<BODY id="gameBackground" style="background-color:black;" onLoad="pageInit()">
 		<div id="worldMapContainer" class="worldMapContainer">
+			<span style="z-index:2; position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="showWorldMap()"></span>
 			<div id="zoneType0" class="zoneType">Forest
 				<div id="zone0" class="mapNode" style="top:5px;left:100px;" onclick="changeZone(0)">
 					<div class="tooltip">
@@ -55,8 +56,8 @@
 			</div>
 			<div class="statContainer">
 				<div class="expContainer" style="color:#A100A1; margin-left:0px;">
-					<span style="color:#FF00FF">[</span><div id="expTNL" class="expBar" style="margin-right:0;">0</div>%
-					<span style="color:#FF00FF">]</span>
+					<span style="color:#FF00FF">[</span><div id="expTNL" class="expBar" style="margin-right:0;">0</div>%<span style="color:#FF00FF">]</span>
+					<span style="color:#FF00FF">[</span><span style="color:#C5C5C5">P: </span><div id="platVal" class="platBar" style="margin-right:0;">0</div><span style="color:#FF00FF">]</span>
 				</div>
 				<br>
 				<div class="hpContainer" style="margin-left:0px;">
@@ -89,6 +90,7 @@
 			</div>
 		</div>
 		<div id="profilePage" class="profile">
+			<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="showCharacterStats()"></span>
 			<span style="color:#01FF00">Level <span id="statLv"></span> <span id="className"></span></span><br><br>
 			<span class="statLine"><span style="color:grey">Strength: <span id="statStr"></span></span><span class="secondColumn" style="color:#204FAF">HP: <span id="statHp"></span><span style="color:#1CBABA">/</span><span id="statMHp" style="color:#1CBABA"></span> (<span id="hpReg"></span>/s)</span></span><br>
 			<span class="statLine"><span style="color:grey">Intelligence: <span id="statInt"></span></span><span class="secondColumn" style="color:#204FAF">Mana: <span id="statMn"></span><span style="color:#1CBABA">/</span><span id="statMMn" style="color:#1CBABA"></span> (<span id="manaReg"></span>/s)</span></span><br>
@@ -110,6 +112,7 @@
 		</div>
 		
 		<div id="gearPage" class="gearMenu">
+			<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="showGearStats()"></span>
 			<div id="eqPanel" class="eqMenu">
 			
 			<span class="statLine">Main Hand: 
@@ -132,7 +135,7 @@
 				</span>
 			</span>
 			<br>
-			<span class="statLine">Body: 
+			<span class="statLine">Torso: 
 				<span class="eqColumn" id="bodyEQ">None
 				</span>
 			</span>
@@ -157,11 +160,6 @@
 				</span>
 			</span>
 			<br>
-			<span class="statLine">Ring: 
-				<span class="eqColumn" id="ringEQ">None
-				</span>
-			</span>
-			<br>
 			<span class="statLine">Trinket: 
 				<span class="eqColumn" id="trinketEQ">None
 				</span>
@@ -183,6 +181,7 @@
 		</div>
 		
 		<div id="skillPage" class="skillMenu">
+			<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="showSpells()"></span>
 			<div id="equipSkills" class="eqSkills">
 				Slot 1:<div id="skill1" class="skillColumn" onClick="removeSpell(1)"></div><span class="modBtn" onclick="modSkill(1)"></span><br><br><br>
 				Slot 2:<div id="skill2" class="skillColumn" onClick="removeSpell(2)"></div><span class="modBtn" onclick="modSkill(2)"></span><br><br><br>
@@ -193,14 +192,26 @@
 		</div>
 		<div id="modPage" class="modMenu">
 			<span style="position:absolute;right:0px;cursor:hand; background-image:url('art/crsBtn.png'); width:21px;height:21px;" onclick="closeMod()"></span>
-			<div id="modSpellName" class="skillModName"></div>
-			<div id="modSpellLvl" class="modSpellLvl">Level Up
+			<div id="modSpellName" class="skillModName"></div><br>
+			<span class="skillModList">Level:<span id="modSpellLvl" class="skillModVal"></span></span><br>
+			<span class="skillModList">Expertise:<span id="modSpellExp" class="skillModVal"></span></span><br>
+			<span class="skillModList">Stun Chance:<span id="modSpellSC" class="skillModVal"></span></span><br>
+			<span class="skillModList">Stun Duration:<span id="modSpellSD" class="skillModVal"></span></span><br>
+			<span class="skillModList">Weak Chance:<span id="modSpellWC" class="skillModVal"></span></span><br>
+			<span class="skillModList">Weak Duration:<span id="modSpellWD" class="skillModVal"></span></span><br>
+			<span class="skillModList">Vulnerability Chance:<span id="modSpellVC" class="skillModVal"></span></span><br>
+			<span class="skillModList">Vulnerability Duration:<span id="modSpellVD" class="skillModVal"></span></span><br>
+			<span class="skillModList">Stamina Cost:<span id="modSpellSt" class="skillModVal"></span></span><br>
+			<span class="skillModList">Mana Cost:<span id="modSpellMn" class="skillModVal"></span></span><br>
+			<span class="skillModList">Activation Chance:<span id="modSpellChnc" class="skillModVal"></span></span><br>
+			<span class="skillModList">Targets:<span id="modSpellTarg" class="skillModVal"></span></span><br><br><br>
+			<div id="modSpellLvlUp" class="modSpellLvl">Level Up
 			<div id="modSpellLvlToolTip" class="tooltip"></div>
 			</div>
-			<div id="mod1" style="left:15px;top:50px;" class="skillMod"><div id="mod1Name" class="modName"></div><span id="mod1List" class="modList"></span></div>
-			<div id="mod2" style="left:180px;top:50px;" class="skillMod"><div id="mod2Name" class="modName"></div><div id="mod2List" class="modList"></div></div>
-			<div id="mod3" style="left:15px;top:230px;" class="skillMod"><div id="mod3Name" class="modName"></div><div id="mod3List" class="modList"></div></div>
-			<div id="mod4" style="left:180px;top:230px;" class="skillMod"><div id="mod4Name" class="modName"></div><div id="mod4List" class="modList"></div></div>
+			<div id="modSpellExpUp" class="modSpellLvl" style="left:150px;">Enhance Ability
+			<div id="modSpellExpToolTip" class="tooltip"></div>
+			</div>
+			
 		</div>
 		
 		<div id="skillTHolder" class="skillTreeHolder">

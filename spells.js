@@ -43,16 +43,38 @@
 			updateSpellInfo(spell);
 		}
 	}
+	function spellExpUp(spell){
+		var expWorth = Math.floor(spell.level/4);
+		spell.level = 1;
+		spell.quality += expWorth;
+		updateSpellInfo(spell);
+	}
+	
 	function updateSpellInfo(spell){
 		spell.chnc = Math.floor(spell.cBase + ((spell.level-1) * spell.chncG));
 		spell.mCost = Math.floor(spell.mBase + ((spell.level-1) * spell.mCostg));
 		spell.sCost = Math.floor(spell.sBase + ((spell.level-1) * spell.sCostg));
+		spell.stunC = Math.round((spell.stunB + (spell.stunCG * spell.quality))*1000)/1000;
+		if(spell.stunC >= .75)
+			spell.stunC = .75;
+		spell.weakC = Math.round((spell.weakB + (spell.weakCG * spell.quality))*1000)/1000;
+		if(spell.weakC >= .75)
+			spell.weakC = .75;
+		spell.vulnC = Math.round((spell.vulnB + (spell.vulnCG * spell.quality))*1000)/1000;
+		if(spell.vulnC >= .75)
+			spell.vulnC = .75;
 	}
 	function castSelectedSpells(spell){
+		stun_g = spell.stunC;
+		stunDur_g = spell.stunDur;
+		weak_g = spell.weakC;
+		weakDur_g = spell.weakDur;
+		vuln_g = spell.vulnC;
+		vulnDur_g = spell.vulnDur;
 		return spellDB[spell.name](spell);
 	}
 	
-	function spell(n,t,mc,sc,bd,e,c,cg,mg,sg){
+	function spell(n,t,mc,sc,bd,e,c,cg,mg,sg,st,stg,std,wk,wkg,wkd,vl,vlg,vld){
 		this.name = n;
 		this.targets = t;
 		this.mCost = mc;
@@ -67,150 +89,62 @@
 		this.chnc = c;
 		this.cBase = c;
 		this.chncG = cg;
-		this.mod1 = "Locked";
-		this.mod2 = "Locked";
-		this.mod3 = "Locked";
-		this.mod4 = "Locked";
+		this.quality = 0;
 		this.multi = 1;
+		this.stunB = st;
+		this.stunC = st;
+		this.stunCG = stg;
+		this.stunDur = std;
+		this.weakB = wk;
+		this.weakC = wk;
+		this.weakCG = wkg;
+		this.weakDur = wkd;
+		this.vulnB = vl;
+		this.vulnC = vl;
+		this.vulnCG = vlg;
+		this.vulnDur = vld;
 	}
-	
-	function buildSpellMod(spell, spellNum){
-		var name = spell.name;
-		var m1 = spell.mod1;
-		var m2 = spell.mod2;
-		var m3 = spell.mod3;
-		var m4 = spell.mod4;
-		var m1List = modList1[name];
-		var m2List = modList2[name];
-		var m3List = modList3[name];
-		var m4List = modList4[name];
+	function setSpellLvlTxt(spellHolder, x){
+		var name = spellHolder.name;
+		$('#modSpellName').html(name);
+		$('#modSpellLvl').html(spellHolder.level);
+		$('#modSpellExp').html(spellHolder.quality+"%");
+		$('#modSpellSC').html((spellHolder.stunC*100)+"%");
+		$('#modSpellSD').html(spellHolder.stunDur+" Seconds");
+		$('#modSpellWC').html((spellHolder.weakC*100)+"%");
+		$('#modSpellWD').html(spellHolder.weakDur+" Seconds");
+		$('#modSpellVC').html((spellHolder.vulnC*100)+"%");
+		$('#modSpellVD').html(spellHolder.vulnDur+" Seconds");
+		$('#modSpellSt').html(spellHolder.sCost);
+		$('#modSpellMn').html(spellHolder.mCost);
+		$('#modSpellChnc').html(spellHolder.chnc+"%");
+		$('#modSpellTarg').html(spellHolder.targets);
 		
-		$('#modSpellName').html(name+", Level "+spell.level);
-		if(spell.level == 20){
-			$('#modSpellLvl:visible').toggle();
+		if(spellHolder.level == 20){
+			$('#modSpellLvlUp:visible').toggle();
 		}
 		else{
-			$('#modSpellLvl:hidden').toggle();
-			$('#modSpellLvl').unbind("click");
-			$('#modSpellLvl').click(function(){
-			buySpellLvlUp(spellNum);
+			$('#modSpellLvlUp:hidden').toggle();
+			$('#modSpellLvlUp').unbind("click");
+			$('#modSpellLvlUp').click(function(){
+			buySpellLvlUp(x);
 			});
-			$('#modSpellLvlToolTip').html(buildSpellLvlTT(spell.level));
+			$('#modSpellLvlToolTip').html(buildSpellLvlTT(spellHolder.level));
 		}
-		
-		$('#mod1Name').html(buildModNameTT(m1, 1, spellNum));
-		$('#mod2Name').html(buildModNameTT(m2, 2, spellNum));
-		$('#mod3Name').html(buildModNameTT(m3, 3, spellNum));
-		$('#mod4Name').html(buildModNameTT(m4, 4, spellNum));
-		
-		$('#mod1List').html(buildModListTT(spell, m1, m1List, spellNum, 1));
-		$('#mod2List').html(buildModListTT(spell, m2, m2List, spellNum, 2));
-		$('#mod3List').html(buildModListTT(spell, m3, m3List, spellNum, 3));
-		$('#mod4List').html(buildModListTT(spell, m4, m4List, spellNum, 4));
-		
-	}
-	function buildModListTT(s, mn, ml, sn, y){
-		var mods = ml.split(",");
-		var ss = "";
-		if(mn != "Locked"){
-			var count = 0;
-			for(x=0; x<mods.length; x++){
-				if(!hasMod(mods[x], s)){
-					count += 1;
-					ss += "<span class='modLine' onClick='equipMod("+y+","+sn+", &quot;"+mods[x]+"&quot;)'>"+count+". "+mods[x]+"<span class='tooltip'>"+getModTT(mods[x])+"</span></span><br><br>";
-				}
-			}
-		}
-		return ss;
-	}
-	function hasMod(mod, s){
-		var flag = false;
-		if(s.mod1 == mod)
-			flag = true;
-		if(s.mod2 == mod)
-			flag = true;
-		if(s.mod3 == mod)
-			flag = true;
-		if(s.mod4 == mod)
-			flag = true;
-		return flag;
-	}
-	function buildModNameTT(m, x, sn){
-		var ss = "";
-		if(m == "Locked"){
-			ss += "<span onClick='unlockMod("+x+","+sn+")'>"+m+"<span class='tooltip'>Cost: "+shortenLargeNumber(modCost(x))+" Platinum</span></span>";
-		}
-		else{
-			ss += "<span onClick='removeMod("+x+","+sn+")'>"+m+"<span class='tooltip'>"+getModTT(m)+"</span>";
-		}
-		return ss;
-	}
-	function unlockMod(mx, sx){
-		if(mc.gold >= modCost(mx)){
-			mc.gold -= modCost(mx);
-			var spellHolder;
-			switch(sx){
-				case(1): spellHolder = equipSpells["slot1"]; break;
-				case(2): spellHolder = equipSpells["slot2"]; break;
-				case(3): spellHolder = equipSpells["slot3"]; break;
-			}
-			switch(mx){
-				case(1): spellHolder.mod1 = "Empty"; break;
-				case(2): spellHolder.mod2 = "Empty"; break;
-				case(3): spellHolder.mod3 = "Empty"; break;
-				case(4): spellHolder.mod4 = "Empty"; break;
-			}
-			buildSpellMod(spellHolder, sx)
-		}
-	}
-	function equipMod(mx, sx, m){
-		var spellHolder;
-		switch(sx){
-			case(1): spellHolder = equipSpells["slot1"]; break;
-			case(2): spellHolder = equipSpells["slot2"]; break;
-			case(3): spellHolder = equipSpells["slot3"]; break;
-		}
-		switch(mx){
-			case(1): spellHolder.mod1 = m; break;
-			case(2): spellHolder.mod2 = m; break;
-			case(3): spellHolder.mod3 = m; break;
-			case(4): spellHolder.mod4 = m; break;
-		}
-		buildSpellMod(spellHolder, sx)
-	}
-	function removeMod(mx, sx){
-		var spellHolder;
-		switch(sx){
-			case(1): spellHolder = equipSpells["slot1"]; break;
-			case(2): spellHolder = equipSpells["slot2"]; break;
-			case(3): spellHolder = equipSpells["slot3"]; break;
-		}
-		switch(mx){
-			case(1): spellHolder.mod1 = "Empty"; break;
-			case(2): spellHolder.mod2 = "Empty"; break;
-			case(3): spellHolder.mod3 = "Empty"; break;
-			case(4): spellHolder.mod4 = "Empty"; break;
-		}
-		buildSpellMod(spellHolder, sx)
-	}
-	function getModTT(m){
-		return modDesc[m];
-	}
-	function modCost(x){
-		switch(x){
-			case(1): return 1000; break;
-			case(2): return 5000; break;
-			case(3): return 25000; break;
-			case(4): return 50000; break;
-		}
+		$('#modSpellExpUp').unbind("click");
+		$('#modSpellExpUp').click(function(){
+		buyExpSpellUp(x);
+		});
+		$('#modSpellExpToolTip').html(buildSpellExpTT(spellHolder.level, spellHolder.quality));
 	}
 	function modSkill(x){
 		if(equipSpells["slot"+x] != null){
 			$('#modPage').toggle();
 			var spellHolder = equipSpells["slot"+x];
-			buildSpellMod(spellHolder, x);
+			setSpellLvlTxt(spellHolder, x);
 		}
 	}
+	
 	function closeMod(){
 		$('#modPage:visible').toggle();
 	}
@@ -264,8 +198,18 @@
 		var lvl = spell.level;
 		if(mc.gold >= calcSpellLvlCost(lvl)){
 			mc.gold -= calcSpellLvlCost(lvl);
-			spellLevelUp(spell)
-			buildSpellMod(spell, x)
+			spellLevelUp(spell);
+			setSpellLvlTxt(spell, x);
+		}
+	}
+	function buyExpSpellUp(x){
+		var spell = equipSpells["slot"+x];
+		var lvl = spell.level;
+		var exp = spell.quality;
+		if(mc.gold >= calcSpellExpCost(lvl, exp)){
+			mc.gold -= calcSpellExpCost(lvl, exp);
+			spellExpUp(spell);
+			setSpellLvlTxt(spell, x);
 		}
 	}
 	function buildSpellLvlTT(lvl){
@@ -274,8 +218,19 @@
 		ss += shortenLargeNumber(cost)+" Platinum";
 		return ss;
 	}
+	function buildSpellExpTT(lvl, exp){
+		var ss = "Enhancing this ability will cost ";
+		var cost = calcSpellExpCost(lvl, exp);
+		ss += shortenLargeNumber(cost)+" Platinum and earn you ";
+		var expGain =  Math.floor(lvl/4);
+		ss += expGain+"% Expertise";
+		return ss;
+	}
 	function calcSpellLvlCost(lvl){
-		return Math.round(90+(2 * (Math.pow((lvl * .87), 4.1))));
+		return Math.round(90+(2 * (Math.pow((lvl * 1.1), 4.1))));
+	}
+	function calcSpellExpCost(lvl, exp){
+		return Math.round(140+(2.3 * (Math.pow((lvl * .97 + (exp * 1.22)), 3.55))));
 	}
 	/*
 	var fireball = new spell("Fireball",3,3,0,7,1,40,2);

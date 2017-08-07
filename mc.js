@@ -78,7 +78,9 @@
 		functionalDexterity : 0,
 		functionalEndurance : 0,
 		functionalWisdom : 0,
-		functionalAgility : 0
+		functionalAgility : 0,
+		
+		followThrough : 0
 	};
 	
 	function resetMC(){
@@ -110,6 +112,7 @@
 				unequipItem(equipHolder[key].slot);
 			}
 		}
+		selectedSkills = "";
 		equipHolder = {mainHand:null, offHand:null, helmet:null, amulet:null, body:null, shoulders:null, gloves:null, pants:null, boots:null, ring:null, trinket:null, aura:null};
 		inventoryHolder = new Array();
 		allItemHolder = new Array();
@@ -179,7 +182,14 @@
 		$('#className').text(mc.charClass);
 	}
 	function calcArmor(curVal, targetLevel, statBonus, flatVal){
+		var isNeg = false;
+		if(curVal < 0){
+			isNeg = true;
+			curVal *= -1;
+		}	
 		var damReduc = Math.round(((Math.round((curVal/(curVal+(100+targetLevel*2.5))+statBonus/1000)*10000)/100)+flatVal) * 100)/100;
+		if(isNeg)
+			damReduc *= -1;
 		return damReduc;
 	}
 	function calcEva(curVal, targetLevel, statBonus, flatVal){
@@ -195,6 +205,7 @@
 		$('#currentHP').text(Math.floor(mc.hp));
 		$('#currentMana').text(Math.floor(mc.mana));
 		$('#currentStamina').text(Math.floor(mc.stamina));
+		$('#platVal').text(shortenLargeNumber(mc.gold));
 		colorizeStats();
 	}
 	function calculateFunctionalStats(){
@@ -239,7 +250,7 @@
 		mc.functionalColdDamage = Math.round(Number((mc.coldDamage + ((mc.functionalIntelligence/5) * 2) + bonus["ColdDamage"])*more["ColdDamage"]));
 		mc.functionalShockDamage = Math.round(Number((mc.shockDamage + ((mc.functionalIntelligence/5) * 2) + bonus["ShockDamage"])*more["ShockDamage"]));
 		mc.functionalDarkDamage = Math.round(Number((mc.darkDamage + bonus["DarkDamage"])*more["DarkDamage"]));
-		mc.functionalCritChnc = Math.round(Number((mc.critChnc + (mc.functionalDexterity/2.5) + bonus["CritChnc"])*more["CritChnc"]));
+		mc.functionalCritChnc = Math.round(Number((mc.critChnc + (mc.functionalDexterity/2.5) + bonus["CritChnc"])*more["CritChnc"])*100)/100;
 		mc.functionalCritDmg = Math.round(Number((mc.critDmg + ((mc.functionalDexterity/5)*5) + bonus["CritDmg"])*more["CritDmg"]));
 		mc.functionalArmor = Math.round(Number((mc.armor + bonus["Armor"])*more["Armor"]));
 		mc.functionalEvasion = Math.round(Number((mc.evasion + bonus["Evasion"])*more["Evasion"]));
@@ -248,6 +259,8 @@
 		mc.functionalColdResist = Math.round(Number((mc.coldResist + bonus["ColdResist"])*more["ColdResist"]));
 		mc.functionalShockResist = Math.round(Number((mc.shockResist + bonus["ShockResist"])*more["ShockResist"]));
 		mc.functionalLeech = Math.round(Number((mc.leech + bonus["Leech"])*more["Leech"]));
+		
+		mc.followThrough = Math.round(Math.pow(mc.level * (mc.functionalStrength/100), (1.1))+(mc.functionalStrength/1.5));
 		
 		if(mc.functionalBaseDamage <= 0)
 			mc.functionalBaseDamage = 1;

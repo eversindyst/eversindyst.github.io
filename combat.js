@@ -14,7 +14,8 @@
 			doStatEffects();
 			calculateFunctionalStats();
 			
-			mc.totBaseDamage = Math.max(Math.round((mc.functionalBaseDamage + Math.round(Math.random()*(mc.functionalBaseDamage*.3)+1) - Math.round(Math.random()*(mc.functionalBaseDamage*.3)+1)) * (1-(calcArmor(currentMonsters[0].armor, currentMonsters[0].level, 0, 0)/100)) * (1-(calcRes(currentMonsters[0].resist, currentMonsters[0].level, 0, 0)/100))),1);
+			mc.totBaseDamage = Math.max(Math.round((mc.functionalBaseDamage + Math.round(Math.random()*(mc.functionalBaseDamage*.3)+1) - Math.round(Math.random()*(mc.functionalBaseDamage*.3)+1)) * (1-(calcArmor((currentMonsters[0].armor - mc.followThrough), currentMonsters[0].level, 0, 0)/100)) * (1-(calcRes(currentMonsters[0].resist, currentMonsters[0].level, 0, 0)/100))),1);
+			
 			if(mc.charClassNum == 4 && mc.dualWield){
 				mc.totBaseDamage = Math.round(mc.totBaseDamage * 1.2);
 			}
@@ -149,7 +150,7 @@
 										}
 										if(vuln_g > Math.random()){
 											currentMonsters[x].vuln = vulnDur_g;
-											ss += "<span style='color:#B40800'>The "+currentMonsters[x].name+"("+(x+1)+") is vulnerable from your "+spell.name+"</span><br>";
+											ss += "<span style='color:#B40800'>The "+currentMonsters[x].name+"("+(x+1)+") is made vulnerable from your "+spell.name+"</span><br>";
 										}
 									}
 								}

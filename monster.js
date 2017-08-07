@@ -58,6 +58,7 @@
 	}
 	function monsterDies(monster){
 		mobKilled += 1;
+		mobCounter ++;
 		var ss = "";
 		itemDrop(monster.dropChnc, monster.itemList, monster.maxLoot);
 		var lvlDiff = Math.max(Math.abs(mc.level-monster.level) - (4+(mc.level/16)),0);
